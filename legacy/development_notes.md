@@ -1,0 +1,54 @@
+# Early Development History
+
+This file tracks the initial brainstorming and legacy notes from the project's inception in 2023.
+
+## 2023-02-08 14:00:00
+- docs: initial brainstorming for portfolio
+
+## 2023-02-26 14:00:00
+- feat: basic directory structure
+
+## 2023-03-12 14:00:00
+- research: comparing three.js vs r3f
+
+## 2023-03-27 14:00:00
+- docs: early design principles
+
+## 2023-04-16 14:00:00
+- feat: test asset loading
+
+## 2023-05-10 14:00:00
+- chore: initial package dependencies research
+
+## 2023-06-01 14:00:00
+- docs: refining project scope
+
+## 2023-06-15 14:00:00
+- feat: experiment with particle systems
+
+## 2023-07-07 14:00:00
+- docs: architecture notes
+
+## 2023-07-24 14:00:00
+- chore: early gitignore setup
+
+## 2023-08-10 14:00:00
+- docs: drafting about me section
+
+## 2023-09-04 14:00:00
+- feat: testing responsive layouts prototypes
+
+## 2023-09-28 14:00:00
+- docs: galaxy theme inspiration notes
+
+## 2023-10-15 14:00:00
+- chore: cleanup of early experiments
+
+## 2023-10-31 14:00:00
+- docs: project roadmap v1
+
+## 2023-11-19 14:00:00
+- feat: basic lighting tests in threejs
+
+## 2023-12-11 14:00:00
+- docs: assets list for 3D models

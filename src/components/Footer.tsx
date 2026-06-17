@@ -1,0 +1,9 @@
+const Footer = () => (
+  <footer className="border-t border-border py-8 px-6 text-center bg-background">
+    <p className="text-sm text-muted-foreground">
+      © 2026 <span className="text-primary">Santhosh Kannan</span>. Crafted with passion & code.
+    </p>
+  </footer>
+);
+
+export default Footer;
