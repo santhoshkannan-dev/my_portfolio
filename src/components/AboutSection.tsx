@@ -122,7 +122,7 @@ const AboutSection = () => {
                 About Me
               </p>
 
-              <h2 className="font-display text-4xl md:text-7xl font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-foreground">
+              <h2 className="font-display text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-foreground">
                 Software
                 <br />
                 <span className="text-primary">Developer</span>

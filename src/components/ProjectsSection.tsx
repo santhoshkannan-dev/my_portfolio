@@ -480,7 +480,7 @@ const ProjectsSection = () => {
         {/* Left Column (GSAP Pinned Column) */}
         <div
           ref={leftColRef}
-          className="md:col-span-4 h-fit md:h-[85vh] flex flex-col justify-center py-8 relative z-20"
+          className="md:col-span-5 h-fit md:h-[85vh] flex flex-col justify-center py-8 relative z-20"
         >
           <div ref={headingRef} className="space-y-6">
             <motion.div
@@ -494,7 +494,7 @@ const ProjectsSection = () => {
                 Featured Works
               </div>
 
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tighter text-white leading-none">
+              <h2 className="font-display text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold uppercase tracking-tighter text-white leading-none">
                 Real World
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-500 font-extrabold">
@@ -534,7 +534,7 @@ const ProjectsSection = () => {
         </div>
 
         {/* Right Column (Scrolling Bento Grid) */}
-        <div ref={rightColRef} className="md:col-span-8 w-full flex flex-col justify-start relative z-10 py-6">
+        <div ref={rightColRef} className="md:col-span-7 w-full flex flex-col justify-start relative z-10 py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-auto">
             {projects.map((project, i) => (
               <ProjectCard key={project.title} project={project} i={i} />
