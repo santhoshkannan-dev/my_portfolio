@@ -70,20 +70,6 @@
     font-family: 'Michroma', sans-serif;
   }
 
-  /* Hide default cursor on devices with a mouse, since we use CustomCursor */
-  @media (pointer: fine) {
-
-    body,
-    a,
-    button,
-    input,
-    select,
-    textarea,
-    canvas {
-      cursor: none !important;
-    }
-  }
-
   h1,
   h2,
   h3,

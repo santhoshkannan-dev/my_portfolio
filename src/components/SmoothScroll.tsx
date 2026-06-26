@@ -22,7 +22,7 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
       mouseMultiplier: 1,
       smoothTouch: false,
       touchMultiplier: 2,
-    } as any);
+    } as unknown as ConstructorParameters<typeof Lenis>[0]);
 
     lenisRef.current = lenis;
 

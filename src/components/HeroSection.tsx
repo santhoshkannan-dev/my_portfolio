@@ -447,7 +447,7 @@ const FloatingTechBadge = ({ data }: { data: typeof techOrbitData[0] }) => {
   );
 };
 
-function StarfighterModel({ isFixed, scrollScale = 1, targetBaseRotation = [0, 0, 0], currentView = 'front', onViewChange, ...props }: { isFixed: boolean, scrollScale?: number, targetBaseRotation?: [number, number, number], currentView?: string, onViewChange?: (view: any) => void } & any) {
+function StarfighterModel({ isFixed, scrollScale = 1, targetBaseRotation = [0, 0, 0], currentView = 'front', onViewChange, ...props }: { isFixed: boolean, scrollScale?: number, targetBaseRotation?: [number, number, number], currentView?: string, onViewChange?: (view: string) => void } & Record<string, unknown>) {
   const [scale, setScale] = useState<[number, number, number]>([1, 1, 1]);
   const groupRef = useRef<THREE.Group>(null);
   const baseRotationRef = useRef(new THREE.Euler(0, 0, 0));

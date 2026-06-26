@@ -71,6 +71,95 @@ const timeline = [
   }
 ];
 
+const TimelineItem = ({ item, idx }: { item: typeof timeline[number]; idx: number }) => {
+  const elementRef = useRef(null);
+  const isInView = useInView(elementRef, { once: true, margin: "-50px" });
+
+  return (
+    <div ref={elementRef} className="relative">
+      {/* Timeline dot */}
+      <div className="absolute -left-[33px] md:-left-[49px] top-1.5 w-4 h-4 rounded-full bg-primary border-4 border-background animate-pulse shadow-[0_0_10px_hsl(var(--primary))]" />
+      
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
+        className="glass rounded-xl p-5 border border-border hover:border-primary/20 transition-all duration-300"
+      >
+        <div className="flex items-center gap-3 mb-2">
+          <span className="text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold border border-primary/20">
+            {item.year}
+          </span>
+          <h4 className="font-display font-semibold text-lg text-foreground">{item.title}</h4>
+        </div>
+        
+        {item.subtitle && (
+          <p className="text-sm text-muted-foreground mb-2 font-medium">{item.subtitle}</p>
+        )}
+
+        {item.details && (
+          <ul className="mt-3 space-y-1.5">
+            {item.details.map((detail, index) => (
+              <li key={index} className="flex gap-2 text-sm text-muted-foreground items-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                <span>{detail}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </motion.div>
+    </div>
+  );
+};
+
+const AchievementCard = ({ item, i }: { item: typeof achievements[number]; i: number }) => {
+  const cardRef = useRef(null);
+  const inView = useInView(cardRef, { once: true, margin: "-50px" });
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30, scale: 0.98 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.6, delay: 0.1 * i, ease: "easeOut" }}
+      whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
+      className="glass rounded-xl p-6 md:p-8 group border border-border hover:border-primary/30 transition-all duration-500 hover:neon-glow"
+    >
+      <div className="flex gap-4 items-center mb-4">
+        <motion.div
+          className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors duration-300"
+          whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
+        >
+          <item.icon className="text-primary" size={20} />
+        </motion.div>
+        <h4 className="font-display font-semibold text-lg md:text-xl text-foreground">{item.title}</h4>
+      </div>
+      <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{item.desc}</p>
+    </motion.div>
+  );
+};
+
+const CertificationCard = ({ cert, index }: { cert: string; index: number }) => {
+  const cardRef = useRef(null);
+  const inView = useInView(cardRef, { once: true, margin: "-50px" });
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
+      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+      className="glass rounded-xl p-4 flex items-center gap-3 border border-border hover:border-primary/20 transition-all duration-300 hover:neon-glow-small"
+    >
+      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary">
+        <CheckCircle2 size={16} />
+      </div>
+      <span className="text-foreground text-sm font-medium">{cert}</span>
+    </motion.div>
+  );
+};
+
 const ExperienceSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
@@ -179,7 +268,10 @@ const ExperienceSection = () => {
                       "Git",
                       "Python"
                     ].map((tech) => (
-                      <span key={tech} className="text-xs px-3 py-1 bg-secondary text-secondary-foreground uppercase tracking-wider font-semibold border border-border hover:border-primary/30 transition-colors duration-300">
+                      <span
+                        key={tech}
+                        className="text-xs font-medium px-3 py-1 rounded-full border border-border bg-card/50 text-foreground transition-all duration-300 hover:border-primary/30 hover:text-primary"
+                      >
                         {tech}
                       </span>
                     ))}
@@ -196,46 +288,9 @@ const ExperienceSection = () => {
             </h3>
             
             <div className="relative border-l border-border pl-6 md:pl-10 ml-4 md:ml-6 space-y-12">
-              {timeline.map((item, idx) => {
-                const elementRef = useRef(null);
-                const isInView = useInView(elementRef, { once: true, margin: "-50px" });
-
-                return (
-                  <div key={idx} ref={elementRef} className="relative">
-                    {/* Timeline dot */}
-                    <div className="absolute -left-[33px] md:-left-[49px] top-1.5 w-4 h-4 rounded-full bg-primary border-4 border-background animate-pulse shadow-[0_0_10px_hsl(var(--primary))]" />
-                    
-                    <motion.div
-                      initial={{ opacity: 0, x: 30 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-                      className="glass rounded-xl p-5 border border-border hover:border-primary/20 transition-all duration-300"
-                    >
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold border border-primary/20">
-                          {item.year}
-                        </span>
-                        <h4 className="font-display font-semibold text-lg text-foreground">{item.title}</h4>
-                      </div>
-                      
-                      {item.subtitle && (
-                        <p className="text-sm text-muted-foreground mb-2 font-medium">{item.subtitle}</p>
-                      )}
-
-                      {item.details && (
-                        <ul className="mt-3 space-y-1.5">
-                          {item.details.map((detail, index) => (
-                            <li key={index} className="flex gap-2 text-sm text-muted-foreground items-center">
-                              <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                              <span>{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </motion.div>
-                  </div>
-                );
-              })}
+              {timeline.map((item, idx) => (
+                <TimelineItem key={idx} item={item} idx={idx} />
+              ))}
             </div>
           </div>
 
@@ -246,33 +301,9 @@ const ExperienceSection = () => {
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {achievements.map((item, i) => {
-                const cardRef = useRef(null);
-                const inView = useInView(cardRef, { once: true, margin: "-50px" });
-
-                return (
-                  <motion.div
-                    key={item.title}
-                    ref={cardRef}
-                    initial={{ opacity: 0, y: 30, scale: 0.98 }}
-                    animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                    transition={{ duration: 0.6, delay: 0.1 * i, ease: "easeOut" }}
-                    whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-                    className="glass rounded-xl p-6 md:p-8 group border border-border hover:border-primary/30 transition-all duration-500 hover:neon-glow"
-                  >
-                    <div className="flex gap-4 items-center mb-4">
-                      <motion.div
-                        className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors duration-300"
-                        whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
-                      >
-                        <item.icon className="text-primary" size={20} />
-                      </motion.div>
-                      <h4 className="font-display font-semibold text-lg md:text-xl text-foreground">{item.title}</h4>
-                    </div>
-                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{item.desc}</p>
-                  </motion.div>
-                );
-              })}
+              {achievements.map((item, i) => (
+                <AchievementCard key={item.title} item={item} i={i} />
+              ))}
             </div>
           </div>
 
@@ -283,27 +314,9 @@ const ExperienceSection = () => {
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {certifications.map((cert, index) => {
-                const cardRef = useRef(null);
-                const inView = useInView(cardRef, { once: true, margin: "-50px" });
-
-                return (
-                  <motion.div
-                    key={index}
-                    ref={cardRef}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
-                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="glass rounded-xl p-4 flex items-center gap-3 border border-border hover:border-primary/20 transition-all duration-300 hover:neon-glow-small"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary">
-                      <CheckCircle2 size={16} />
-                    </div>
-                    <span className="text-foreground text-sm font-medium">{cert}</span>
-                  </motion.div>
-                );
-              })}
+              {certifications.map((cert, index) => (
+                <CertificationCard key={index} cert={cert} index={index} />
+              ))}
             </div>
           </div>
 
