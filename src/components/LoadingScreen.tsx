@@ -95,13 +95,13 @@ const StarStreaks = () => {
 };
 
 const LoadingScreen = ({ onFinished }: { onFinished: () => void }) => {
-    const [loadingText, setLoadingText] = useState("Initializing Systems...");
+    const [loadingText, setLoadingText] = useState("Initializing Santhosh's Workspace...");
 
     useEffect(() => {
         const timers = [
             setTimeout(() => setLoadingText("Synchronizing Neural Core..."), 2000),
-            setTimeout(() => setLoadingText("Loading Assets..."), 4000),
-            setTimeout(() => setLoadingText("Finalizing..."), 6000),
+            setTimeout(() => setLoadingText("Loading Full-Stack Modules..."), 4000),
+            setTimeout(() => setLoadingText("Finalizing Portfolio..."), 6000),
             setTimeout(() => onFinished(), 7500)
         ];
 
