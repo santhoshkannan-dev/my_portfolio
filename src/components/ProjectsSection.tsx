@@ -129,6 +129,68 @@ const PortfolioMockup = () => {
   );
 };
 
+const VLinkInventoryMockup = () => {
+  return (
+    <div className="relative w-full h-full min-h-[200px] bg-zinc-950/90 border border-amber-500/20 rounded-2xl overflow-hidden p-4 flex flex-col justify-between font-sans">
+      {/* Top Header Bar */}
+      <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-red-500/60" />
+            <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500/60" />
+          </div>
+          <span className="text-[9px] text-zinc-500 font-mono tracking-wider">VLINK_IMS_v2.0</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+          <span className="text-[8px] text-amber-400 font-bold uppercase tracking-wider">Secure</span>
+        </div>
+      </div>
+
+      {/* Analytics Dashboard Widgets */}
+      <div className="grid grid-cols-3 gap-2 my-1">
+        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between h-12">
+          <span className="text-[6.5px] text-zinc-500 uppercase font-semibold">Stock Level</span>
+          <span className="text-[10px] font-bold text-white font-display">14.2k <span className="text-[5.5px] font-normal text-emerald-400">Opt</span></span>
+        </div>
+        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between h-12">
+          <span className="text-[6.5px] text-zinc-500 uppercase font-semibold">Dispatched</span>
+          <span className="text-[10px] font-bold text-amber-400 font-display">180 pcs</span>
+        </div>
+        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between h-12">
+          <span className="text-[6.5px] text-zinc-500 uppercase font-semibold">Low Stock</span>
+          <span className="text-[10px] font-bold text-red-500 font-display">03 <span className="text-[5.5px] font-normal text-red-400 animate-pulse">Alert</span></span>
+        </div>
+      </div>
+
+      {/* Technician Dispatch Grid table */}
+      <div className="bg-white/[0.01] border border-white/5 rounded-lg p-2 flex-grow mt-1 font-mono text-[7px] text-zinc-400">
+        <div className="flex justify-between font-sans font-bold text-[6.5px] text-zinc-500 border-b border-white/5 pb-1 mb-1 uppercase">
+          <span>Tech</span>
+          <span>Material</span>
+          <span>Qty</span>
+          <span>Status</span>
+        </div>
+        <div className="space-y-1">
+          <div className="flex justify-between items-center">
+            <span className="text-zinc-300">Rahul M.</span>
+            <span>CAT-6 Cable</span>
+            <span>2 rolls</span>
+            <span className="text-emerald-400">Approved</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-zinc-300">Justin K.</span>
+            <span>Fiber ONT</span>
+            <span>5 units</span>
+            <span className="text-emerald-400">Approved</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ProjectMockup = ({ type }: { type: string }) => {
   switch (type) {
     case "agriculture":
@@ -139,6 +201,8 @@ const ProjectMockup = ({ type }: { type: string }) => {
       return <NeXGeaRMockup />;
     case "portfolio":
       return <PortfolioMockup />;
+    case "vlink-inventory":
+      return <VLinkInventoryMockup />;
     default:
       return null;
   }
@@ -193,6 +257,21 @@ const projects = [
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-1",
     mockupType: "ecommerce",
+  },
+  {
+    title: "VLink Inventory",
+    subtitle: "Telecom Logistics & Inventory System",
+    desc: "A MERN stack inventory tracking web app engineered for telecom operations logistics management. Features stock logs, supplier shipments, technician dispatches with safety checks, RBAC controls, and automated PDF/Excel reports.",
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+    github: "https://github.com/santhoshkannan-dev/vlink_inventory",
+    live: "https://vlink-inventory.vercel.app",
+    gradient: "from-amber-500/20 via-orange-500/10 to-yellow-500/20",
+    glowColor: "rgba(245, 158, 11, 0.15)",
+    badgeColor: "text-amber-400 bg-amber-950/30 border-amber-500/20",
+    borderColor: "group-hover:border-amber-500/30",
+    colSpan: "md:col-span-2",
+    rowSpan: "md:row-span-1",
+    mockupType: "vlink-inventory",
   },
   // {
   //   title: "Developer Portfolio",
