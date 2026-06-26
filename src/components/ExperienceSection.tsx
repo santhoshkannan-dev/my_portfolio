@@ -181,6 +181,20 @@ const ExperienceSection = () => {
       });
     });
 
+    gsap.fromTo(".section-title__square",
+      { rotation: 0 },
+      {
+        rotation: 360,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
+        }
+      }
+    );
+
     return () => mm.revert();
   }, { scope: containerRef });
 
@@ -193,6 +207,8 @@ const ExperienceSection = () => {
           ref={leftColRef}
           className="md:col-span-5 p-6 lg:p-8 border-b md:border-b-0 md:border-r border-border h-fit md:h-screen flex flex-col justify-center bg-glass backdrop-blur-md relative z-10"
         >
+          {/* Subtle rotating square decoration */}
+          <div className="section-title__square absolute w-[260px] h-[260px] border border-primary/10 rounded-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" />
           <div ref={inViewRef}>
             <motion.div
               initial={{ opacity: 0, x: -50 }}

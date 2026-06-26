@@ -462,6 +462,20 @@ const ProjectsSection = () => {
       });
     });
 
+    gsap.fromTo(".section-title__square",
+      { rotation: 0 },
+      {
+        rotation: 360,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
+        }
+      }
+    );
+
     return () => mm.revert();
   }, { scope: containerRef });
 
@@ -482,6 +496,8 @@ const ProjectsSection = () => {
           ref={leftColRef}
           className="md:col-span-5 h-fit md:h-[85vh] flex flex-col justify-center py-8 relative z-20"
         >
+          {/* Subtle rotating square decoration */}
+          <div className="section-title__square absolute w-[260px] h-[260px] border border-emerald-500/10 rounded-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" />
           <div ref={headingRef} className="space-y-6">
             <motion.div
               initial={{ opacity: 0, x: -30 }}

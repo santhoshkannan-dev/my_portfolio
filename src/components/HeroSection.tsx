@@ -718,6 +718,24 @@ const HeroSection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const splitText = (text: string, isGradient: boolean = false) => {
+    return text.split("").map((char, index) => {
+      if (char === " ") return <span key={index}>&nbsp;</span>;
+      return (
+        <span
+          key={index}
+          className={`title-char inline-block ${
+            isGradient
+              ? "bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent"
+              : "text-white"
+          }`}
+        >
+          {char}
+        </span>
+      );
+    });
+  };
+
   const viewRotations: Record<string, [number, number, number]> = {
     front: [0.2, 0, 0], // Slight tilt downwards
     back: [0, Math.PI, 0],
@@ -729,16 +747,33 @@ const HeroSection = () => {
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-    // Sequence 1: Intro Text Entrance
-    tl.fromTo(introRef.current,
-      { opacity: 0, scale: 0.9, filter: "blur(10px)" },
-      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }
-    )
+    // Sequence 1: Intro Text Entrance with Split Character stagger
+    tl.set(introRef.current, { opacity: 1 })
+      .fromTo(".intro-badge", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" })
+      .fromTo(".title-char",
+        { opacity: 0, y: 60, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, stagger: 0.015, duration: 1.0, ease: "back.out(1.5)" },
+        "-=0.4"
+      )
+      .fromTo(".intro-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
       // Sequence 2: Reveal rest of Hero UI
       .fromTo(".hero-line", { scaleX: 0 }, { scaleX: 1, duration: 1.5, transformOrigin: "left center" }, "-=0.5")
       .fromTo(".hero-tag", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.8 }, "-=1.0")
       .fromTo(".hero-role", { opacity: 0 }, { opacity: 1, duration: 1 }, "-=0.8")
+      .fromTo(".hero-marquee", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
       .fromTo(buttonsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.6");
+
+    // Marquee scroll translation
+    gsap.to(".hero-marquee-wrapp", {
+      xPercent: -30,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "+=400%",
+        scrub: 2.5,
+      }
+    });
 
     if (textRef.current) {
       gsap.timeline({
@@ -818,22 +853,20 @@ const HeroSection = () => {
         ref={introRef}
         className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-16 xs:pt-20 md:pt-0 px-6 text-center opacity-0"
       >
-        <span className="mb-2 md:mb-4 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl">
+        <span className="intro-badge mb-2 md:mb-4 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
           Software Developer • MCA Student
         </span>
 
         <h1
-          className="max-w-6xl text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight text-white"
+          className="max-w-6xl text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight"
           style={{ fontFamily: "'Rubik Mono One'" }}
         >
-          Building
-          <span className="block bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            Scalable Digital
-          </span>
-          Products
+          <div className="block">{splitText("Building")}</div>
+          <div className="block my-1 sm:my-2">{splitText("Scalable Digital", true)}</div>
+          <div className="block">{splitText("Products")}</div>
         </h1>
 
-        <p className="mt-4 md:mt-8 max-w-3xl text-xs xs:text-sm md:text-lg lg:text-xl text-gray-400 leading-6 xs:leading-7 md:leading-8">
+        <p className="intro-desc mt-4 md:mt-8 max-w-3xl text-xs xs:text-sm md:text-lg lg:text-xl text-gray-400 leading-6 xs:leading-7 md:leading-8 opacity-0">
           Passionate about creating scalable web applications, cross-platform
           mobile apps, and AI-driven solutions using React, Django, Node.js,
           PostgreSQL, and AWS.
@@ -857,6 +890,28 @@ const HeroSection = () => {
             </group>
           </PresentationControls>
         </Canvas>
+      </div>
+
+      {/* Horizontal Sliding Marquee from other project */}
+      <div className="hero-marquee absolute bottom-[185px] lg:bottom-[155px] left-0 w-full overflow-hidden bg-black/45 py-3 border-y border-white/5 pointer-events-none z-10 opacity-0">
+        <div className="hero-marquee-wrapp flex whitespace-nowrap">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="flex items-center gap-12 text-[10px] font-bold tracking-[0.25em] uppercase text-zinc-500/85 px-6">
+              <span>React</span>
+              <span className="text-primary">•</span>
+              <span>Django</span>
+              <span className="text-primary">•</span>
+              <span>PostgreSQL</span>
+              <span className="text-primary">•</span>
+              <span>React Native</span>
+              <span className="text-primary">•</span>
+              <span>AWS</span>
+              <span className="text-primary">•</span>
+              <span>AI & Machine Learning</span>
+              <span className="text-primary">•</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div ref={textRef} className="relative z-10 w-full max-w-[90rem] mx-auto pointer-events-none">

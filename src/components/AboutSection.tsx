@@ -91,6 +91,20 @@ const AboutSection = () => {
       });
     });
 
+    gsap.fromTo(".section-title__square",
+      { rotation: 0 },
+      {
+        rotation: 360,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
+        }
+      }
+    );
+
     return () => mm.revert();
   }, { scope: containerRef });
 
@@ -109,6 +123,9 @@ const AboutSection = () => {
               <InteractiveModel color="hsl(151, 55%, 52%)" distort={0.4} speed={1} />
             </Canvas>
           </div>
+
+          {/* Subtle rotating square decoration */}
+          <div className="section-title__square absolute w-[260px] h-[260px] border border-primary/10 rounded-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" />
 
           <div className="relative z-10" ref={inViewRef}>
             <motion.div
