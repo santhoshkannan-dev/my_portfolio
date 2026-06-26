@@ -6,6 +6,58 @@
 
 @layer base {
   :root {
+    /* Shopify Editions inspired Stark White & Black for light mode */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 151 55% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 217 91% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Bento Box Grid Lines */
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 151 55% 42%;
+
+    --radius: 0rem;
+    /* Shopify Editions uses sharp or very slightly rounded edges */
+
+    /* Custom utility colors */
+    --neon-glow: 151 55% 42%;
+    --neon-purple: 217 91% 50%;
+
+    /* Strict glass effects for bento boxes */
+    --glass: 0 0% 100%;
+    --glass-border: 0 0% 0% / 0.08;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-ring: 151 55% 42%;
+  }
+
+  .dark {
     /* Shopify Editions inspired Stark Black & White with vibrant accents */
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
@@ -37,9 +89,6 @@
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 151 55% 52%;
-
-    --radius: 0rem;
-    /* Shopify Editions uses sharp or very slightly rounded edges */
 
     /* Custom utility colors */
     --neon-glow: 151 55% 52%;

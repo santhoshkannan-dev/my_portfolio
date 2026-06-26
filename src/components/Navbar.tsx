@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Send } from "lucide-react";
+import { Menu, X, Send, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const links = ["About", "Skills", "Projects", "Journey", "Contact"];
 
@@ -10,6 +11,12 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("about");
   const [visible, setVisible] = useState(true);
   const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const lastScrollY = useRef(0);
 
@@ -130,21 +137,38 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* Quick Contact Button */}
-        <button
-          onClick={() => scrollTo("Contact")}
-          className="hidden md:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all duration-300 text-xs font-semibold uppercase tracking-wider"
-        >
-          <Send size={12} /> Let's Talk
-        </button>
+        <div className="flex items-center gap-2 pointer-events-auto">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 rounded-full bg-secondary/30 hover:bg-secondary/60 text-foreground border border-border/40 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none"
+            title="Toggle Light/Dark Theme"
+          >
+            {!mounted ? (
+              <div className="w-[18px] h-[18px]" />
+            ) : theme === "dark" ? (
+              <Sun size={18} className="text-yellow-400" />
+            ) : (
+              <Moon size={18} className="text-indigo-600" />
+            )}
+          </button>
 
-        {/* Mobile Menu Toggle Button */}
-        <button
-          className="md:hidden p-2 rounded-full bg-secondary/50 text-foreground border border-border/40"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
+          {/* Quick Contact Button */}
+          <button
+            onClick={() => scrollTo("Contact")}
+            className="hidden md:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all duration-300 text-xs font-semibold uppercase tracking-wider cursor-pointer"
+          >
+            <Send size={12} /> Let's Talk
+          </button>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            className="md:hidden p-2 rounded-full bg-secondary/50 text-foreground border border-border/40 cursor-pointer"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown */}

@@ -4,6 +4,7 @@ import { ArrowUpRight, Github, ExternalLink, Sparkles, Cpu, Layers, TrendingUp, 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTheme } from "next-themes";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -211,7 +212,6 @@ const ProjectMockup = ({ type }: { type: string }) => {
 // ==========================================
 // 2. Project Data Definitions
 // ==========================================
-
 const projects = [
   {
     title: "NavaKrishi",
@@ -222,7 +222,7 @@ const projects = [
     live: "#",
     gradient: "from-emerald-500/20 via-green-500/10 to-teal-500/20",
     glowColor: "rgba(16, 185, 129, 0.15)",
-    badgeColor: "text-emerald-400 bg-emerald-950/30 border-emerald-500/20",
+    badgeColor: "text-emerald-700 bg-emerald-50 border-emerald-200/50 dark:text-emerald-400 dark:bg-emerald-950/30 dark:border-emerald-500/20",
     borderColor: "group-hover:border-emerald-500/30",
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
@@ -237,7 +237,7 @@ const projects = [
     live: "#",
     gradient: "from-blue-500/20 via-cyan-500/10 to-sky-500/20",
     glowColor: "rgba(59, 130, 246, 0.15)",
-    badgeColor: "text-blue-400 bg-blue-950/30 border-blue-500/20",
+    badgeColor: "text-blue-700 bg-blue-50 border-blue-200/50 dark:text-blue-400 dark:bg-blue-950/30 dark:border-blue-500/20",
     borderColor: "group-hover:border-blue-500/30",
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-1",
@@ -252,7 +252,7 @@ const projects = [
     live: "#",
     gradient: "from-purple-500/20 via-violet-500/10 to-pink-500/20",
     glowColor: "rgba(139, 92, 246, 0.15)",
-    badgeColor: "text-purple-400 bg-purple-950/30 border-purple-500/20",
+    badgeColor: "text-purple-700 bg-purple-50 border-purple-200/50 dark:text-purple-400 dark:bg-purple-950/30 dark:border-purple-500/20",
     borderColor: "group-hover:border-purple-500/30",
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-1",
@@ -267,27 +267,12 @@ const projects = [
     live: "https://vlink-inventory.vercel.app",
     gradient: "from-amber-500/20 via-orange-500/10 to-yellow-500/20",
     glowColor: "rgba(245, 158, 11, 0.15)",
-    badgeColor: "text-amber-400 bg-amber-950/30 border-amber-500/20",
+    badgeColor: "text-amber-700 bg-amber-50 border-amber-200/50 dark:text-amber-400 dark:bg-amber-950/30 dark:border-amber-500/20",
     borderColor: "group-hover:border-amber-500/30",
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-1",
     mockupType: "vlink-inventory",
   },
-  // {
-  //   title: "Developer Portfolio",
-  //   subtitle: "Personal Website",
-  //   desc: "Modern animated portfolio built with React, TypeScript, TailwindCSS, GSAP, and Framer Motion featuring premium UI interactions, grid systems, and responsive layouts.",
-  //   tech: ["React", "TypeScript", "GSAP", "Framer Motion", "TailwindCSS"],
-  //   github: "https://github.com/yourusername",
-  //   live: "https://yourportfolio.com",
-  //   gradient: "from-orange-500/20 via-red-500/10 to-pink-500/20",
-  //   glowColor: "rgba(249, 115, 22, 0.15)",
-  //   badgeColor: "text-orange-400 bg-orange-950/30 border-orange-500/20",
-  //   borderColor: "group-hover:border-orange-500/30",
-  //   colSpan: "md:col-span-2",
-  //   rowSpan: "md:row-span-1",
-  //   mockupType: "portfolio",
-  // },
 ];
 
 // ==========================================
@@ -297,6 +282,7 @@ const projects = [
 const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const inView = useInView(cardRef, { once: true, margin: "-80px" });
+  const { theme } = useTheme();
 
   const [hovered, setHovered] = useState(false);
   const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
@@ -308,24 +294,32 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
   const springX = useSpring(mouseX, { stiffness: 100, damping: 15 });
   const springY = useSpring(mouseY, { stiffness: 100, damping: 15 });
 
-  const rotateX = useTransform(springY, [-0.5, 0.5], ["7deg", "-7deg"]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], ["-7deg", "7deg"]);
+  // Tilt transform values
+  const rotateX = useTransform(springY, [-0.5, 0.5], ["9deg", "-9deg"]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], ["-9deg", "9deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
 
-    // 3D rotation coordinates
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(xPct);
-    mouseY.set(yPct);
+    // Calculate normalized relative mouse coordinates (-0.5 to 0.5)
+    const valX = (e.clientX - rect.left) / width - 0.5;
+    const valY = (e.clientY - rect.top) / height - 0.5;
 
-    // Spotlight cursor tracking position
+    mouseX.set(valX);
+    mouseY.set(valY);
+
+    // Calculate spotlight position in pixels relative to viewport client
     setSpotlightPos({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     });
+  };
+
+  const handleMouseEnter = () => {
+    setHovered(true);
   };
 
   const handleMouseLeave = () => {
@@ -339,19 +333,19 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
   return (
     <motion.div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={handleMouseLeave}
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: i * 0.15, ease: "easeOut" }}
+      transition={{ duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       style={{
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
       }}
       className={`
-        relative overflow-hidden rounded-[2rem] border border-white/5 bg-zinc-950/40 backdrop-blur-md p-6 md:p-8 flex flex-col justify-between transition-all duration-500 group cursor-none
+        relative overflow-hidden rounded-[2rem] border border-border bg-card/40 backdrop-blur-md p-6 md:p-8 flex flex-col justify-between transition-all duration-500 group cursor-none
         ${project.colSpan} ${project.rowSpan} ${project.borderColor} min-h-[360px]
       `}
     >
@@ -391,10 +385,10 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
                 <Sparkles size={12} className="text-primary animate-pulse" />
                 {project.subtitle}
               </p>
-              <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-none mb-4">
+              <h3 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight leading-none mb-4">
                 {project.title}
               </h3>
-              <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-6 font-sans">
+              <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6 font-sans">
                 {project.desc}
               </p>
             </div>
@@ -418,7 +412,7 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-zinc-900 border border-white/10 hover:bg-zinc-800 hover:border-white/20 text-zinc-300 hover:text-white text-xs font-bold transition-all duration-300 cursor-none"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-secondary border border-border hover:bg-secondary/80 text-secondary-foreground text-xs font-bold transition-all duration-300 cursor-none"
                 >
                   <Github size={14} />
                   GitHub
@@ -427,7 +421,7 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
                   href={project.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-black hover:bg-zinc-200 text-xs font-bold transition-all duration-300 cursor-none shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-foreground text-background hover:bg-foreground/90 text-xs font-bold transition-all duration-300 cursor-none shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
                 >
                   <ExternalLink size={14} />
                   Live Demo
@@ -451,20 +445,20 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
                 <p className="uppercase tracking-[3px] text-[9px] text-primary font-bold mb-1 font-display">
                   {project.subtitle}
                 </p>
-                <h3 className="text-xl md:text-2xl font-extrabold text-white tracking-tight leading-none">
+                <h3 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight leading-none">
                   {project.title}
                 </h3>
               </div>
               <motion.div
                 animate={{ rotate: hovered ? 45 : 0 }}
                 transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center bg-zinc-900/60 text-zinc-400 group-hover:text-primary group-hover:border-primary transition-colors"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center bg-secondary text-muted-foreground group-hover:text-primary group-hover:border-primary transition-colors"
               >
                 <ArrowUpRight size={16} />
               </motion.div>
             </div>
 
-            <p className="text-zinc-400 text-xs md:text-sm leading-relaxed mb-6 font-sans">
+            <p className="text-muted-foreground text-xs md:text-sm leading-relaxed mb-6 font-sans">
               {project.desc}
             </p>
           </div>
@@ -493,7 +487,7 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-zinc-900 border border-white/5 hover:bg-zinc-800 hover:border-white/15 text-zinc-300 hover:text-white text-[11px] font-bold transition-all duration-300 cursor-none flex-grow justify-center"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-secondary border border-border hover:bg-secondary/80 text-secondary-foreground text-[11px] font-bold transition-all duration-300 cursor-none flex-grow justify-center"
               >
                 <Github size={12} />
                 GitHub
@@ -502,7 +496,7 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white text-black hover:bg-zinc-200 text-[11px] font-bold transition-all duration-300 cursor-none shadow-md flex-grow justify-center"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-foreground text-background hover:bg-foreground/90 text-[11px] font-bold transition-all duration-300 cursor-none shadow-md flex-grow justify-center"
               >
                 <ExternalLink size={12} />
                 Live
@@ -562,7 +556,7 @@ const ProjectsSection = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="relative border-b border-white/5 bg-black py-20 overflow-hidden"
+      className="relative border-b border-border bg-background py-20 overflow-hidden"
     >
       {/* Background Animated Gradient Blobs */}
       <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-emerald-500/5 filter blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: "8s" }} />
@@ -589,7 +583,7 @@ const ProjectsSection = () => {
                 Featured Works
               </div>
 
-              <h2 className="font-display text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold uppercase tracking-tighter text-white leading-none">
+              <h2 className="font-display text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold uppercase tracking-tighter text-foreground leading-none">
                 Real World
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-500 font-extrabold">
@@ -597,7 +591,7 @@ const ProjectsSection = () => {
                 </span>
               </h2>
 
-              <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-sm">
+              <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
                 A selection of modular, production-ready applications engineered with React,
                 Django, PostgreSQL, React Native, and high-performance UI toolkits.
               </p>
@@ -608,21 +602,21 @@ const ProjectsSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="grid grid-cols-2 gap-4 border-t border-white/5 pt-6 max-w-sm"
+              className="grid grid-cols-2 gap-4 border-t border-border pt-6 max-w-sm"
             >
               <div className="space-y-1">
-                <div className="text-2xl font-bold text-white font-display flex items-center gap-1.5">
+                <div className="text-2xl font-bold text-foreground font-display flex items-center gap-1.5">
                   <Layers size={18} className="text-emerald-500" />
                   04+
                 </div>
-                <div className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500 font-sans">Full Builds</div>
+                <div className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground font-sans">Full Builds</div>
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-bold text-white font-display flex items-center gap-1.5">
+                <div className="text-2xl font-bold text-foreground font-display flex items-center gap-1.5">
                   <Cpu size={18} className="text-blue-500" />
                   10+
                 </div>
-                <div className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500 font-sans">Tech Integrations</div>
+                <div className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground font-sans">Tech Integrations</div>
               </div>
             </motion.div>
           </div>

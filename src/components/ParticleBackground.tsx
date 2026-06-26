@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 interface Particle {
   x: number;
@@ -15,8 +16,10 @@ interface Particle {
 const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
+  const { theme } = useTheme();
 
   useEffect(() => {
+    const isDark = theme !== "light";
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -60,9 +63,10 @@ const ParticleBackground = () => {
       const h = window.innerHeight;
 
       for (let i = 0; i < particleCount; i++) {
-        // 80% white particles, 20% primary green particles
+        // 80% white/black particles, 20% primary green particles
         const isGreen = Math.random() < 0.2;
-        const color = isGreen ? "16, 185, 129" : "255, 255, 255"; // RGB values
+        const defaultColor = isDark ? "255, 255, 255" : "0, 0, 0";
+        const color = isGreen ? "16, 185, 129" : defaultColor; // RGB values
         
         particles.push({
           x: Math.random() * w,
@@ -100,7 +104,7 @@ const ParticleBackground = () => {
 
           if (dist < 90) {
             const lineOpacity = (1 - dist / 90) * 0.04;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${lineOpacity})`;
+            ctx.strokeStyle = isDark ? `rgba(255, 255, 255, ${lineOpacity})` : `rgba(0, 0, 0, ${lineOpacity * 1.5})`;
             ctx.lineWidth = 0.4;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
@@ -172,13 +176,13 @@ const ParticleBackground = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ mixBlendMode: "screen", opacity: 0.8 }}
+      style={{ mixBlendMode: theme === "dark" ? "screen" : "multiply", opacity: theme === "dark" ? 0.8 : 0.45 }}
     />
   );
 };

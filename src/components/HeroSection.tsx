@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from "framer-motion";
 import { ArrowDown, Send, Download } from "lucide-react";
+import { useTheme } from "next-themes";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -699,6 +700,7 @@ const HeroStarStreaks = ({ progress }: { progress: number }) => {
 };
 
 const HeroSection = () => {
+  const { theme } = useTheme();
   const [roleIndex, setRoleIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -727,7 +729,7 @@ const HeroSection = () => {
           className={`title-char inline-block ${
             isGradient
               ? "bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent"
-              : "text-white"
+              : "text-foreground"
           }`}
         >
           {char}
@@ -866,7 +868,7 @@ const HeroSection = () => {
           <div className="block">{splitText("Products")}</div>
         </h1>
 
-        <p className="intro-desc mt-4 md:mt-8 max-w-3xl text-xs xs:text-sm md:text-lg lg:text-xl text-gray-400 leading-6 xs:leading-7 md:leading-8 opacity-0">
+        <p className="intro-desc mt-4 md:mt-8 max-w-3xl text-xs xs:text-sm md:text-lg lg:text-xl text-muted-foreground leading-6 xs:leading-7 md:leading-8 opacity-0">
           Passionate about creating scalable web applications, cross-platform
           mobile apps, and AI-driven solutions using React, Django, Node.js,
           PostgreSQL, and AWS.
@@ -875,12 +877,14 @@ const HeroSection = () => {
 
       <div className="middle-3d-model absolute inset-0 z-0 pointer-events-auto flex items-center justify-center overflow-hidden transition-opacity duration-500" style={{ opacity: modelScaleProgress > 0.01 ? 1 : 0 }}>
         <Canvas dpr={[1, 2]} camera={{ fov: 45, position: [0, 0, 15] }} className="w-full h-full">
-          <color attach="background" args={['#000000']} />
+          <color attach="background" args={[theme === 'dark' ? '#000000' : '#ffffff']} />
           <ambientLight intensity={1.5 + (modelScaleProgress * 2)} />
           <spotLight position={[10, 10, 10]} angle={0.2} penumbra={1} intensity={2 + (modelScaleProgress * 10)} color="#ffffff" />
           <spotLight position={[0, 5, 5]} angle={0.3} penumbra={0.8} intensity={modelScaleProgress * 15} color="#00f3ff" />
           <pointLight position={[-10, -10, -10]} intensity={1 + (modelScaleProgress * 3)} />
-          <Stars radius={100} depth={50} count={Math.floor(modelScaleProgress * 5000)} factor={4} saturation={0} fade speed={1} />
+          {theme === 'dark' && (
+            <Stars radius={100} depth={50} count={Math.floor(modelScaleProgress * 5000)} factor={4} saturation={0} fade speed={1} />
+          )}
           <group position={[0, isMobile ? 1.8 : 0, 0]}>
             <HeroStarStreaks progress={modelScaleProgress} />
           </group>
@@ -893,7 +897,7 @@ const HeroSection = () => {
       </div>
 
       {/* Horizontal Sliding Marquee from other project */}
-      <div className="hero-marquee absolute bottom-[185px] lg:bottom-[155px] left-0 w-full overflow-hidden bg-black/45 py-3 border-y border-white/5 pointer-events-none z-10 opacity-0">
+      <div className="hero-marquee absolute bottom-[185px] lg:bottom-[155px] left-0 w-full overflow-hidden bg-secondary/35 py-3 border-y border-border pointer-events-none z-10 opacity-0">
         <div className="hero-marquee-wrapp flex whitespace-nowrap">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="flex items-center gap-12 text-[10px] font-bold tracking-[0.25em] uppercase text-zinc-500/85 px-6">

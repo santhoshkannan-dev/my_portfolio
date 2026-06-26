@@ -146,7 +146,7 @@ const AboutSection = () => {
               </h2>
 
               <p className="text-muted-foreground text-lg leading-relaxed max-w-md font-sans font-light">
-                I'm <span className="text-white font-medium">Santhosh Kannan</span>, a passionate
+                I'm <span className="text-foreground font-semibold">Santhosh Kannan</span>, a passionate
                 Full Stack Developer currently pursuing my Master of Computer Applications.
                 I specialize in building scalable web and mobile applications using the MERN
                 stack, React Native, Django, and PostgreSQL while exploring Artificial
