@@ -191,7 +191,7 @@ const ExperienceSection = () => {
         {/* Left Column - Pinned */}
         <div
           ref={leftColRef}
-          className="md:col-span-4 p-6 lg:p-10 border-b md:border-b-0 md:border-r border-border h-fit md:h-screen flex flex-col justify-center bg-glass backdrop-blur-md relative z-10"
+          className="md:col-span-5 p-6 lg:p-8 border-b md:border-b-0 md:border-r border-border h-fit md:h-screen flex flex-col justify-center bg-glass backdrop-blur-md relative z-10"
         >
           <div ref={inViewRef}>
             <motion.div
@@ -200,7 +200,7 @@ const ExperienceSection = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <p className="text-primary font-medium tracking-widest uppercase text-xs mb-4">Portfolio</p>
-              <h2 className="font-display text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold uppercase leading-[0.9] tracking-tighter text-foreground">
+              <h2 className="font-display text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold uppercase leading-[0.9] tracking-tighter text-foreground">
                 Learning<br />
                 &<br />
                 <span className="text-primary">Achievements</span>
@@ -210,7 +210,7 @@ const ExperienceSection = () => {
         </div>
 
         {/* Right Column - Scrolling Content */}
-        <div ref={rightColRef} className="md:col-span-8 flex flex-col p-6 md:p-12 justify-center gap-16">
+        <div ref={rightColRef} className="md:col-span-7 flex flex-col p-6 md:p-12 justify-center gap-16">
           
           {/* Academic Journey (Education & Learning Journey) */}
           <div>
