@@ -1,157 +1,133 @@
-import React, { useRef, useMemo, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars, PerspectiveCamera } from "@react-three/drei";
-import * as THREE from "three";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import styles from "./Intro.module.css";
 
+interface LoadingScreenProps {
+    onFinished?: () => void;
+    onComplete?: () => void;
+}
 
-
-const StarStreaks = () => {
-    const count = 600;
-    const [lines, colors] = useMemo(() => {
-        const positions = new Float32Array(count * 6);
-        const colors = new Float32Array(count * 6);
-        const colorPalette = ["#00f3ff", "#ffffff", "#0078ff", "#a5f3fc", "#ffffff"];
-
-        for (let i = 0; i < count; i++) {
-            const radius = 3 + Math.random() * 25;
-            const angle = Math.random() * Math.PI * 2;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-            const z = Math.random() * 1000 - 500;
-            const length = 40 + Math.random() * 60;
-
-            positions[i * 6] = x;
-            positions[i * 6 + 1] = y;
-            positions[i * 6 + 2] = z;
-
-            positions[i * 6 + 3] = x;
-            positions[i * 6 + 4] = y;
-            positions[i * 6 + 5] = z + length; // Tail goes further positive (closer)
-
-            const color = new THREE.Color(colorPalette[Math.floor(Math.random() * colorPalette.length)]);
-            colors[i * 6] = color.r;
-            colors[i * 6 + 1] = color.g;
-            colors[i * 6 + 2] = color.b;
-            colors[i * 6 + 3] = color.r * 0.1;
-            colors[i * 6 + 4] = color.g * 0.1;
-            colors[i * 6 + 5] = color.b * 0.1;
-        }
-        return [positions, colors];
-    }, []);
-
-    const meshRef = useRef<THREE.LineSegments>(null);
-
-    useFrame((state) => {
-        if (!meshRef.current) return;
-
-        const elapsed = state.clock.elapsedTime;
-        // Reversed Surge: moving away from camera (negative Z)
-        let speed = -0.6;
-        if (elapsed > 4.5) {
-            const t = Math.min((elapsed - 4.5) / 3, 1);
-            speed = THREE.MathUtils.lerp(-0.6, -50, t * t);
-        }
-
-        // Final surge boost at 97% completion (7.275s)
-        if (elapsed > 7.275) {
-            speed *= 1.5;
-        }
-
-        const pos = meshRef.current.geometry.attributes.position.array as Float32Array;
-
-        for (let i = 0; i < count; i++) {
-            pos[i * 6 + 2] += speed;
-            pos[i * 6 + 5] += speed;
-
-            // Loop back from infinity
-            if (pos[i * 6 + 2] < -1000) {
-                pos[i * 6 + 2] = 200;
-                pos[i * 6 + 5] = 260;
-            }
-        }
-        meshRef.current.geometry.attributes.position.needsUpdate = true;
-    });
-
-    return (
-        <lineSegments ref={meshRef}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    count={lines.length / 3}
-                    array={lines}
-                    itemSize={3}
-                />
-                <bufferAttribute
-                    attach="attributes-color"
-                    count={colors.length / 3}
-                    array={colors}
-                    itemSize={3}
-                />
-            </bufferGeometry>
-            <lineBasicMaterial vertexColors transparent opacity={0.4} blending={THREE.AdditiveBlending} />
-        </lineSegments>
-    );
-};
-
-const LoadingScreen = ({ onFinished }: { onFinished: () => void }) => {
-    const [loadingText, setLoadingText] = useState("Initializing Santhosh's Workspace...");
+const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete }) => {
+    const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        const timers = [
-            setTimeout(() => setLoadingText("Synchronizing Neural Core..."), 2000),
-            setTimeout(() => setLoadingText("Loading Full-Stack Modules..."), 4000),
-            setTimeout(() => setLoadingText("Finalizing Portfolio..."), 6000),
-            setTimeout(() => onFinished(), 7500)
-        ];
-
-        return () => timers.forEach(t => clearTimeout(t));
-    }, [onFinished]);
+        // Total intro duration: 3.3 seconds (User requested longer duration for name completion)
+        const timer = setTimeout(() => {
+            setIsVisible(false);
+            if (onComplete) onComplete();
+            if (onFinished) onFinished();
+        }, 3300);
+        return () => clearTimeout(timer);
+    }, [onComplete, onFinished]);
 
     return (
-        <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, filter: "blur(20px)" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center overflow-hidden"
-        >
-            <div className="absolute inset-0 z-0">
-                <Canvas>
-                    <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={75} />
-                    <color attach="background" args={["#000"]} />
-                    <ambientLight intensity={0.5} />
-                    <StarStreaks />
-                    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-                </Canvas>
-            </div>
-
-            <div className="relative z-10 text-center">
+        <AnimatePresence>
+            {isVisible && (
                 <motion.div
-                    key={loadingText}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="mb-8"
+                    className={styles.intro}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
                 >
-                    <h2 className="text-white font-display text-xs tracking-[0.4em] uppercase opacity-50 mb-2">
-                        System Online
-                    </h2>
-                    <p className="text-primary font-display text-xl font-bold tracking-widest uppercase">
-                        {loadingText}
-                    </p>
-                </motion.div>
-
-                {/* Simplified Loading Bar */}
-                <div className="w-64 h-[2px] bg-white/10 relative overflow-hidden mx-auto">
+                    {/* Lightning Flash - Accelerated */}
                     <motion.div
-                        className="absolute inset-0 bg-primary"
-                        initial={{ left: "-100%" }}
-                        animate={{ left: "0%" }}
-                        transition={{ duration: 7.5, ease: "easeIn" }}
+                        className={styles.lightning}
+                        initial={{ opacity: 0 }}
+                        animate={{
+                            opacity: [0, 0.6, 0, 0.3, 0, 0.1, 0]
+                        }}
+                        transition={{
+                            delay: 1.0,
+                            duration: 0.5,
+                            times: [0, 0.1, 0.2, 0.4, 0.5, 0.7, 1],
+                            ease: "easeOut"
+                        }}
                     />
-                </div>
-            </div>
-        </motion.div>
+
+                    {/* Cyan Edge Glow */}
+                    <motion.div
+                        className={styles.edgeGlow}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.8 }}
+                    />
+
+                    {/* Vertical Grid Lines */}
+                    <div className={styles.gridLines}>
+                        {[...Array(15)].map((_, i) => (
+                            <motion.span
+                                key={i}
+                                className={styles.line}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.05 + i * 0.01, duration: 0.4 }}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Name - Staggered Letter Animation (No Blur for Speed) */}
+                    <motion.h1
+                        className={styles.name}
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: {
+                                    staggerChildren: 0.04,
+                                    delayChildren: 0.1
+                                }
+                            }
+                        }}
+                    >
+                        {Array.from("SANTHOSH KANNAN").map((char, index) => (
+                            <motion.span
+                                key={index}
+                                variants={{
+                                    hidden: {
+                                        opacity: 0,
+                                        y: 20,
+                                        scale: 1.2
+                                    },
+                                    visible: {
+                                        opacity: 1,
+                                        y: 0,
+                                        scale: 1
+                                    }
+                                }}
+                                className={styles.gradientChar}
+                                style={{
+                                    display: 'inline-block',
+                                    whiteSpace: 'pre',
+                                }}
+                            >
+                                {char}
+                            </motion.span>
+                        ))}
+                    </motion.h1>
+
+                    {/* Role - Fade in after name settles */}
+                    <motion.p
+                        className={styles.role}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.3, duration: 0.6 }}
+                    >
+                        BUILDING RELIABLE APPLICATIONS — CODING SOLUTIONS: LOGICAL, EFFICIENT, SCALABLE.
+                        <br />
+                        Cloud / NOC Engineer – MONITORING INFRASTRUCTURE: VIGILANT, OPTIMIZED, ALWAYS-ON.
+                    </motion.p>
+
+                    {/* Pulsing Dot */}
+                    <motion.div
+                        className={styles.dot}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.0, duration: 0.4, type: 'spring' }}
+                    />
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
 

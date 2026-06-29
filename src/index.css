@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Croissant+One&family=Michroma&display=swap');
 
+@font-face {
+  font-family: 'Ace of Swords';
+  src: url('/fonts/ace_of_swords/aceofswords.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ace of Swords';
+  src: url('/fonts/ace_of_swords/aceofswordsital.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'A Grazing Mace';
+  src: url('/fonts/AGrazingMace.otf') format('opentype'),
+    url('/fonts/A Grazing Mace.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -124,8 +149,10 @@
   h3,
   h4,
   h5,
-  h6 {
-    font-family: 'Michroma', sans-serif;
+  h6,
+  .font-display,
+  .font-heading {
+    font-family: 'Ace of Swords', 'A Grazing Mace', 'Michroma', sans-serif !important;
   }
 }
 

@@ -19,7 +19,8 @@ export default {
       },
       fontFamily: {
         sans: ["Michroma", "sans-serif"],
-        display: ["Michroma", "sans-serif"],
+        display: ["'Ace of Swords'", "'A Grazing Mace'", "Michroma", "sans-serif"],
+        heading: ["'Ace of Swords'", "'A Grazing Mace'", "Michroma", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
