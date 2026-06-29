@@ -1,6 +1,6 @@
-# Parth Tyagi — Portfolio
+# SANTHOSH KANNAN — Portfolio
 
-Welcome to the personal portfolio of **Parth Tyagi** — UI/UX Designer, AI Explorer, and Tech Innovator.
+Welcome to the personal portfolio of **SANTHOSH KANNAN** — Aspiring Software Developer,Cloud Engineer, AI Explorer, and Tech Innovator.
 
 This repository contains the source code for my interactive, 3D-enhanced portfolio website.
 
