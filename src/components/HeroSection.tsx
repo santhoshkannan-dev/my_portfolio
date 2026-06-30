@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Center, Sparkles, PresentationControls, Stars, Html } from "@react-three/drei";
 import * as THREE from "three";
+import { createTimeline, Timeline, stagger, set } from "animejs";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -378,14 +379,24 @@ const FloatingTechBadge = ({ data }: { data: typeof techOrbitData[0] }) => {
   useFrame((state) => {
     if (!ref.current) return;
     const time = state.clock.elapsedTime * data.speed;
+    const t = time + data.phase;
 
-    // Smooth orbit paths
-    ref.current.position.x = Math.sin(time + data.phase) * data.radius;
-    ref.current.position.z = Math.cos(time + data.phase) * data.radius;
-    ref.current.position.y = Math.sin(state.clock.elapsedTime * 1.5 + data.phase) * 0.15 + data.yOffset;
+    // Elegant figure-8 (Lemniscate of Bernoulli) orbit path
+    const scaleFactor = 1.4 / (3 - Math.cos(2 * t));
+    ref.current.position.x = scaleFactor * Math.cos(t) * data.radius;
+    ref.current.position.z = scaleFactor * Math.sin(2 * t) * (data.radius * 0.75);
+    
+    // Wave-like vertical oscillation (graceful hover)
+    ref.current.position.y = data.yOffset + Math.sin(state.clock.elapsedTime * 1.5 + data.phase) * 0.35;
 
-    // Face the viewer
-    ref.current.rotation.y = state.clock.elapsedTime * 0.2 + data.phase;
+    // Gentle premium floating wobble (micro-rotations) to feel alive
+    const wobbleX = Math.sin(state.clock.elapsedTime * 2 + data.phase) * 0.08;
+    const wobbleY = Math.cos(state.clock.elapsedTime * 1.8 + data.phase) * 0.08;
+
+    // Look at camera but allow a subtle organic float/drift
+    ref.current.lookAt(state.camera.position);
+    ref.current.rotation.x += wobbleX;
+    ref.current.rotation.y += wobbleY;
   });
 
   return (
@@ -708,6 +719,7 @@ const HeroSection = () => {
   const textRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
+  const animeTimelineRef = useRef<Timeline | null>(null);
   const [isModelFixed, setIsModelFixed] = useState(false);
   const [modelScaleProgress, setModelScaleProgress] = useState(0);
   const [activeView, setActiveView] = useState<'front' | 'back' | 'left' | 'right' | 'top'>('front');
@@ -731,6 +743,7 @@ const HeroSection = () => {
               ? "bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent"
               : "text-foreground"
           }`}
+          style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
         >
           {char}
         </span>
@@ -746,25 +759,98 @@ const HeroSection = () => {
     top: [Math.PI / 2, 0, 0],
   };
 
+  useEffect(() => {
+    if (introRef.current) {
+      introRef.current.style.opacity = "1";
+    }
+
+    // Set initial states using anime.js to prevent animation jump
+    set(".intro-badge", { opacity: 0, scale: 0.6, letterSpacing: "0.1em" });
+    set(".title-char", { 
+      opacity: 0, 
+      translateY: 100, 
+      rotateX: -75, 
+      translateZ: -150, 
+      scale: 0.3 
+    });
+    set(".intro-desc", { opacity: 0, translateY: 30 });
+    set(".hero-line", { scaleX: 0 });
+    set(".hero-tag", { opacity: 0, translateX: -30 });
+    set(".hero-role", { opacity: 0, translateY: 20 });
+    set(".hero-marquee", { opacity: 0, translateY: 20 });
+    if (buttonsRef.current) {
+      set(buttonsRef.current, { opacity: 0, translateY: 20 });
+    }
+
+    const timeline = createTimeline({
+      autoplay: true,
+    });
+
+    animeTimelineRef.current = timeline;
+
+    timeline
+      .add(".intro-badge", {
+        opacity: [0, 1],
+        scale: [0.6, 1],
+        letterSpacing: ["0.1em", "0.35em"],
+        duration: 900,
+        easing: "easeOutExpo",
+      })
+      .add(".title-char", {
+        opacity: [0, 1],
+        translateY: [100, 0],
+        rotateX: [-75, 0],
+        translateZ: [-150, 0],
+        scale: [0.3, 1],
+        duration: 1300,
+        delay: stagger(15),
+        easing: "easeOutElastic(1, 0.75)",
+      }, "-=700")
+      .add(".intro-desc", {
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 1000,
+        easing: "easeOutExpo",
+      }, "-=900")
+      .add(".hero-line", {
+        scaleX: [0, 1],
+        duration: 1000,
+        easing: "easeOutExpo",
+      }, "-=900")
+      .add(".hero-tag", {
+        opacity: [0, 1],
+        translateX: [-30, 0],
+        duration: 800,
+        easing: "easeOutExpo",
+      }, "-=900")
+      .add(".hero-role", {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 800,
+        easing: "easeOutExpo",
+      }, "-=900")
+      .add(".hero-marquee", {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 800,
+        easing: "easeOutExpo",
+      }, "-=900");
+
+    if (buttonsRef.current) {
+      timeline.add(buttonsRef.current, {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 800,
+        easing: "easeOutExpo",
+      }, "-=900");
+    }
+
+    return () => {
+      timeline.pause();
+    };
+  }, []);
+
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-
-    // Sequence 1: Intro Text Entrance with Split Character stagger
-    tl.set(introRef.current, { opacity: 1 })
-      .fromTo(".intro-badge", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" })
-      .fromTo(".title-char",
-        { opacity: 0, y: 60, scale: 0.8 },
-        { opacity: 1, y: 0, scale: 1, stagger: 0.015, duration: 1.0, ease: "back.out(1.5)" },
-        "-=0.4"
-      )
-      .fromTo(".intro-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
-      // Sequence 2: Reveal rest of Hero UI
-      .fromTo(".hero-line", { scaleX: 0 }, { scaleX: 1, duration: 1.5, transformOrigin: "left center" }, "-=0.5")
-      .fromTo(".hero-tag", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.8 }, "-=1.0")
-      .fromTo(".hero-role", { opacity: 0 }, { opacity: 1, duration: 1 }, "-=0.8")
-      .fromTo(".hero-marquee", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-      .fromTo(buttonsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.6");
-
     // Marquee scroll translation
     gsap.to(".hero-marquee-wrapp", {
       xPercent: -30,
@@ -801,7 +887,9 @@ const HeroSection = () => {
             if (introRef.current) {
               if (progress > 0) {
                 // If the user scrolls while entrance is playing, snap to end of entrance
-                if (tl.isActive()) tl.progress(1);
+                if (animeTimelineRef.current) {
+                  animeTimelineRef.current.seek(animeTimelineRef.current.duration);
+                }
 
                 // Scrub the text away over the first 15% of scroll
                 const introScroll = gsap.utils.clamp(0, 1, progress / 0.15);
@@ -811,7 +899,7 @@ const HeroSection = () => {
                   scale: 1 + introScroll * 0.2, // Expand slightly
                   filter: `blur(${introScroll * 15}px)`
                 });
-              } else if (progress === 0 && !tl.isActive()) {
+              } else if (progress === 0) {
                 // Reset to fully visible when scrolled all the way back up
                 gsap.set(introRef.current, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" });
               }
@@ -821,6 +909,7 @@ const HeroSection = () => {
       });
     }
   }, { scope: sectionRef });
+
 
   useEffect(() => {
     if (isModelFixed) {
@@ -861,7 +950,7 @@ const HeroSection = () => {
 
         <h1
           className="max-w-6xl text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight"
-          style={{ fontFamily: "'Rubik Mono One'" }}
+          style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
         >
           <div className="block">{splitText("Building")}</div>
           <div className="block my-1 sm:my-2">{splitText("Scalable Digital", true)}</div>
