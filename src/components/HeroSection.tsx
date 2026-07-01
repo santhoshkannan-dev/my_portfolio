@@ -509,7 +509,7 @@ const HeroSection = () => {
       {/* Main Intro Text Overlay */}
       <div
         ref={introRef}
-        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-16 xs:pt-20 md:pt-0 px-6 text-center opacity-0"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-16 xs:pt-20 md:pt-0 px-6 text-center opacity-0 pointer-events-none"
       >
         <span className="intro-badge mb-2 md:mb-4 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
           Software Developer • MCA Student
@@ -533,12 +533,12 @@ const HeroSection = () => {
 
       {/* Premium Multi-row Logo Loop Tag Wall */}
       <div 
-        className="absolute inset-x-0 top-[28%] md:top-[38%] z-0 flex flex-col justify-center gap-6 overflow-hidden pointer-events-auto select-none py-8"
+        className="absolute inset-0 z-0 flex flex-col justify-center gap-6 overflow-hidden pointer-events-auto select-none py-8"
         style={{
-          opacity: Math.max(0, 1 - modelScaleProgress * 1.5), // Fades out completely in first 66% of scroll
-          transform: `scale(${1 - modelScaleProgress * 0.15}) translateY(${-modelScaleProgress * 60}px)`,
-          filter: `blur(${modelScaleProgress * 8}px)`,
-          transition: "opacity 0.2s ease-out, transform 0.2s ease-out, filter 0.2s ease-out"
+          opacity: modelScaleProgress, // Fades in as user scrolls down
+          transform: `scale(${0.85 + modelScaleProgress * 0.15}) translateY(${(1 - modelScaleProgress) * 40}px)`,
+          filter: `blur(${(1 - modelScaleProgress) * 8}px)`,
+          transition: "opacity 0.15s ease-out, transform 0.15s ease-out, filter 0.15s ease-out"
         }}
       >
         <LogoLoop
