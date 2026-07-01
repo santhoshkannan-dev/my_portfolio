@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ScrollGif from "./components/ScrollGif";
+import TargetCursor from "./components/TargetCursor";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,12 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <TooltipProvider>
+        <TargetCursor
+          targetSelector="a, button, [role='button'], .cursor-target"
+          spinDuration={2.5}
+          hideDefaultCursor={true}
+          parallaxOn={true}
+        />
         <ScrollGif />
         <Toaster />
         <Sonner />
