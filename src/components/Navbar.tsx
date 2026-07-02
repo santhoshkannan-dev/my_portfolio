@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Send, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import GooeyNav from "./GooeyNav";
 
 const links = ["About", "Skills", "Projects", "Journey", "Contact"];
 
@@ -61,6 +62,16 @@ const Navbar = () => {
     setMobileOpen(false);
   };
 
+  const gooeyItems = useMemo(() => links.map(l => ({
+    label: l,
+    href: `#${l.toLowerCase()}`
+  })), []);
+
+  const activeIndex = useMemo(() => {
+    const idx = links.findIndex(l => l.toLowerCase() === activeSection);
+    return idx === -1 ? 0 : idx;
+  }, [activeSection]);
+
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
@@ -113,28 +124,18 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Desktop Links (Floating Pill Layout) */}
-        <div className="hidden md:flex items-center gap-1 bg-secondary/20 border border-border/20 rounded-full p-1 backdrop-blur-md">
-          {links.map((l) => {
-            const isActive = activeSection === l.toLowerCase();
-            return (
-              <button
-                key={l}
-                onClick={() => scrollTo(l)}
-                className={`relative px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full transition-colors duration-300 ${isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-                  }`}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="activeNavTab"
-                    className="absolute inset-0 bg-primary rounded-full -z-10 shadow-[0_0_15px_hsl(var(--primary)/0.3)]"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-                {l}
-              </button>
-            );
-          })}
+        {/* Desktop Links (Gooey Nav Layout) */}
+        <div className="hidden md:block">
+          <GooeyNav
+            items={gooeyItems}
+            activeIndex={activeIndex}
+            onItemClick={(item) => scrollTo(item.label)}
+            particleCount={15}
+            particleDistances={[90, 10]}
+            particleR={100}
+            animationTime={600}
+            timeVariance={300}
+          />
         </div>
 
         <div className="flex items-center gap-2 pointer-events-auto">
