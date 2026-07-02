@@ -178,7 +178,10 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
       const isStillOverTarget =
         elementUnderMouse &&
-        (elementUnderMouse === activeTarget || elementUnderMouse.closest(targetSelector) === activeTarget);
+        (elementUnderMouse === activeTarget || 
+         (elementUnderMouse.nodeType === 1 && 
+          typeof elementUnderMouse.closest === 'function' && 
+          elementUnderMouse.closest(targetSelector) === activeTarget));
       if (!isStillOverTarget) {
         if (currentLeaveHandler) {
           currentLeaveHandler();
@@ -207,7 +210,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       const allTargets: HTMLElement[] = [];
       let current: HTMLElement | null = directTarget;
       while (current && current !== document.body) {
-        if (current.matches(targetSelector)) {
+        if (current && current.nodeType === 1 && typeof current.matches === 'function' && current.matches(targetSelector)) {
           allTargets.push(current);
         }
         current = current.parentElement;

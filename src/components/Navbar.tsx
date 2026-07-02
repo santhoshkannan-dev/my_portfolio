@@ -62,7 +62,13 @@ const Navbar = () => {
     const element = document.getElementById(id.toLowerCase());
     console.log("Found element to scroll to:", element);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if ((window as any).lenis) {
+        console.log("Scrolling using Lenis scroller to:", element);
+        (window as any).lenis.scrollTo(element, { duration: 1.2 });
+      } else {
+        console.log("Scrolling using native scrollIntoView to:", element);
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     } else {
       console.warn("Could not find element with ID:", id.toLowerCase());
     }
