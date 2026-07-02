@@ -58,7 +58,14 @@ const Navbar = () => {
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    console.log("scrollTo called with ID:", id);
+    const element = document.getElementById(id.toLowerCase());
+    console.log("Found element to scroll to:", element);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.warn("Could not find element with ID:", id.toLowerCase());
+    }
     setMobileOpen(false);
   };
 

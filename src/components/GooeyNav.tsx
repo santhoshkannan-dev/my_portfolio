@@ -121,8 +121,14 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, index: number) => {
     e.preventDefault();
+    console.log("GooeyNav handleClick called. Index:", index, "Item:", items[index]);
     if (onItemClick) {
-      onItemClick(items[index], index, e);
+      try {
+        console.log("Invoking onItemClick callback with:", items[index]);
+        onItemClick(items[index], index, e);
+      } catch (err) {
+        console.error("Error in onItemClick:", err);
+      }
     }
 
     if (propActiveIndex === undefined) {
