@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Intro.module.css";
+import Lightning from "./Lightning";
 
 interface LoadingScreenProps {
     onFinished?: () => void;
@@ -28,6 +29,16 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
                 >
+                    {/* Lightning WebGL Background */}
+                    <div className={styles.lightningBg}>
+                        <Lightning
+                            hue={150}
+                            xOffset={0}
+                            speed={1.0}
+                            intensity={1.0}
+                            size={0.6}
+                        />
+                    </div>
                     {/* Lightning Flash - Accelerated */}
                     <motion.div
                         className={styles.lightning}

@@ -262,3 +262,12 @@
         bottom: 25%;
     }
 }
+
+.lightningBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
