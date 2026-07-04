@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Intro.module.css";
-import Lightning from "./Lightning";
+import LightRays from "./LightRays";
 
 interface LoadingScreenProps {
     onFinished?: () => void;
@@ -29,16 +29,6 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
                 >
-                    {/* Lightning WebGL Background */}
-                    <div className={styles.lightningBg}>
-                        <Lightning
-                            hue={150}
-                            xOffset={0}
-                            speed={1.0}
-                            intensity={1.0}
-                            size={0.6}
-                        />
-                    </div>
                     {/* Lightning Flash - Accelerated */}
                     <motion.div
                         className={styles.lightning}
@@ -61,6 +51,22 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
                     />
+
+                    {/* Light Rays Background */}
+                    <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+                        <LightRays
+                            raysOrigin="top-center"
+                            raysColor="#00ff88"
+                            raysSpeed={1.0}
+                            lightSpread={0.7}
+                            rayLength={1.5}
+                            followMouse={true}
+                            mouseInfluence={0.1}
+                            noiseAmount={0.05}
+                            distortion={0.05}
+                            className="!z-0"
+                        />
+                    </div>
 
                     {/* Vertical Grid Lines */}
                     <div className={styles.gridLines}>
