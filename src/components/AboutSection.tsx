@@ -55,7 +55,7 @@ const timeline = [
   {
     year: "2024",
     title: "Diploma in Finance & Accounting",
-    desc: "Completed a professional Diploma in Finance & Accounting, specializing in Student Accounts at Axionz, Kochi.",
+    desc: "Completed a professional Diploma in Finance & Accounting, specializing in Finance & Accounting at Axionz, Kochi.",
   },
   {
     year: "2025",
@@ -63,7 +63,7 @@ const timeline = [
     desc: "Started MCA while expanding expertise in cloud computing, machine learning, Linux administration, and scalable application development.",
   },
   {
-    year: "Present",
+    year: "Present Developing",
     title: "MERN & AI Developer",
     desc: "Focused on building modern web experiences, AI-powered applications, cross-platform mobile apps, and continuously improving problem-solving skills.",
   },
