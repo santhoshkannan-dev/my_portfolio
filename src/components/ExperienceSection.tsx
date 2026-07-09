@@ -56,7 +56,7 @@ const timeline = [
     year: "2024",
     title: "Diploma in Finance & Accounting",
     subtitle: "Axionz, Kochi",
-    details: ["Specialized in Student Accounts"]
+    details: ["Specialized in Finance & Accounts"]
   },
   {
     year: "2025",
@@ -85,7 +85,7 @@ const TimelineItem = ({ item, idx }: { item: typeof timeline[number]; idx: numbe
     <div ref={elementRef} className="relative">
       {/* Timeline dot */}
       <div className="absolute -left-[33px] md:-left-[49px] top-1.5 w-4 h-4 rounded-full bg-primary border-4 border-background animate-pulse shadow-[0_0_10px_hsl(var(--primary))]" />
-      
+
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -98,7 +98,7 @@ const TimelineItem = ({ item, idx }: { item: typeof timeline[number]; idx: numbe
           </span>
           <h4 className="font-display font-semibold text-lg text-foreground">{item.title}</h4>
         </div>
-        
+
         {item.subtitle && (
           <p className="text-sm text-muted-foreground mb-2 font-medium">{item.subtitle}</p>
         )}
@@ -233,13 +233,13 @@ const ExperienceSection = () => {
 
         {/* Right Column - Scrolling Content */}
         <div ref={rightColRef} className="md:col-span-7 flex flex-col p-6 md:p-12 justify-center gap-16">
-          
+
           {/* Academic Journey (Education & Learning Journey) */}
           <div>
             <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
               <GraduationCap size={16} /> Education & Learning Journey
             </h3>
-            
+
             <div className="relative space-y-8">
               {/* MCA Card */}
               <motion.div
@@ -308,7 +308,7 @@ const ExperienceSection = () => {
             <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
               <BookOpen size={16} /> Education Timeline
             </h3>
-            
+
             <div className="relative border-l border-border pl-6 md:pl-10 ml-4 md:ml-6 space-y-12">
               {timeline.map((item, idx) => (
                 <TimelineItem key={idx} item={item} idx={idx} />
@@ -321,7 +321,7 @@ const ExperienceSection = () => {
             <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
               <Trophy size={16} /> Achievements & Milestones
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {achievements.map((item, i) => (
                 <AchievementCard key={item.title} item={item} i={i} />
@@ -334,7 +334,7 @@ const ExperienceSection = () => {
             <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
               <CheckCircle2 size={16} className="text-primary" /> Certifications
             </h3>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {certifications.map((cert, index) => (
                 <CertificationCard key={index} cert={cert} index={index} />
@@ -353,7 +353,7 @@ const ExperienceSection = () => {
             <div className="absolute right-6 bottom-6 text-primary/5 group-hover:text-primary/10 transition-colors duration-500">
               <Quote size={120} style={{ transform: "rotate(180deg)" }} />
             </div>
-            
+
             <div className="relative z-10 flex flex-col items-center text-center gap-6">
               <Quote size={32} className="text-primary" />
               <p className="text-xl md:text-2xl font-display font-medium text-foreground max-w-2xl leading-relaxed italic">
