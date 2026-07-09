@@ -53,6 +53,12 @@ const timeline = [
     details: null
   },
   {
+    year: "2024",
+    title: "Diploma in Finance & Accounting",
+    subtitle: "Axionz, Kochi",
+    details: ["Specialized in Student Accounts"]
+  },
+  {
     year: "2025",
     title: "Started MCA",
     subtitle: "Marian College Kuttikkanam Autonomous",
