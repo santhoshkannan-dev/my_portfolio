@@ -22,11 +22,11 @@ const ProfileImage = memo(() => (
       <div className="relative z-10">
         <div className="w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden shadow-[0_0_40px_rgba(120,119,198,0.3)] transform transition-all duration-700 group-hover:scale-105 bg-zinc-950 border border-white/10">
           <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105 pointer-events-none" />
-          
+
           {/* Optimized overlay effects - disabled on mobile */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block pointer-events-none" />
-          
+
           <img
             src="/kannan.png"
             alt="Santhosh Kannan"
@@ -54,8 +54,8 @@ const timeline = [
   },
   {
     year: "2024",
-    title: "Full Stack Developer",
-    desc: "Built multiple full-stack web and mobile applications using React, Django, PostgreSQL, React Native, and REST APIs.",
+    title: "Diploma in Finance & Accounting",
+    desc: "Completed a professional Diploma in Finance & Accounting, specializing in Student Accounts at Axionz, Kochi.",
   },
   {
     year: "2025",
