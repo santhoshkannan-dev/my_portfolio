@@ -282,7 +282,7 @@ const ContactSection = () => {
         >
           {[
             { icon: Github, href: "https://github.com/santhoshkannan007", label: "GitHub" },
-            { icon: Linkedin, href: "https://www.linkedin.com/in/santhosh-kannan-a59363355/", label: "LinkedIn" },
+            { icon: Linkedin, href: "https://www.linkedin.com/in/santhosh-kannan-r/", label: "LinkedIn" },
             { icon: Mail, href: "mailto:santhoshkannan.dev@gmail.com", label: "Email" },
           ].map((social, i) => (
             <motion.a
