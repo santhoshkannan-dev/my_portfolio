@@ -281,7 +281,7 @@ const ContactSection = () => {
           className="flex justify-center gap-6 mt-10"
         >
           {[
-            { icon: Github, href: "https://github.com/santhoshkannan007", label: "GitHub" },
+            { icon: Github, href: "https://github.com/santhoshkannan-dev", label: "GitHub" },
             { icon: Linkedin, href: "https://www.linkedin.com/in/santhosh-kannan-r/", label: "LinkedIn" },
             { icon: Mail, href: "mailto:santhoshkannan.dev@gmail.com", label: "Email" },
           ].map((social, i) => (
