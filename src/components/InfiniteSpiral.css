@@ -28,13 +28,11 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--infinite-spiral-card-radius);
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(18, 24, 38, 0.92);
   box-shadow: 0 14px 38px rgba(0, 0, 0, 0.35);
   transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
   text-decoration: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }

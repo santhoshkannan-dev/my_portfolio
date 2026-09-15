@@ -494,8 +494,7 @@ const HeroSection = () => {
         style={{
           opacity: modelScaleProgress,
           transform: `scale(${0.85 + modelScaleProgress * 0.15}) translateY(${(1 - modelScaleProgress) * 40}px)`,
-          filter: `blur(${(1 - modelScaleProgress) * 8}px)`,
-          transition: "opacity 0.15s ease-out, transform 0.15s ease-out, filter 0.15s ease-out"
+          transition: "opacity 0.15s ease-out, transform 0.15s ease-out"
         }}
       >
         <div className="w-full h-full max-h-[600px] relative">
@@ -510,7 +509,7 @@ const HeroSection = () => {
             perspective={1000}
             cardRadius={14}
             centerScale={1.25}
-            edgeBlur={4}
+            edgeBlur={0}
             cardsPerTurn={7}
             pauseOnHover
             imageFit="contain"
