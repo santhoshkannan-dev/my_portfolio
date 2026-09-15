@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createTimeline, Timeline, stagger, set } from "animejs";
-import LogoLoop from './LogoLoop';
+import InfiniteSpiral from './InfiniteSpiral';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -263,60 +263,17 @@ const HeroSection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const logosRow1 = useMemo(() => techOrbitData.slice(0, 7).map(item => ({
-    src: item.logoUrl,
-    alt: item.name,
-    color: item.color,
-    href: "#"
-  })), []);
-
-  const logosRow2 = useMemo(() => techOrbitData.slice(7, 14).map(item => ({
-    src: item.logoUrl,
-    alt: item.name,
-    color: item.color,
-    href: "#"
-  })), []);
-
-  const logosRow3 = useMemo(() => techOrbitData.slice(14).map(item => ({
-    src: item.logoUrl,
-    alt: item.name,
-    color: item.color,
-    href: "#"
-  })), []);
-
-  const renderLogoItem = useCallback((item: any) => {
-    return (
-      <div
-        className="flex items-center gap-3 px-5 py-3.5 bg-card/60 border border-border hover:border-primary/40 rounded-xl backdrop-blur-md transition-all duration-300 shadow-sm"
-        style={{
-          boxShadow: `0 4px 30px rgba(0, 0, 0, 0.05)`,
-          '--logo-glow-color': item.color ? `${item.color}33` : 'rgba(0, 255, 128, 0.15)',
-        } as React.CSSProperties}
-        onMouseEnter={(e) => {
-          const el = e.currentTarget as HTMLElement;
-          el.style.borderColor = item.color || 'var(--primary)';
-          el.style.boxShadow = `0 0 25px ${el.style.getPropertyValue('--logo-glow-color')}`;
-          el.style.transform = 'translateY(-2px)';
-        }}
-        onMouseLeave={(e) => {
-          const el = e.currentTarget as HTMLElement;
-          el.style.borderColor = 'var(--border)';
-          el.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.05)';
-          el.style.transform = 'translateY(0)';
-        }}
-      >
-        <img
-          src={item.src}
-          alt={item.alt}
-          className="w-8 h-8 object-contain"
-          loading="lazy"
-        />
-        <span className="text-xs font-bold tracking-wider text-muted-foreground uppercase hover:text-foreground transition-colors duration-300">
-          {item.alt}
-        </span>
-      </div>
-    );
-  }, []);
+  const spiralItems = useMemo(
+    () =>
+      techOrbitData.map((item, idx) => ({
+        id: idx,
+        src: item.logoUrl,
+        alt: item.name,
+        title: item.name,
+        color: item.color,
+      })),
+    []
+  );
 
   const splitText = (text: string, isGradient: boolean = false) => {
     return text.split("").map((char, index) => {
@@ -531,52 +488,34 @@ const HeroSection = () => {
         </p>
       </div>
 
-      {/* Premium Multi-row Logo Loop Tag Wall */}
+      {/* 3D Infinite Spiral Tech Stack */}
       <div 
-        className="absolute inset-0 z-0 flex flex-col justify-center gap-6 overflow-hidden pointer-events-auto select-none py-8"
+        className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-auto select-none py-4"
         style={{
-          opacity: modelScaleProgress, // Fades in as user scrolls down
+          opacity: modelScaleProgress,
           transform: `scale(${0.85 + modelScaleProgress * 0.15}) translateY(${(1 - modelScaleProgress) * 40}px)`,
           filter: `blur(${(1 - modelScaleProgress) * 8}px)`,
           transition: "opacity 0.15s ease-out, transform 0.15s ease-out, filter 0.15s ease-out"
         }}
       >
-        <LogoLoop
-          logos={logosRow1}
-          speed={30}
-          direction="left"
-          logoHeight={56}
-          gap={32}
-          hoverSpeed={0}
-          scaleOnHover
-          fadeOut
-          fadeOutColor={theme === 'dark' ? '#000000' : '#ffffff'}
-          renderItem={renderLogoItem}
-        />
-        <LogoLoop
-          logos={logosRow2}
-          speed={35}
-          direction="right"
-          logoHeight={56}
-          gap={32}
-          hoverSpeed={0}
-          scaleOnHover
-          fadeOut
-          fadeOutColor={theme === 'dark' ? '#000000' : '#ffffff'}
-          renderItem={renderLogoItem}
-        />
-        <LogoLoop
-          logos={logosRow3}
-          speed={25}
-          direction="left"
-          logoHeight={56}
-          gap={32}
-          hoverSpeed={0}
-          scaleOnHover
-          fadeOut
-          fadeOutColor={theme === 'dark' ? '#000000' : '#ffffff'}
-          renderItem={renderLogoItem}
-        />
+        <div className="w-full h-full max-h-[600px] relative">
+          <InfiniteSpiral
+            items={spiralItems}
+            animationMode="all"
+            speed={0.55}
+            radius={isMobile ? 130 : 200}
+            cardWidth={isMobile ? 85 : 110}
+            cardHeight={isMobile ? 85 : 110}
+            verticalSpacing={isMobile ? 45 : 55}
+            perspective={1000}
+            cardRadius={14}
+            centerScale={1.25}
+            edgeBlur={4}
+            cardsPerTurn={7}
+            pauseOnHover
+            imageFit="contain"
+          />
+        </div>
       </div>
 
       <div ref={textRef} className="relative z-10 w-full max-w-[90rem] mx-auto pointer-events-none">
