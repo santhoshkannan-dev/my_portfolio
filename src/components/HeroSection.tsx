@@ -420,12 +420,11 @@ const HeroSection = () => {
                 gsap.set(introRef.current, {
                   opacity: 1 - introScroll,
                   y: -introScroll * 400, // Move upwards as it fades
-                  scale: 1 + introScroll * 0.2, // Expand slightly
-                  filter: `blur(${introScroll * 15}px)`
+                  scale: 1 + introScroll * 0.2
                 });
               } else if (progress === 0) {
                 // Reset to fully visible when scrolled all the way back up
-                gsap.set(introRef.current, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" });
+                gsap.set(introRef.current, { opacity: 1, y: 0, scale: 1 });
               }
             }
           }
@@ -500,16 +499,17 @@ const HeroSection = () => {
         <div className="w-full h-full max-h-[600px] relative">
           <InfiniteSpiral
             items={spiralItems}
-            animationMode="all"
-            speed={0.55}
-            radius={isMobile ? 130 : 200}
+            animationMode="auto"
+            speed={0.5}
+            radius={isMobile ? 140 : 210}
             cardWidth={isMobile ? 85 : 110}
             cardHeight={isMobile ? 85 : 110}
-            verticalSpacing={isMobile ? 45 : 55}
+            verticalSpacing={isMobile ? 32 : 45}
             perspective={1000}
             cardRadius={14}
             centerScale={1.25}
             edgeBlur={0}
+            edgeFade={0.08}
             cardsPerTurn={7}
             pauseOnHover
             imageFit="contain"
