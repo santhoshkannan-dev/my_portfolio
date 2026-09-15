@@ -192,6 +192,19 @@ const VLinkInventoryMockup = () => {
   );
 };
 
+const MarianExcellenceGridMockup = () => {
+  return (
+    <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-indigo-500/20 shadow-xl group/img">
+      <img
+        src="/MEG.png"
+        alt="Marian Excellence Grid"
+        className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-40 pointer-events-none" />
+    </div>
+  );
+};
+
 const ProjectMockup = ({ type }: { type: string }) => {
   switch (type) {
     case "agriculture":
@@ -204,6 +217,8 @@ const ProjectMockup = ({ type }: { type: string }) => {
       return <PortfolioMockup />;
     case "vlink-inventory":
       return <VLinkInventoryMockup />;
+    case "marian-excellence-grid":
+      return <MarianExcellenceGridMockup />;
     default:
       return null;
   }
@@ -213,6 +228,21 @@ const ProjectMockup = ({ type }: { type: string }) => {
 // 2. Project Data Definitions
 // ==========================================
 const projects = [
+  {
+    title: "Marian Excellence Grid",
+    subtitle: "Academic Evaluation Platform",
+    desc: "A role-based academic evaluation platform developed for Marian College Kuttikkanam to manage class achievements, submit evaluation records, verify activities, and recognize student excellence through a centralized digital system.",
+    tech: ["React", "Django", "PostgreSQL", "Google OAuth", "REST API"],
+    github: "https://github.com/santhoshkannan-dev/Marian-Excellence-Grid.git",
+    live: "#",
+    gradient: "from-indigo-500/20 via-blue-500/10 to-purple-500/20",
+    glowColor: "rgba(99, 102, 241, 0.15)",
+    badgeColor: "text-indigo-700 bg-indigo-50 border-indigo-200/50 dark:text-indigo-400 dark:bg-indigo-950/30 dark:border-indigo-500/20",
+    borderColor: "group-hover:border-indigo-500/30",
+    colSpan: "md:col-span-2",
+    rowSpan: "md:row-span-1",
+    mockupType: "marian-excellence-grid",
+  },
   {
     title: "NavaKrishi",
     subtitle: "AI Smart Agriculture Platform",
