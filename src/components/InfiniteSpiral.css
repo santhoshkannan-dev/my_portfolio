@@ -21,15 +21,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 12px;
+  padding: 10px;
   width: var(--infinite-spiral-card-width);
   height: var(--infinite-spiral-card-height);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: var(--infinite-spiral-card-radius);
-  background: rgba(18, 24, 38, 0.92);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.35);
+  background: rgba(18, 24, 38, 0.85);
+  box-shadow: 0 14px 38px rgba(8, 6, 18, 0.35);
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform, opacity;
@@ -38,25 +37,27 @@
 }
 
 .infinite-spiral__item:hover {
-  border-color: rgba(0, 255, 128, 0.4);
-  box-shadow: 0 0 25px rgba(0, 255, 128, 0.2);
+  border-color: rgba(0, 255, 128, 0.5);
+  box-shadow: 0 0 25px rgba(0, 255, 128, 0.25);
 }
 
 .infinite-spiral__image {
   display: block;
-  width: 65%;
-  height: 65%;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
   object-position: center;
   user-select: none;
   pointer-events: none;
 }
 
 .infinite-spiral__label {
+  margin-top: 6px;
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   text-align: center;
   white-space: nowrap;
   overflow: hidden;

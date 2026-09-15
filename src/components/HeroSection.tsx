@@ -499,17 +499,16 @@ const HeroSection = () => {
         <div className="w-full h-full max-h-[600px] relative">
           <InfiniteSpiral
             items={spiralItems}
-            animationMode="auto"
-            speed={0.5}
-            radius={isMobile ? 140 : 210}
-            cardWidth={isMobile ? 85 : 110}
-            cardHeight={isMobile ? 85 : 110}
-            verticalSpacing={isMobile ? 32 : 45}
+            animationMode="all"
+            speed={0.55}
+            radius={isMobile ? 140 : 180}
+            cardWidth={isMobile ? 85 : 100}
+            cardHeight={isMobile ? 85 : 100}
+            verticalSpacing={isMobile ? 35 : 50}
             perspective={1000}
-            cardRadius={14}
-            centerScale={1.25}
-            edgeBlur={0}
-            edgeFade={0.08}
+            cardRadius={12}
+            centerScale={1.2}
+            edgeFade={0.12}
             cardsPerTurn={7}
             pauseOnHover
             imageFit="contain"

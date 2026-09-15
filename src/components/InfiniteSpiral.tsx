@@ -46,7 +46,7 @@ const InfiniteSpiral: React.FC<InfiniteSpiralProps> = ({
   items = [],
   speed = 0.55,
   direction = 'up',
-  animationMode = 'auto',
+  animationMode = 'all',
   radius = 170,
   cardWidth = 100,
   cardHeight = 100,
@@ -57,10 +57,10 @@ const InfiniteSpiral: React.FC<InfiniteSpiralProps> = ({
   cardTilt = 0,
   cardRadius = 10,
   centerScale = 1.2,
-  edgeFade = 0.3,
+  edgeFade = 0.15,
   edgeBlur = 0,
   pauseOnHover = true,
-  imageFit = 'cover',
+  imageFit = 'contain',
   grayscale = 0,
   className = ''
 }) => {
@@ -115,11 +115,14 @@ const InfiniteSpiral: React.FC<InfiniteSpiralProps> = ({
       const scrollDelta = nextScrollY - lastScrollY;
       lastScrollY = nextScrollY;
       if (!scrollEnabled || !visibleRef.current || scrollDelta === 0) return;
-      targetProgressRef.current += clamp(
-        (scrollDelta * scrollSpeedMultiplier) / Math.max(verticalSpacing * 2, 1),
-        -1.5,
-        1.5
+      
+      // Dampened scroll progress to work seamlessly with smooth scroll libraries
+      const scrollStep = clamp(
+        (scrollDelta * scrollSpeedMultiplier) / 400,
+        -0.12,
+        0.12
       );
+      targetProgressRef.current += scrollStep;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
@@ -165,11 +168,14 @@ const InfiniteSpiral: React.FC<InfiniteSpiralProps> = ({
         const z = Math.cos(angleRadians) * responsiveRadius;
         const depthScale = clamp(perspective / Math.max(perspective - z, 1), 0.72, 1.45);
         const visualScale = scale * depthScale;
+        const depth = (z / Math.max(responsiveRadius, 1) + 1) / 2;
+        
         card.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${offset * verticalSpacing * fit}px, 0) rotateZ(${cardTilt}deg) scale(${visualScale})`;
         card.style.opacity = opacity.toFixed(3);
         if (edgeBlur > 0) {
+          const blur = edgeBlur * smoothstep(0.35, 1, edge);
           card.style.filter = blur > 0.01 ? `blur(${blur.toFixed(2)}px)` : 'none';
-        } else if (card.style.filter !== 'none') {
+        } else {
           card.style.filter = 'none';
         }
         card.style.zIndex = String(Math.round(depth * 100000) + index);
@@ -292,7 +298,7 @@ const InfiniteSpiral: React.FC<InfiniteSpiralProps> = ({
                 draggable={false}
                 style={{
                   objectFit: imageFit,
-                  filter: `grayscale(${Math.min(1, Math.max(0, grayscale))})`
+                  filter: grayscale > 0 ? `grayscale(${Math.min(1, Math.max(0, grayscale))})` : 'none'
                 }}
               />
               {(item.title || item.label) && (
