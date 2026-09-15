@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Intro.module.css";
-import LightRays from "./LightRays";
 
 import TextType from "./TextType";
 
@@ -31,21 +30,6 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
                 >
-                    {/* Lightning Flash - Accelerated */}
-                    <motion.div
-                        className={styles.lightning}
-                        initial={{ opacity: 0 }}
-                        animate={{
-                            opacity: [0, 0.6, 0, 0.3, 0, 0.1, 0]
-                        }}
-                        transition={{
-                            delay: 1.0,
-                            duration: 0.5,
-                            times: [0, 0.1, 0.2, 0.4, 0.5, 0.7, 1],
-                            ease: "easeOut"
-                        }}
-                    />
-
                     {/* Cyan Edge Glow */}
                     <motion.div
                         className={styles.edgeGlow}
@@ -53,22 +37,6 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
                     />
-
-                    {/* Light Rays Background */}
-                    <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-                        <LightRays
-                            raysOrigin="top-center"
-                            raysColor="#00ff88"
-                            raysSpeed={1.0}
-                            lightSpread={0.7}
-                            rayLength={1.5}
-                            followMouse={true}
-                            mouseInfluence={0.1}
-                            noiseAmount={0.05}
-                            distortion={0.05}
-                            className="!z-0"
-                        />
-                    </div>
 
                     {/* Vertical Grid Lines */}
                     <div className={styles.gridLines}>
