@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Intro.module.css";
 import LightRays from "./LightRays";
 
+import TextType from "./TextType";
+
 interface LoadingScreenProps {
     onFinished?: () => void;
     onComplete?: () => void;
@@ -12,12 +14,12 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        // Total intro duration: 3.3 seconds (User requested longer duration for name completion)
+        // Total intro duration: 3.5 seconds
         const timer = setTimeout(() => {
             setIsVisible(false);
             if (onComplete) onComplete();
             if (onFinished) onFinished();
-        }, 3300);
+        }, 3500);
         return () => clearTimeout(timer);
     }, [onComplete, onFinished]);
 
@@ -81,46 +83,23 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinished, onComplete })
                         ))}
                     </div>
 
-                    {/* Name - Staggered Letter Animation (No Blur for Speed) */}
+                    {/* Name - TextType Typing Animation from React Bits */}
                     <motion.h1
                         className={styles.name}
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 0 },
-                            visible: {
-                                opacity: 1,
-                                transition: {
-                                    staggerChildren: 0.04,
-                                    delayChildren: 0.1
-                                }
-                            }
-                        }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
                     >
-                        {Array.from("SANTHOSH KANNAN").map((char, index) => (
-                            <motion.span
-                                key={index}
-                                variants={{
-                                    hidden: {
-                                        opacity: 0,
-                                        y: 20,
-                                        scale: 1.2
-                                    },
-                                    visible: {
-                                        opacity: 1,
-                                        y: 0,
-                                        scale: 1
-                                    }
-                                }}
-                                className={styles.gradientChar}
-                                style={{
-                                    display: 'inline-block',
-                                    whiteSpace: 'pre',
-                                }}
-                            >
-                                {char}
-                            </motion.span>
-                        ))}
+                        <TextType
+                            text="SANTHOSH KANNAN"
+                            typingSpeed={75}
+                            initialDelay={200}
+                            showCursor={true}
+                            cursorCharacter="_"
+                            cursorClassName="text-[#00ff88]"
+                            loop={false}
+                            className={styles.gradientChar}
+                        />
                     </motion.h1>
 
                     {/* Role - Fade in after name settles */}
