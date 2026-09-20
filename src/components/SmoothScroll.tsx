@@ -25,7 +25,7 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
     } as unknown as ConstructorParameters<typeof Lenis>[0]);
 
     lenisRef.current = lenis;
-    (window as any).lenis = lenis;
+    (window as Window & { lenis?: Lenis | null }).lenis = lenis;
 
     // Sync Lenis scroll with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
@@ -38,7 +38,7 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
 
     return () => {
       lenis.destroy();
-      (window as any).lenis = null;
+      (window as Window & { lenis?: Lenis | null }).lenis = null;
       gsap.ticker.remove((time) => {
         lenis.raf(time * 1000);
       });
