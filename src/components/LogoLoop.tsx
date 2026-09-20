@@ -40,8 +40,8 @@ export interface LogoLoopProps {
 
 const useResizeObserver = (
   callback: () => void,
-  elements: React.RefObject<HTMLElement>[],
-  dependencies: any[]
+  elements: React.RefObject<HTMLElement | null>[],
+  dependencies: React.DependencyList
 ) => {
   useEffect(() => {
     if (!window.ResizeObserver) {
@@ -64,9 +64,9 @@ const useResizeObserver = (
 };
 
 const useImageLoader = (
-  seqRef: React.RefObject<HTMLElement>,
+  seqRef: React.RefObject<HTMLElement | null>,
   onLoad: () => void,
-  dependencies: any[]
+  dependencies: React.DependencyList
 ) => {
   useEffect(() => {
     const images = seqRef.current?.querySelectorAll('img') ?? [];
@@ -98,7 +98,7 @@ const useImageLoader = (
 };
 
 const useAnimationLoop = (
-  trackRef: React.RefObject<HTMLElement>,
+  trackRef: React.RefObject<HTMLElement | null>,
   targetVelocity: number,
   seqWidth: number,
   seqHeight: number,
