@@ -275,7 +275,7 @@ const InfiniteSpiral: React.FC<InfiniteSpiralProps> = ({
           return (
             <Card
               key={item.id ?? `${item.src}-${index}`}
-              ref={(node: any) => {
+              ref={(node: HTMLDivElement | HTMLAnchorElement | null) => {
                 cardRefs.current[index] = node;
               }}
               className="infinite-spiral__item"
