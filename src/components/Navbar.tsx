@@ -58,19 +58,14 @@ const Navbar = () => {
   }, []);
 
   const scrollTo = (id: string) => {
-    console.log("scrollTo called with ID:", id);
     const element = document.getElementById(id.toLowerCase());
-    console.log("Found element to scroll to:", element);
     if (element) {
-      if ((window as any).lenis) {
-        console.log("Scrolling using Lenis scroller to:", element);
-        (window as any).lenis.scrollTo(element, { duration: 1.2 });
+      const win = window as Window & { lenis?: { scrollTo: (target: HTMLElement, opts?: { duration?: number }) => void } };
+      if (win.lenis) {
+        win.lenis.scrollTo(element, { duration: 1.2 });
       } else {
-        console.log("Scrolling using native scrollIntoView to:", element);
         element.scrollIntoView({ behavior: "smooth" });
       }
-    } else {
-      console.warn("Could not find element with ID:", id.toLowerCase());
     }
     setMobileOpen(false);
   };

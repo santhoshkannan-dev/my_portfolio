@@ -45,7 +45,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   };
 
   const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-    let rotate = noise(r / 10);
+    const rotate = noise(r / 10);
     return {
       start: getXY(d[0], particleCount - i, particleCount),
       end: getXY(d[1] + noise(7), particleCount - i, particleCount),
@@ -121,13 +121,11 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, index: number) => {
     e.preventDefault();
-    console.log("GooeyNav handleClick called. Index:", index, "Item:", items[index]);
     if (onItemClick) {
       try {
-        console.log("Invoking onItemClick callback with:", items[index]);
         onItemClick(items[index], index, e);
-      } catch (err) {
-        console.error("Error in onItemClick:", err);
+      } catch {
+        // Ignore callback error
       }
     }
 
@@ -147,6 +145,13 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
       makeParticles(filterRef.current);
     }
 
+    if (navRef.current) {
+      const liElements = navRef.current.querySelectorAll('li');
+      if (liElements[index]) {
+        updateEffectPosition(liElements[index] as HTMLElement);
+      }
+    }
+
     if (textRef.current) {
       textRef.current.classList.remove('active');
       void textRef.current.offsetWidth;
@@ -159,7 +164,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
       e.preventDefault();
       const target = e.currentTarget;
       if (target) {
-        handleClick(e as any, index);
+        handleClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, index);
       }
     }
   };
