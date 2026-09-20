@@ -56,7 +56,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
   const isActiveRef = useRef<boolean>(false);
   const targetCornerPositionsRef = useRef<{ x: number; y: number }[] | null>(null);
   const tickerFnRef = useRef<(() => void) | null>(null);
-  const activeStrengthRef = useRef<{ current: number } | number>(0);
+  const activeStrengthRef = useRef<number>(0);
 
   const isMobile = useMemo(() => {
     if (typeof window === 'undefined') return false;
@@ -136,7 +136,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         return;
       }
 
-      const strength = activeStrengthRef.current.current ?? activeStrengthRef.current;
+      const strength = activeStrengthRef.current;
       if (strength === 0) return;
 
       const cursorX = gsap.getProperty(cursorRef.current, 'x') as number;
