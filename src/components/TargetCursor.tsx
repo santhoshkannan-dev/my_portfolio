@@ -56,13 +56,13 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
   const isActiveRef = useRef<boolean>(false);
   const targetCornerPositionsRef = useRef<{ x: number; y: number }[] | null>(null);
   const tickerFnRef = useRef<(() => void) | null>(null);
-  const activeStrengthRef = useRef<any>(0);
+  const activeStrengthRef = useRef<{ current: number } | number>(0);
 
   const isMobile = useMemo(() => {
     if (typeof window === 'undefined') return false;
     const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const isSmallScreen = window.innerWidth <= 768;
-    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const userAgent = navigator.userAgent || navigator.vendor || (window as Window & { opera?: string }).opera;
     const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
     const isMobileUserAgent = mobileRegex.test(userAgent.toLowerCase());
     return (hasTouchScreen && isSmallScreen) || isMobileUserAgent;
