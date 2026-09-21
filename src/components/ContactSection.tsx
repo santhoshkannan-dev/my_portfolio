@@ -18,9 +18,26 @@ const ContactSection = () => {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["50px", "-30px"]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      toast.error("Please fill in all required fields.");
+      setSending(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      toast.error("Please enter a valid email address.");
+      setSending(false);
+      return;
+    }
 
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -32,28 +49,27 @@ const ContactSection = () => {
       return;
     }
 
-    emailjs.send(
-      serviceId,
-      templateId,
-      {
-        from_name: name,
-        from_email: email,
-        message: message,
-        to_name: "Santhosh Kannan",
-      },
-      publicKey
-    )
-      .then(() => {
-        setSending(false);
-        toast.success("Message sent successfully!");
-        setName("");
-        setEmail("");
-        setMessage("");
-      })
-      .catch(() => {
-        setSending(false);
-        toast.error("Unable to send your message right now. Please try again or contact me directly.");
-      });
+    const templateParams = {
+      name: trimmedName,
+      email: trimmedEmail,
+      message: trimmedMessage,
+      title: "Contact Us",
+      from_name: trimmedName,
+      from_email: trimmedEmail,
+    };
+
+    try {
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      setSending(false);
+      toast.success("Message sent successfully!");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (error) {
+      setSending(false);
+      console.error("EmailJS submission failed:", error);
+      toast.error("Unable to send your message right now. Please try again or contact me directly.");
+    }
   };
 
   return (
