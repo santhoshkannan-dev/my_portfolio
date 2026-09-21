@@ -109,7 +109,7 @@ const SkillsSection = () => {
           </h2>
 
           <p className="mt-4 max-w-2xl text-muted-foreground text-lg">
-            I enjoy building scalable full-stack web and mobile applications using modern
+            I enjoy building scalable web and mobile applications using modern
             technologies while continuously expanding my expertise in cloud computing,
             machine learning, and software engineering.
           </p>

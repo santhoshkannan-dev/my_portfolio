@@ -246,7 +246,7 @@ const Navbar = () => {
               {/* Metadata */}
               <div className="p-4 border-t border-border/40 text-center bg-secondary/10">
                 <h4 className="font-display font-semibold text-lg text-foreground">Santhosh Kannan</h4>
-                <p className="text-xs text-primary font-medium tracking-wide mt-0.5">MCA Student & Full Stack Developer</p>
+                <p className="text-xs text-primary font-medium tracking-wide mt-0.5">Software Developer</p>
               </div>
             </motion.div>
           </motion.div>

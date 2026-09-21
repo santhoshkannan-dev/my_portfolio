@@ -60,7 +60,7 @@ const timeline = [
   {
     year: "2025",
     title: "Master of Computer Applications",
-    desc: "Started MCA while expanding expertise in cloud computing, machine learning, Linux administration, and scalable application development.",
+    desc: "Advanced expertise in cloud computing, machine learning, Linux administration, and scalable application development.",
   },
   {
     year: "Present Developing",
@@ -147,9 +147,9 @@ const AboutSection = () => {
 
               <p className="text-muted-foreground text-lg leading-relaxed max-w-md font-sans font-light">
                 I'm <span className="text-foreground font-semibold">Santhosh Kannan</span>, a passionate
-                Full Stack Developer currently pursuing my Master of Computer Applications.
-                I specialize in building scalable web and mobile applications using the MERN
-                stack, React Native, Django, and PostgreSQL while exploring Artificial
+                Software Developer.
+                I specialize in building scalable web and mobile applications using React,
+                React Native, Django, Python, and PostgreSQL while exploring Artificial
                 Intelligence, Cloud Computing, and modern software architecture. I enjoy
                 transforming ideas into fast, responsive, and user-focused digital products.
               </p>
@@ -165,8 +165,8 @@ const AboutSection = () => {
             {[
               {
                 icon: Code,
-                label: "Full Stack",
-                desc: "React, Node.js, Django, MERN",
+                label: "Software Dev",
+                desc: "React, Python, Django, REST APIs",
               },
               {
                 icon: Brain,

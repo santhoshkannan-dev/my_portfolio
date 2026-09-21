@@ -38,8 +38,7 @@ const TitleSparkles = () => (
   </div>
 );
 
-const roles = ["AI/ML Engineer", "Software Developer"];
-
+const roles = ["Software Developer", "Software Engineering"];
 
 const techOrbitData = [
   // Frontend
@@ -468,7 +467,7 @@ const HeroSection = () => {
         className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-16 xs:pt-20 md:pt-0 px-6 text-center opacity-0 pointer-events-none"
       >
         <span className="intro-badge mb-2 md:mb-4 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
-          Software Developer • MCA Student
+          Software Developer
         </span>
 
         <h1
@@ -481,9 +480,8 @@ const HeroSection = () => {
         </h1>
 
         <p className="intro-desc mt-4 md:mt-8 max-w-3xl text-xs xs:text-sm md:text-lg lg:text-xl text-muted-foreground leading-6 xs:leading-7 md:leading-8 opacity-0">
-          Passionate about creating scalable web applications, cross-platform
-          mobile apps, and AI-driven solutions using React, Django, Node.js,
-          PostgreSQL, and AWS.
+          Building scalable web applications, mobile apps, REST APIs, and AI-powered
+          solutions using React, Django, Python, PostgreSQL, and AWS.
         </p>
       </div>
 
@@ -533,7 +531,7 @@ const HeroSection = () => {
                 <p className="text-foreground text-xl font-bold">Santhosh Kannan</p>
               </div>
               <p className="text-xl lg:text-2xl text-muted-foreground h-8 font-sans font-light tracking-wide flex items-center justify-center lg:justify-start">
-                <span className="text-foreground font-medium mr-2">Role:</span> {text}<span className="animate-pulse text-primary ml-1">|</span>
+                <span className="text-foreground font-medium mr-2">Focus:</span> {text}<span className="animate-pulse text-primary ml-1">|</span>
               </p>
             </div>
           </div>

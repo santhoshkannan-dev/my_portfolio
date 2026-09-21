@@ -112,7 +112,7 @@ const PortfolioMockup = () => {
         <div className="text-[8px] text-orange-300/90 pl-2 mt-0.5 leading-normal">
           <span>{"{"}</span>
           <p className="pl-3">"name": <span className="text-emerald-400">"Santhosh"</span>,</p>
-          <p className="pl-3">"role": <span className="text-emerald-400">"Full Stack Developer"</span>,</p>
+          <p className="pl-3">"role": <span className="text-emerald-400">"Software Developer"</span>,</p>
           <p className="pl-3">"focus": <span className="text-emerald-400">["React", "Django", "AI"]</span></p>
           <span>{"}"}</span>
         </div>

@@ -16,7 +16,7 @@ const achievements = [
   {
     icon: Trophy,
     title: "Academic Projects",
-    desc: "Successfully completed multiple full-stack web and mobile projects using React, Django, PostgreSQL and React Native."
+    desc: "Successfully completed multiple software development web and mobile projects using React, Django, PostgreSQL and React Native."
   },
   {
     icon: Users,
@@ -60,7 +60,7 @@ const timeline = [
   },
   {
     year: "2025",
-    title: "Started MCA",
+    title: "Advanced Software Engineering",
     subtitle: "Marian College Kuttikkanam Autonomous",
     details: null
   },
@@ -69,7 +69,7 @@ const timeline = [
     title: "Building & Learning",
     subtitle: "Marian College Kuttikkanam Autonomous",
     details: [
-      "Building Full Stack Projects",
+      "Building Software Applications",
       "Learning AWS",
       "Machine Learning",
       "React Native"
@@ -269,7 +269,7 @@ const ExperienceSection = () => {
 
                 {/* Description */}
                 <p className="text-muted-foreground md:text-lg leading-relaxed mb-6 whitespace-pre-line">
-                  Currently pursuing MCA with a strong focus on Full Stack Development, Cloud Computing, Machine Learning, Data Analytics, and Software Engineering.
+                  Software Developer with a strong focus on Software Engineering, Cloud Computing, Machine Learning, Data Analytics, and Web Development.
                   {"\n\n"}
                   Building modern web and mobile applications while continuously improving problem-solving skills through real-world projects.
                 </p>
@@ -362,7 +362,7 @@ const ExperienceSection = () => {
               <div className="flex flex-col items-center">
                 <span className="w-8 h-[2px] bg-primary mb-3" />
                 <span className="font-semibold text-lg text-foreground tracking-wider uppercase">Santhosh Kannan</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">MCA Student & Developer</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Software Developer</span>
               </div>
             </div>
           </motion.div>
