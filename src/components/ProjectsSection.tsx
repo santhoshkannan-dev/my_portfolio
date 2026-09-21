@@ -234,7 +234,7 @@ const projects = [
     desc: "A role-based academic evaluation platform developed for Marian College Kuttikkanam to manage class achievements, submit evaluation records, verify activities, and recognize student excellence through a centralized digital system.",
     tech: ["React", "Django", "PostgreSQL", "Google OAuth", "REST API"],
     github: "https://github.com/santhoshkannan-dev/Marian-Excellence-Grid.git",
-    live: "#",
+    live: "https://excellence.marian.cloud",
     gradient: "from-indigo-500/20 via-blue-500/10 to-purple-500/20",
     glowColor: "rgba(99, 102, 241, 0.15)",
     badgeColor: "text-indigo-700 bg-indigo-50 border-indigo-200/50 dark:text-indigo-400 dark:bg-indigo-950/30 dark:border-indigo-500/20",
