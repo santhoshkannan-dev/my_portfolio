@@ -49,7 +49,7 @@ const hero10Cards = [
     tech: ["React", "Django", "REST APIs", "React Native"],
     icon: Code,
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:rotate-[-6deg] md:translate-y-6 z-10 hover:z-30",
+    containerClass: "md:rotate-[-6deg] md:translate-y-6 z-10 hover:z-30 hover:rotate-[-2deg]",
     gradient: "from-emerald-500/10 via-primary/5 to-transparent",
   },
   {
@@ -60,7 +60,7 @@ const hero10Cards = [
     tech: ["Python", "Machine Learning", "OpenCV", "Data Analytics"],
     icon: Cpu,
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:z-20 md:-translate-y-2 md:scale-[1.03] hover:z-30 border-primary/50 shadow-[0_15px_40px_rgba(0,255,128,0.2)] ring-1 ring-primary/30",
+    containerClass: "md:z-20 md:translate-y-0 md:scale-[1.03] hover:z-30 hover:scale-[1.05] border-primary/50 shadow-[0_16px_40px_rgba(0,255,128,0.2)] ring-1 ring-primary/30",
     gradient: "from-cyan-500/10 via-blue-500/5 to-transparent",
   },
   {
@@ -71,7 +71,7 @@ const hero10Cards = [
     tech: ["AWS", "PostgreSQL", "Linux", "Docker"],
     icon: Database,
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:rotate-[6deg] md:translate-y-6 z-10 hover:z-30",
+    containerClass: "md:rotate-[6deg] md:translate-y-6 z-10 hover:z-30 hover:rotate-[2deg]",
     gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
   },
 ];
@@ -506,9 +506,9 @@ const HeroSection = () => {
       {/* Main Intro Text Overlay with React Bits Hero 10 Integration */}
       <div
         ref={introRef}
-        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-20 sm:pt-24 md:pt-16 lg:pt-20 pb-16 md:pb-24 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-start pt-20 xs:pt-24 md:pt-24 lg:pt-28 pb-12 md:pb-16 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
       >
-        <span className="intro-badge mb-2 md:mb-3 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
+        <span className="intro-badge mb-2 md:mb-3 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1 md:py-1.5 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
           Software Developer
         </span>
 
@@ -517,32 +517,32 @@ const HeroSection = () => {
           style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
         >
           <div className="block">{splitText("Building")}</div>
-          <div className="block my-1 sm:my-2">{splitText("Scalable Digital", true)}</div>
+          <div className="block my-1 sm:my-1.5">{splitText("Scalable Digital", true)}</div>
           <div className="block">{splitText("Products")}</div>
         </h1>
 
-        <p className="intro-desc mt-2 md:mt-4 max-w-2xl text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed opacity-0">
+        <p className="intro-desc mt-2 md:mt-3 max-w-2xl text-xs sm:text-sm text-muted-foreground leading-relaxed opacity-0">
           Building scalable web applications, mobile apps, REST APIs, and AI-powered
           solutions using React, Django, Python, PostgreSQL, and AWS.
         </p>
 
         {/* Hero 10 Curved 3-Card Visual Arc Composition */}
-        <div className="relative w-full max-w-[1100px] mx-auto mt-4 md:mt-5 px-2 md:px-4 pointer-events-auto">
+        <div className="relative w-full max-w-[1020px] mx-auto mt-3 md:mt-5 px-2 md:px-4 pointer-events-auto">
           {/* Ambient Curved Arc Glow Background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-[1000px] h-32 md:h-44 bg-gradient-to-r from-primary/10 via-cyan-500/20 to-blue-500/10 blur-3xl rounded-[100%] pointer-events-none -z-10 opacity-70" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-[950px] h-32 md:h-44 bg-gradient-to-r from-primary/10 via-cyan-500/20 to-blue-500/10 blur-3xl rounded-[100%] pointer-events-none -z-10 opacity-70" />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 lg:gap-5 items-start justify-center max-w-full">
             {hero10Cards.map((card) => {
               const IconComponent = card.icon;
               return (
-                <div key={card.id} className={`hero-card-wrapper w-full flex justify-center ${card.containerClass}`}>
+                <div key={card.id} className="hero-card-wrapper w-full flex justify-center">
                   <motion.div
                     whileHover={{ y: -6, scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`hero-10-card relative flex flex-col w-full max-w-[340px] sm:max-w-[360px] md:max-w-none min-h-[250px] md:min-h-[270px] rounded-[20px] md:rounded-[24px] glass border border-primary/25 hover:border-primary/60 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-xl group shadow-xl shadow-black/50 overflow-hidden origin-center`}
+                    className={`hero-10-card relative flex flex-col w-full max-w-sm sm:max-w-md md:max-w-none min-h-[250px] md:min-h-[275px] lg:min-h-[290px] rounded-2xl md:rounded-[22px] glass border border-primary/25 hover:border-primary/60 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-xl group shadow-xl shadow-black/60 overflow-hidden origin-center ${card.containerClass}`}
                   >
                     {/* Top Visual Image Banner (45-50% height) */}
-                    <div className="relative h-28 sm:h-32 md:h-36 w-full overflow-hidden rounded-t-[20px] md:rounded-t-[24px]">
+                    <div className="relative h-28 sm:h-32 md:h-36 w-full overflow-hidden rounded-t-2xl md:rounded-t-[22px]">
                       <img
                         src={card.image}
                         alt={card.title}
@@ -557,13 +557,13 @@ const HeroSection = () => {
 
                     {/* Card Body */}
                     <div className="p-3 md:p-3.5 flex flex-col flex-1">
-                      <span className="text-[9px] md:text-[10px] font-mono tracking-wider uppercase text-primary font-semibold mb-0.5">
+                      <span className="text-[10px] font-mono tracking-wider uppercase text-primary font-semibold mb-1">
                         {card.category}
                       </span>
                       <h3 className="text-xs md:text-sm font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
                         {card.title}
                       </h3>
-                      <p className="text-[11px] md:text-xs text-muted-foreground leading-normal mb-2 md:mb-3 flex-1 line-clamp-2">
+                      <p className="text-[11px] md:text-xs text-muted-foreground leading-snug mb-2 flex-1">
                         {card.desc}
                       </p>
                       <div className="flex flex-wrap gap-1 mt-auto">
