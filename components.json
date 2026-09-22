@@ -16,5 +16,14 @@
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
-  }
+  },
+  "registries": [
+    {
+      "name": "reactbits-pro",
+      "url": "https://pro.reactbits.dev/r",
+      "headers": {
+        "Authorization": "Bearer ${REACTBITS_LICENSE_KEY}"
+      }
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { motion } from "framer-motion";
-import { ArrowDown, Send, Download } from "lucide-react";
+import { ArrowDown, Send, Download, Code, Cpu, Database } from "lucide-react";
 import { useTheme } from "next-themes";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -39,6 +39,39 @@ const TitleSparkles = () => (
 );
 
 const roles = ["Software Developer", "Software Engineering"];
+
+const hero10Cards = [
+  {
+    id: "card-1",
+    category: "SOFTWARE DEVELOPMENT",
+    title: "Web & Mobile Applications",
+    desc: "Building scalable web & cross-platform applications with React, Django, and REST APIs.",
+    tech: ["React", "Django", "REST APIs", "React Native"],
+    icon: Code,
+    gradient: "from-emerald-500/10 via-primary/5 to-transparent",
+    glowColor: "rgba(0, 255, 128, 0.15)",
+  },
+  {
+    id: "card-2",
+    category: "AI & MACHINE LEARNING",
+    title: "AI-Powered Solutions",
+    desc: "Developing intelligent algorithms, computer vision models, and data analytics pipelines.",
+    tech: ["Python", "Machine Learning", "OpenCV", "Data Analytics"],
+    icon: Cpu,
+    gradient: "from-cyan-500/10 via-blue-500/5 to-transparent",
+    glowColor: "rgba(6, 182, 212, 0.15)",
+  },
+  {
+    id: "card-3",
+    category: "CLOUD & INFRASTRUCTURE",
+    title: "Cloud & Database Architecture",
+    desc: "Designing high-performance relational database schemas and cloud deployment workflows.",
+    tech: ["AWS", "PostgreSQL", "Linux", "Docker"],
+    icon: Database,
+    gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
+    glowColor: "rgba(59, 130, 246, 0.15)",
+  },
+];
 
 const techOrbitData = [
   // Frontend
@@ -293,7 +326,6 @@ const HeroSection = () => {
     });
   };
 
-
   useEffect(() => {
     if (introRef.current) {
       introRef.current.style.opacity = "1";
@@ -309,6 +341,7 @@ const HeroSection = () => {
       scale: 0.3 
     });
     set(".intro-desc", { opacity: 0, translateY: 30 });
+    set(".hero-10-card", { opacity: 0, translateY: 30 });
     set(".hero-line", { scaleX: 0 });
     set(".hero-tag", { opacity: 0, translateX: -30 });
     set(".hero-role", { opacity: 0, translateY: 20 });
@@ -347,6 +380,13 @@ const HeroSection = () => {
         duration: 1000,
         easing: "easeOutExpo",
       }, "-=900")
+      .add(".hero-10-card", {
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 900,
+        delay: stagger(100),
+        easing: "easeOutExpo",
+      }, "-=800")
       .add(".hero-line", {
         scaleX: [0, 1],
         duration: 1000,
@@ -432,10 +472,9 @@ const HeroSection = () => {
     }
   }, { scope: sectionRef });
 
-
   useEffect(() => {
     if (isModelFixed) {
-      setText("AI/ML Developer");
+      setText("Software Developer");
       return;
     }
 
@@ -461,12 +500,12 @@ const HeroSection = () => {
       <div className="absolute inset-y-0 left-[10%] w-px bg-border/20 hidden md:block" />
       <div className="absolute inset-y-0 right-[10%] w-px bg-border/20 hidden md:block" />
 
-      {/* Main Intro Text Overlay */}
+      {/* Main Intro Text Overlay with React Bits Hero 10 Integration */}
       <div
         ref={introRef}
-        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-16 xs:pt-20 md:pt-0 px-6 text-center opacity-0 pointer-events-none"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-12 xs:pt-16 md:pt-4 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
       >
-        <span className="intro-badge mb-2 md:mb-4 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
+        <span className="intro-badge mb-2 md:mb-3 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
           Software Developer
         </span>
 
@@ -479,10 +518,50 @@ const HeroSection = () => {
           <div className="block">{splitText("Products")}</div>
         </h1>
 
-        <p className="intro-desc mt-4 md:mt-8 max-w-3xl text-xs xs:text-sm md:text-lg lg:text-xl text-muted-foreground leading-6 xs:leading-7 md:leading-8 opacity-0">
+        <p className="intro-desc mt-3 md:mt-5 max-w-3xl text-xs xs:text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed opacity-0">
           Building scalable web applications, mobile apps, REST APIs, and AI-powered
           solutions using React, Django, Python, PostgreSQL, and AWS.
         </p>
+
+        {/* Hero 10 Three Stacked Visual Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 max-w-6xl w-full mt-5 md:mt-6 pointer-events-auto px-2">
+          {hero10Cards.map((card) => {
+            const IconComponent = card.icon;
+            return (
+              <motion.div
+                key={card.id}
+                whileHover={{ y: -4, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className={`hero-10-card relative p-4 md:p-5 rounded-xl glass border border-primary/20 hover:border-primary/50 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-md group shadow-lg shadow-black/30`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono tracking-wider uppercase text-primary font-semibold">
+                    {card.category}
+                  </span>
+                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary group-hover:bg-primary group-hover:text-black transition-colors duration-300">
+                    <IconComponent size={16} />
+                  </div>
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-xs text-muted-foreground leading-normal mb-3">
+                  {card.desc}
+                </p>
+                <div className="flex flex-wrap gap-1.5 mt-auto">
+                  {card.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[10px] font-mono px-2 py-0.5 rounded bg-secondary/80 text-foreground/80 border border-border/50"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
       {/* 3D Infinite Spiral Tech Stack */}
