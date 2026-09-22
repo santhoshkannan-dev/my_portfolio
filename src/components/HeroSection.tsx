@@ -49,7 +49,7 @@ const hero10Cards = [
     tech: ["React", "Django", "REST APIs", "React Native"],
     icon: Code,
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:-mr-3 md:-rotate-3 lg:-rotate-4 md:translate-y-3 z-10 hover:z-30 hover:-rotate-1",
+    containerClass: "md:rotate-[-7deg] md:translate-y-9 z-10 hover:z-30 hover:rotate-[-3deg]",
     gradient: "from-emerald-500/10 via-primary/5 to-transparent",
   },
   {
@@ -60,7 +60,7 @@ const hero10Cards = [
     tech: ["Python", "Machine Learning", "OpenCV", "Data Analytics"],
     icon: Cpu,
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:z-20 md:-translate-y-3 md:scale-[1.03] hover:z-30 hover:scale-[1.05] border-primary/40 shadow-[0_12px_35px_rgba(0,255,128,0.18)]",
+    containerClass: "md:z-20 md:translate-y-0 md:scale-[1.04] hover:z-30 hover:scale-[1.06] border-primary/50 shadow-[0_20px_50px_rgba(0,255,128,0.22)] ring-1 ring-primary/30",
     gradient: "from-cyan-500/10 via-blue-500/5 to-transparent",
   },
   {
@@ -71,7 +71,7 @@ const hero10Cards = [
     tech: ["AWS", "PostgreSQL", "Linux", "Docker"],
     icon: Database,
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:-ml-3 md:rotate-3 lg:rotate-4 md:translate-y-3 z-10 hover:z-30 hover:rotate-1",
+    containerClass: "md:rotate-[7deg] md:translate-y-9 z-10 hover:z-30 hover:rotate-[3deg]",
     gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
   },
 ];
@@ -344,7 +344,7 @@ const HeroSection = () => {
       scale: 0.3 
     });
     set(".intro-desc", { opacity: 0, translateY: 30 });
-    set(".hero-10-card", { opacity: 0, translateY: 30 });
+    set(".hero-card-wrapper", { opacity: 0, translateY: 30 });
     set(".hero-line", { scaleX: 0 });
     set(".hero-tag", { opacity: 0, translateX: -30 });
     set(".hero-role", { opacity: 0, translateY: 20 });
@@ -383,7 +383,7 @@ const HeroSection = () => {
         duration: 1000,
         easing: "easeOutExpo",
       }, "-=900")
-      .add(".hero-10-card", {
+      .add(".hero-card-wrapper", {
         opacity: [0, 1],
         translateY: [30, 0],
         duration: 900,
@@ -506,7 +506,7 @@ const HeroSection = () => {
       {/* Main Intro Text Overlay with React Bits Hero 10 Integration */}
       <div
         ref={introRef}
-        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-12 xs:pt-16 md:pt-4 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-start md:justify-center pt-10 xs:pt-14 md:pt-2 pb-20 md:pb-28 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
       >
         <span className="intro-badge mb-2 md:mb-3 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
           Software Developer
@@ -527,54 +527,58 @@ const HeroSection = () => {
         </p>
 
         {/* Hero 10 Curved 3-Card Visual Arc Composition */}
-        <div className="relative w-full max-w-6xl mx-auto mt-4 md:mt-6 px-2 pointer-events-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2 lg:gap-3 items-stretch justify-center">
+        <div className="relative w-full max-w-[1240px] mx-auto mt-4 md:mt-6 lg:mt-7 px-2 md:px-6 pointer-events-auto">
+          {/* Ambient Curved Arc Glow Background */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-[1150px] h-40 md:h-56 bg-gradient-to-r from-primary/10 via-cyan-500/20 to-blue-500/10 blur-3xl rounded-[100%] pointer-events-none -z-10 opacity-70" />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 lg:gap-7 items-start justify-center max-w-full">
             {hero10Cards.map((card) => {
               const IconComponent = card.icon;
               return (
-                <motion.div
-                  key={card.id}
-                  whileHover={{ y: -6 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className={`hero-10-card relative flex flex-col rounded-2xl md:rounded-3xl glass border border-primary/25 hover:border-primary/60 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-md group shadow-xl shadow-black/50 overflow-hidden ${card.containerClass}`}
-                >
-                  {/* Top Visual Image Banner with Curved Mask */}
-                  <div className="relative h-24 sm:h-28 md:h-32 w-full overflow-hidden rounded-t-2xl md:rounded-t-3xl">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-                    <div className="absolute top-2.5 right-2.5 p-1.5 rounded-lg bg-background/80 backdrop-blur-md border border-primary/30 text-primary group-hover:border-primary group-hover:bg-primary group-hover:text-black transition-all duration-300">
-                      <IconComponent size={14} />
+                <div key={card.id} className="hero-card-wrapper w-full flex justify-center">
+                  <motion.div
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className={`hero-10-card relative flex flex-col w-full max-w-sm sm:max-w-md md:max-w-none min-h-[310px] md:min-h-[340px] lg:min-h-[360px] rounded-[24px] md:rounded-[28px] glass border border-primary/25 hover:border-primary/60 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-xl group shadow-2xl shadow-black/60 overflow-hidden origin-center ${card.containerClass}`}
+                  >
+                    {/* Top Visual Image Banner (45-50% height) */}
+                    <div className="relative h-36 sm:h-40 md:h-44 lg:h-48 w-full overflow-hidden rounded-t-[24px] md:rounded-t-[28px]">
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+                      <div className="absolute top-3 right-3 p-2 rounded-xl bg-background/80 backdrop-blur-md border border-primary/30 text-primary group-hover:border-primary group-hover:bg-primary group-hover:text-black transition-all duration-300 shadow-md">
+                        <IconComponent size={16} />
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Card Body */}
-                  <div className="p-3.5 md:p-4 flex flex-col flex-1">
-                    <span className="text-[10px] font-mono tracking-wider uppercase text-primary font-semibold mb-1">
-                      {card.category}
-                    </span>
-                    <h3 className="text-xs md:text-sm font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-                      {card.title}
-                    </h3>
-                    <p className="text-[11px] md:text-xs text-muted-foreground leading-normal mb-3 flex-1">
-                      {card.desc}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 mt-auto">
-                      {card.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded bg-secondary/80 text-foreground/80 border border-border/50"
-                        >
-                          {t}
-                        </span>
-                      ))}
+                    {/* Card Body */}
+                    <div className="p-4 md:p-5 flex flex-col flex-1">
+                      <span className="text-[10px] md:text-[11px] font-mono tracking-wider uppercase text-primary font-semibold mb-1">
+                        {card.category}
+                      </span>
+                      <h3 className="text-sm md:text-base font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                        {card.title}
+                      </h3>
+                      <p className="text-xs md:text-xs text-muted-foreground leading-relaxed mb-3 flex-1">
+                        {card.desc}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 mt-auto">
+                        {card.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded-md bg-secondary/80 text-foreground/80 border border-border/50"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </div>
               );
             })}
           </div>
