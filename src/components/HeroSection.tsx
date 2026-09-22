@@ -48,8 +48,9 @@ const hero10Cards = [
     desc: "Building scalable web & cross-platform applications with React, Django, and REST APIs.",
     tech: ["React", "Django", "REST APIs", "React Native"],
     icon: Code,
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
+    containerClass: "md:-mr-3 md:-rotate-3 lg:-rotate-4 md:translate-y-3 z-10 hover:z-30 hover:-rotate-1",
     gradient: "from-emerald-500/10 via-primary/5 to-transparent",
-    glowColor: "rgba(0, 255, 128, 0.15)",
   },
   {
     id: "card-2",
@@ -58,8 +59,9 @@ const hero10Cards = [
     desc: "Developing intelligent algorithms, computer vision models, and data analytics pipelines.",
     tech: ["Python", "Machine Learning", "OpenCV", "Data Analytics"],
     icon: Cpu,
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+    containerClass: "md:z-20 md:-translate-y-3 md:scale-[1.03] hover:z-30 hover:scale-[1.05] border-primary/40 shadow-[0_12px_35px_rgba(0,255,128,0.18)]",
     gradient: "from-cyan-500/10 via-blue-500/5 to-transparent",
-    glowColor: "rgba(6, 182, 212, 0.15)",
   },
   {
     id: "card-3",
@@ -68,8 +70,9 @@ const hero10Cards = [
     desc: "Designing high-performance relational database schemas and cloud deployment workflows.",
     tech: ["AWS", "PostgreSQL", "Linux", "Docker"],
     icon: Database,
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
+    containerClass: "md:-ml-3 md:rotate-3 lg:rotate-4 md:translate-y-3 z-10 hover:z-30 hover:rotate-1",
     gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
-    glowColor: "rgba(59, 130, 246, 0.15)",
   },
 ];
 
@@ -523,44 +526,58 @@ const HeroSection = () => {
           solutions using React, Django, Python, PostgreSQL, and AWS.
         </p>
 
-        {/* Hero 10 Three Stacked Visual Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 max-w-6xl w-full mt-5 md:mt-6 pointer-events-auto px-2">
-          {hero10Cards.map((card) => {
-            const IconComponent = card.icon;
-            return (
-              <motion.div
-                key={card.id}
-                whileHover={{ y: -4, scale: 1.02 }}
-                transition={{ duration: 0.2 }}
-                className={`hero-10-card relative p-4 md:p-5 rounded-xl glass border border-primary/20 hover:border-primary/50 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-md group shadow-lg shadow-black/30`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-mono tracking-wider uppercase text-primary font-semibold">
-                    {card.category}
-                  </span>
-                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary group-hover:bg-primary group-hover:text-black transition-colors duration-300">
-                    <IconComponent size={16} />
+        {/* Hero 10 Curved 3-Card Visual Arc Composition */}
+        <div className="relative w-full max-w-6xl mx-auto mt-4 md:mt-6 px-2 pointer-events-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2 lg:gap-3 items-stretch justify-center">
+            {hero10Cards.map((card) => {
+              const IconComponent = card.icon;
+              return (
+                <motion.div
+                  key={card.id}
+                  whileHover={{ y: -6 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className={`hero-10-card relative flex flex-col rounded-2xl md:rounded-3xl glass border border-primary/25 hover:border-primary/60 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-md group shadow-xl shadow-black/50 overflow-hidden ${card.containerClass}`}
+                >
+                  {/* Top Visual Image Banner with Curved Mask */}
+                  <div className="relative h-24 sm:h-28 md:h-32 w-full overflow-hidden rounded-t-2xl md:rounded-t-3xl">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+                    <div className="absolute top-2.5 right-2.5 p-1.5 rounded-lg bg-background/80 backdrop-blur-md border border-primary/30 text-primary group-hover:border-primary group-hover:bg-primary group-hover:text-black transition-all duration-300">
+                      <IconComponent size={14} />
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-sm md:text-base font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-                  {card.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-normal mb-3">
-                  {card.desc}
-                </p>
-                <div className="flex flex-wrap gap-1.5 mt-auto">
-                  {card.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded bg-secondary/80 text-foreground/80 border border-border/50"
-                    >
-                      {t}
+
+                  {/* Card Body */}
+                  <div className="p-3.5 md:p-4 flex flex-col flex-1">
+                    <span className="text-[10px] font-mono tracking-wider uppercase text-primary font-semibold mb-1">
+                      {card.category}
                     </span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
+                    <h3 className="text-xs md:text-sm font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                      {card.title}
+                    </h3>
+                    <p className="text-[11px] md:text-xs text-muted-foreground leading-normal mb-3 flex-1">
+                      {card.desc}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 mt-auto">
+                      {card.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded bg-secondary/80 text-foreground/80 border border-border/50"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
