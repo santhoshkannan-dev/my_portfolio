@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { motion } from "framer-motion";
-import { ArrowDown, Send, Download, Code, Cpu, Database } from "lucide-react";
+import { ArrowDown, Send, Download, Code, Cpu, Database, Layers, ExternalLink } from "lucide-react";
 import { useTheme } from "next-themes";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { createTimeline, Timeline, stagger, set } from "animejs";
 import InfiniteSpiral from './InfiniteSpiral';
+import Hero7Carousel, { CarouselItem } from './Hero7Carousel';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,39 +41,60 @@ const TitleSparkles = () => (
 
 const roles = ["Software Developer", "Software Engineering"];
 
-const hero10Cards = [
+const hero7Items: CarouselItem[] = [
   {
-    id: "card-1",
-    category: "SOFTWARE DEVELOPMENT",
-    title: "Web & Mobile Applications",
-    desc: "Building scalable web & cross-platform applications with React, Django, and REST APIs.",
-    tech: ["React", "Django", "REST APIs", "React Native"],
-    icon: Code,
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:rotate-[-6deg] md:translate-y-6 z-10 hover:z-30 hover:rotate-[-2deg]",
-    gradient: "from-emerald-500/10 via-primary/5 to-transparent",
-  },
-  {
-    id: "card-2",
-    category: "AI & MACHINE LEARNING",
-    title: "AI-Powered Solutions",
-    desc: "Developing intelligent algorithms, computer vision models, and data analytics pipelines.",
-    tech: ["Python", "Machine Learning", "OpenCV", "Data Analytics"],
-    icon: Cpu,
+    id: "navakrishi",
+    category: "AI & AGRICULTURE",
+    title: "NavaKrishi AI",
+    desc: "Smart agriculture platform predicting soil health & crop yields with ML models.",
+    tech: ["Python", "Machine Learning", "OpenCV", "Django"],
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:z-20 md:translate-y-0 md:scale-[1.03] hover:z-30 hover:scale-[1.05] border-primary/50 shadow-[0_16px_40px_rgba(0,255,128,0.2)] ring-1 ring-primary/30",
-    gradient: "from-cyan-500/10 via-blue-500/5 to-transparent",
+    icon: Cpu,
   },
   {
-    id: "card-3",
+    id: "meg",
+    category: "ACADEMIC ANALYTICS",
+    title: "Marian Excellence Grid",
+    desc: "Class evaluation & performance tracking platform with analytics grid.",
+    tech: ["React", "Django", "PostgreSQL", "REST APIs"],
+    image: "/MEG.png",
+    icon: Layers,
+  },
+  {
+    id: "navayatra",
+    category: "MOBILE & TRAVEL",
+    title: "NavaYatra App",
+    desc: "KSRTC bus booking & live passenger travel management app.",
+    tech: ["React Native", "REST APIs", "Node.js", "MongoDB"],
+    image: "/nava1.png",
+    icon: Code,
+  },
+  {
+    id: "nexgear",
+    category: "E-COMMERCE & PC",
+    title: "NeXGeaR PC Platform",
+    desc: "Custom PC building & hardware e-commerce store with real-time specs.",
+    tech: ["React", "Django REST", "PostgreSQL", "Tailwind"],
+    image: "/nex1.png",
+    icon: ExternalLink,
+  },
+  {
+    id: "web-mobile",
+    category: "SOFTWARE DEVELOPMENT",
+    title: "Scalable Web Applications",
+    desc: "Building high-performance responsive web & mobile apps with React & Django.",
+    tech: ["React", "Django", "Python", "Tailwind"],
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
+    icon: Code,
+  },
+  {
+    id: "cloud-infra",
     category: "CLOUD & INFRASTRUCTURE",
     title: "Cloud & Database Architecture",
-    desc: "Designing high-performance relational database schemas and cloud deployment workflows.",
-    tech: ["AWS", "PostgreSQL", "Linux", "Docker"],
-    icon: Database,
+    desc: "Designing scalable cloud deployment workflows & relational databases.",
+    tech: ["AWS", "PostgreSQL", "Docker", "Linux"],
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-    containerClass: "md:rotate-[6deg] md:translate-y-6 z-10 hover:z-30 hover:rotate-[2deg]",
-    gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
+    icon: Database,
   },
 ];
 
@@ -344,7 +366,7 @@ const HeroSection = () => {
       scale: 0.3 
     });
     set(".intro-desc", { opacity: 0, translateY: 30 });
-    set(".hero-card-wrapper", { opacity: 0, translateY: 30 });
+    set(".hero-7-carousel-wrapper", { opacity: 0, translateY: 30 });
     set(".hero-line", { scaleX: 0 });
     set(".hero-tag", { opacity: 0, translateX: -30 });
     set(".hero-role", { opacity: 0, translateY: 20 });
@@ -383,7 +405,7 @@ const HeroSection = () => {
         duration: 1000,
         easing: "easeOutExpo",
       }, "-=900")
-      .add(".hero-card-wrapper", {
+      .add(".hero-7-carousel-wrapper", {
         opacity: [0, 1],
         translateY: [30, 0],
         duration: 900,
@@ -526,62 +548,9 @@ const HeroSection = () => {
           solutions using React, Django, Python, PostgreSQL, and AWS.
         </p>
 
-        {/* Hero 10 Curved 3-Card Visual Arc Composition */}
-        <div className="relative w-full max-w-[1020px] mx-auto mt-3 md:mt-5 px-2 md:px-4 pointer-events-auto">
-          {/* Ambient Curved Arc Glow Background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-[950px] h-32 md:h-44 bg-gradient-to-r from-primary/10 via-cyan-500/20 to-blue-500/10 blur-3xl rounded-[100%] pointer-events-none -z-10 opacity-70" />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 lg:gap-5 items-start justify-center max-w-full">
-            {hero10Cards.map((card) => {
-              const IconComponent = card.icon;
-              return (
-                <div key={card.id} className="hero-card-wrapper w-full flex justify-center">
-                  <motion.div
-                    whileHover={{ y: -6, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className={`hero-10-card relative flex flex-col w-full max-w-sm sm:max-w-md md:max-w-none min-h-[250px] md:min-h-[275px] lg:min-h-[290px] rounded-2xl md:rounded-[22px] glass border border-primary/25 hover:border-primary/60 transition-all duration-300 text-left bg-gradient-to-br ${card.gradient} backdrop-blur-xl group shadow-xl shadow-black/60 overflow-hidden origin-center ${card.containerClass}`}
-                  >
-                    {/* Top Visual Image Banner (45-50% height) */}
-                    <div className="relative h-28 sm:h-32 md:h-36 w-full overflow-hidden rounded-t-2xl md:rounded-t-[22px]">
-                      <img
-                        src={card.image}
-                        alt={card.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
-                      <div className="absolute top-2.5 right-2.5 p-1.5 rounded-lg bg-background/80 backdrop-blur-md border border-primary/30 text-primary group-hover:border-primary group-hover:bg-primary group-hover:text-black transition-all duration-300 shadow-md">
-                        <IconComponent size={14} />
-                      </div>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="p-3 md:p-3.5 flex flex-col flex-1">
-                      <span className="text-[10px] font-mono tracking-wider uppercase text-primary font-semibold mb-1">
-                        {card.category}
-                      </span>
-                      <h3 className="text-xs md:text-sm font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-                        {card.title}
-                      </h3>
-                      <p className="text-[11px] md:text-xs text-muted-foreground leading-snug mb-2 flex-1">
-                        {card.desc}
-                      </p>
-                      <div className="flex flex-wrap gap-1 mt-auto">
-                        {card.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-secondary/80 text-foreground/80 border border-border/50"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              );
-            })}
-          </div>
+        {/* React Bits Pro Hero 7 3D Rotating Image Carousel */}
+        <div className="hero-7-carousel-wrapper relative w-full max-w-[1100px] mx-auto mt-2 md:mt-4 pointer-events-auto">
+          <Hero7Carousel items={hero7Items} />
         </div>
       </div>
 
