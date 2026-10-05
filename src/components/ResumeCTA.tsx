@@ -23,7 +23,7 @@ export const ResumeCTA: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="/SANTHOSH_KANNAN.pdf"
+            href="/Santhosh_Kannan.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm tracking-wider uppercase transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 cursor-pointer"
@@ -32,8 +32,8 @@ export const ResumeCTA: React.FC = () => {
           </a>
 
           <a
-            href="/SANTHOSH_KANNAN.pdf"
-            download="SANTHOSH_KANNAN.pdf"
+            href="/Santhosh_Kannan.pdf"
+            download="Santhosh_Kannan.pdf"
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400 font-bold text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
             <Download size={16} /> Download Resume

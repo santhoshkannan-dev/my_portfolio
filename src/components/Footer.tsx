@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
               <Mail size={14} /> Email
             </a>
             <a
-              href="/SANTHOSH_KANNAN.pdf"
+              href="/Santhosh_Kannan.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-emerald-400 transition-colors flex items-center gap-1.5"

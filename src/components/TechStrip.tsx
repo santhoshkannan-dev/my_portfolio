@@ -31,7 +31,7 @@ export const TechStrip: React.FC = () => {
         <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
 
         <div className="flex space-x-8 md:space-x-12 animate-marquee whitespace-nowrap py-2">
-          {technologies.concat(technologies).map((tech, idx) => (
+          {[...technologies, ...technologies, ...technologies, ...technologies].map((tech, idx) => (
             <div
               key={`${tech.name}-${idx}`}
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/5 hover:border-emerald-500/30 transition-all duration-300 group/item"

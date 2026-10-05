@@ -168,8 +168,8 @@ const HeroSection = () => {
           <div className="block">{splitText("That Solve Real Problems.")}</div>
         </h1>
 
-        <p className="intro-desc mt-3 md:mt-4 max-w-2xl text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed opacity-0">
-          I build scalable web applications, mobile apps, REST APIs, and AI-powered solutions using modern technologies.
+        <p className="intro-desc mt-4 max-w-3xl text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed opacity-0 font-normal">
+          Full Stack Software Developer & MCA Student specializing in high-performance web applications, mobile platforms, REST APIs, and AI solutions with React, Python & Django.
         </p>
 
         {/* Hero CTA Action Buttons */}
@@ -187,8 +187,8 @@ const HeroSection = () => {
             <Send size={14} /> Let's Talk
           </button>
           <a
-            href="/SANTHOSH_KANNAN.pdf"
-            download="SANTHOSH_KANNAN.pdf"
+            href="/Santhosh_Kannan.pdf"
+            download="Santhosh_Kannan.pdf"
             className="px-5 py-3 rounded-xl border border-white/10 hover:border-white/30 text-muted-foreground hover:text-white font-medium text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
           >
             <Download size={14} /> Resume
