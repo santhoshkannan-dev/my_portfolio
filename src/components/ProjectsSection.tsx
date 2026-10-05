@@ -59,6 +59,63 @@ const NavaKrishiMockup = () => (
   </div>
 );
 
+const VLinkInventoryMockup = () => (
+  <div className="relative w-full h-full min-h-[260px] md:min-h-[320px] bg-zinc-950/90 border border-amber-500/30 rounded-2xl overflow-hidden p-5 flex flex-col justify-between font-sans shadow-2xl">
+    <div className="flex justify-between items-center border-b border-white/10 pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
+        </div>
+        <span className="text-[10px] text-zinc-400 font-mono tracking-wider">VLINK_INVENTORY_LOGISTICS_v2.0</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+        <span className="text-[9px] text-amber-400 font-mono font-bold uppercase tracking-wider">Telecom Stock Live</span>
+      </div>
+    </div>
+
+    <div className="grid grid-cols-3 gap-2.5 my-3">
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+        <span className="text-[9px] text-zinc-400 uppercase font-mono block">Total Stock</span>
+        <span className="text-sm font-bold text-white font-mono">14,250 <span className="text-[9px] text-emerald-400 font-normal">Units</span></span>
+      </div>
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+        <span className="text-[9px] text-zinc-400 uppercase font-mono block">Dispatched</span>
+        <span className="text-sm font-bold text-amber-400 font-mono">180 Pcs</span>
+      </div>
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+        <span className="text-[9px] text-zinc-400 uppercase font-mono block">Alert Threshold</span>
+        <span className="text-sm font-bold text-red-400 font-mono">3 Items</span>
+      </div>
+    </div>
+
+    <div className="bg-white/[0.02] border border-white/10 rounded-xl p-3 flex-grow font-mono text-[10px] text-zinc-300">
+      <div className="flex justify-between font-bold text-[9px] text-zinc-400 border-b border-white/10 pb-1.5 mb-2 uppercase">
+        <span>Technician</span>
+        <span>Material</span>
+        <span>Qty</span>
+        <span>Status</span>
+      </div>
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center">
+          <span>Rahul M.</span>
+          <span>CAT-6 Cable</span>
+          <span>2 Rolls</span>
+          <span className="text-emerald-400 font-bold">Approved</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span>Justin K.</span>
+          <span>Fiber ONT</span>
+          <span>5 Units</span>
+          <span className="text-emerald-400 font-bold">Approved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const projects: Project[] = [
   {
     id: "meg",
@@ -99,6 +156,26 @@ const projects: Project[] = [
     github: "https://github.com/santhoshkannan-dev/NavaKrishi",
     live: "#",
     mockupType: "agriculture",
+  },
+  {
+    id: "vlink",
+    title: "VLink Inventory",
+    subtitle: "Telecom Logistics & Inventory System",
+    category: "FULL STACK",
+    desc: "A MERN stack inventory tracking web app engineered for telecom operations logistics management. Features stock logs, supplier shipments, technician dispatches with safety checks, RBAC controls, and automated PDF/Excel reports.",
+    problem: "Telecom service operators require real-time tracking of technician stock dispatches, material allocation logs, and automated depletion alerts.",
+    solution: "Engineered a MERN stack logistics application with role-based access controls, technician dispatch approvals, dynamic stock logs, and report exports.",
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "REST API"],
+    features: [
+      "Role-Based Access Control (Admin, Supervisor, Technician)",
+      "Technician dispatch & material allocation approvals",
+      "Real-time stock logs & inventory depletion alerts",
+      "Automated PDF & Excel report exports"
+    ],
+    role: "Full-Stack MERN Developer",
+    github: "https://github.com/santhoshkannan-dev/vlink_inventory",
+    live: "https://vlink-inventory.vercel.app",
+    mockupType: "vlink",
   },
   {
     id: "navayatra",
@@ -215,6 +292,10 @@ export const ProjectsSection: React.FC = () => {
                             loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60" />
+                        </div>
+                      ) : project.mockupType === "vlink" ? (
+                        <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
+                          <VLinkInventoryMockup />
                         </div>
                       ) : (
                         <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
