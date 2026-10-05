@@ -59,7 +59,7 @@ const HeroSection: React.FC = () => {
             <div className="mb-4">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                SOFTWARE DEVELOPER • MCA STUDENT
+                SOFTWARE DEVELOPER • FULL STACK ENGINEER
               </span>
             </div>
 
@@ -74,7 +74,7 @@ const HeroSection: React.FC = () => {
 
             {/* Personal Intro */}
             <p className="text-xs sm:text-sm md:text-base text-zinc-300 leading-relaxed font-normal mb-8 max-w-xl">
-              Full Stack Software Developer and MCA student specializing in high-performance web applications, mobile apps, REST APIs, and AI-powered solutions using React, Python, Django, PostgreSQL and modern cloud technologies.
+              Full Stack Software Developer specializing in high-performance web applications, mobile apps, REST APIs, and AI-powered solutions using React, Python, Django, PostgreSQL and modern cloud technologies.
             </p>
 
             {/* CTA Buttons */}
@@ -108,8 +108,8 @@ const HeroSection: React.FC = () => {
             {/* Credibility / Quick Stats Block */}
             <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4">
               <div>
-                <span className="block text-lg sm:text-xl font-bold font-mono text-white">MCA</span>
-                <span className="text-[10px] sm:text-xs text-zinc-400 uppercase tracking-wider">Student</span>
+                <span className="block text-lg sm:text-xl font-bold font-mono text-white">SOFTWARE</span>
+                <span className="text-[10px] sm:text-xs text-zinc-400 uppercase tracking-wider">Developer</span>
               </div>
               <div>
                 <span className="block text-lg sm:text-xl font-bold font-mono text-emerald-400">FULL STACK</span>

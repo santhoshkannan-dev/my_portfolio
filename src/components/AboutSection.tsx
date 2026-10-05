@@ -28,7 +28,7 @@ export const AboutSection: React.FC = () => {
 
             <div className="prose prose-invert max-w-none text-muted-foreground text-sm sm:text-base leading-relaxed space-y-4">
               <p>
-                I am <strong className="text-foreground font-semibold">Santhosh Kannan</strong>, a Software Developer and Master of Computer Applications (MCA) student at Marian College Kuttikkanam (Autonomous).
+                I am <strong className="text-foreground font-semibold">Santhosh Kannan</strong>, a Software Developer based in India specializing in building modern web applications, mobile platforms, REST APIs, and AI-powered solutions.
               </p>
               <p>
                 My engineering focus centers on building reliable full-stack web applications, scalable backend REST APIs, cross-platform mobile tools, and AI-powered data solutions using <span className="text-emerald-400 font-mono">React</span>, <span className="text-emerald-400 font-mono">Python</span>, <span className="text-emerald-400 font-mono">Django</span>, <span className="text-emerald-400 font-mono">PostgreSQL</span>, and cloud services.
@@ -41,8 +41,8 @@ export const AboutSection: React.FC = () => {
             {/* Quick Metrics / Focus Badges */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/10">
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-                <span className="text-xs font-mono uppercase text-muted-foreground block mb-1">Education</span>
-                <span className="text-sm font-bold text-foreground">MCA Student</span>
+                <span className="text-xs font-mono uppercase text-muted-foreground block mb-1">Role</span>
+                <span className="text-sm font-bold text-foreground">Software Developer</span>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
                 <span className="text-xs font-mono uppercase text-muted-foreground block mb-1">Core Tech</span>
