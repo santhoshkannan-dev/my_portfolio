@@ -1,666 +1,318 @@
-import { motion, useInView, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { ArrowUpRight, Github, ExternalLink, Sparkles, Cpu, Layers, TrendingUp, Monitor } from "lucide-react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useTheme } from "next-themes";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, Github, Sparkles, Code2, Layers, CheckCircle2, ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+interface Project {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: "WEB" | "MOBILE" | "AI / ML" | "FULL STACK";
+  desc: string;
+  problem: string;
+  solution: string;
+  tech: string[];
+  features: string[];
+  role: string;
+  github: string;
+  live: string;
+  image?: string;
+  mockupType?: string;
+}
 
-// ==========================================
-// 1. High-Fidelity CSS/SVG Interactive Mockups
-// ==========================================
-
-const NavaKrishiMockup = () => {
-  return (
-    <div className="relative w-full h-full min-h-[200px] bg-zinc-950/90 border border-emerald-500/20 rounded-2xl overflow-hidden p-4 flex flex-col justify-between font-sans">
-      {/* Top Header Bar */}
-      <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2">
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500/60" />
-            <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
-            <span className="w-2 h-2 rounded-full bg-emerald-500/60" />
-          </div>
-          <span className="text-[9px] text-zinc-500 font-mono tracking-wider">NAVAKRISHI_AI_v1.0</span>
+const NavaKrishiMockup = () => (
+  <div className="relative w-full h-full min-h-[260px] md:min-h-[320px] bg-zinc-950/90 border border-emerald-500/30 rounded-2xl overflow-hidden p-5 flex flex-col justify-between font-sans shadow-2xl">
+    <div className="flex justify-between items-center border-b border-white/10 pb-3">
+      <div className="flex items-center gap-2">
+        <div className="flex gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
         </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[8px] text-emerald-400 font-bold uppercase tracking-wider">Predicting Mode</span>
-        </div>
+        <span className="text-[10px] text-zinc-400 font-mono tracking-wider">NAVAKRISHI_AI_ANALYTICS_v1.0</span>
       </div>
-
-      {/* Main Graph Card */}
-      <div className="flex-grow flex flex-col justify-center min-h-[90px] relative">
-        <div className="absolute top-1 left-1 text-[8px] text-zinc-500 uppercase font-semibold">Yield Forecast</div>
-        <svg viewBox="0 0 300 100" className="w-full h-20 stroke-emerald-500 fill-none stroke-[2] drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">
-          <path d="M 0 80 Q 30 70 60 50 T 120 60 T 180 30 T 240 25 T 300 10" />
-          <path d="M 0 80 Q 30 70 60 50 T 120 60 T 180 30 T 240 25 T 300 10 L 300 100 L 0 100 Z" className="fill-emerald-500/5 stroke-none" />
-          <circle cx="240" cy="25" r="4.5" className="fill-emerald-400" />
-          <circle cx="240" cy="25" r="9" className="stroke-emerald-400/50 fill-none animate-ping" />
-        </svg>
-      </div>
-
-      {/* Info Boxes */}
-      <div className="grid grid-cols-2 gap-2 mt-2">
-        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2 flex flex-col justify-between">
-          <span className="text-[8px] text-zinc-500 uppercase font-semibold">Moisture Index</span>
-          <span className="text-xs font-bold text-emerald-400 font-display">42.8% <span className="text-[8px] font-normal text-emerald-500/70">Optimal</span></span>
-        </div>
-        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2 flex flex-col justify-between">
-          <span className="text-[8px] text-zinc-500 uppercase font-semibold">ML Recommendation</span>
-          <span className="text-xs font-bold text-white font-display">Sow Wheat Seeds</span>
-        </div>
+      <div className="flex items-center gap-1.5">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <span className="text-[9px] text-emerald-400 font-mono font-bold uppercase tracking-wider">AI Yield Predictor Live</span>
       </div>
     </div>
-  );
-};
 
-const NavaYatraMockup = () => {
-  return (
-    <div className="relative w-full max-w-[200px] h-[230px] mx-auto bg-zinc-950 border border-blue-500/20 rounded-[2.2rem] p-2 flex flex-col shadow-2xl overflow-hidden">
-      {/* Notch */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-3.5 bg-zinc-950 rounded-b-xl z-20 flex justify-center items-center">
-        <span className="w-10 h-0.5 bg-white/20 rounded-full" />
+    <div className="flex-grow flex flex-col justify-center min-h-[110px] relative my-2">
+      <div className="absolute top-0 left-0 text-[9px] text-zinc-400 font-mono uppercase">Soil Moisture & Crop Forecast Curve</div>
+      <svg viewBox="0 0 300 100" className="w-full h-24 stroke-emerald-400 fill-none stroke-[2.5] drop-shadow-[0_0_10px_rgba(16,185,129,0.4)]">
+        <path d="M 0 80 Q 30 70 60 50 T 120 60 T 180 30 T 240 25 T 300 10" />
+        <path d="M 0 80 Q 30 70 60 50 T 120 60 T 180 30 T 240 25 T 300 10 L 300 100 L 0 100 Z" className="fill-emerald-500/10 stroke-none" />
+        <circle cx="240" cy="25" r="5" className="fill-emerald-400" />
+        <circle cx="240" cy="25" r="10" className="stroke-emerald-400/50 fill-none animate-ping" />
+      </svg>
+    </div>
+
+    <div className="grid grid-cols-2 gap-3 pt-2">
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+        <span className="text-[9px] text-zinc-400 uppercase font-mono block">Moisture Index</span>
+        <span className="text-sm font-bold text-emerald-400 font-mono">42.8% <span className="text-[9px] font-normal text-emerald-500/80">Optimal</span></span>
       </div>
-
-      {/* Inner Screen */}
-      <div className="flex-grow flex flex-col bg-zinc-900 rounded-[1.8rem] overflow-hidden relative z-10 border border-white/5 mt-1">
-        <img
-          src="/nava1.png"
-          alt="NavaYatra UI"
-          className="w-full h-full object-cover object-top select-none pointer-events-none"
-        />
+      <div className="bg-white/[0.03] border border-white/10 rounded-xl p-2.5">
+        <span className="text-[9px] text-zinc-400 uppercase font-mono block">AI Recommendation</span>
+        <span className="text-xs font-bold text-white">Sow Wheat Seeds</span>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
-const NeXGeaRMockup = () => {
-  return (
-    <div className="relative w-full h-full min-h-[200px] bg-zinc-950 border border-purple-500/20 rounded-2xl overflow-hidden flex flex-col shadow-xl">
-      <div className="flex-grow rounded-xl overflow-hidden border border-white/5 m-2.5 relative">
-        <img
-          src="/nex1.png"
-          alt="NeXGeaR E-Store UI"
-          className="w-full h-full object-cover object-top select-none pointer-events-none"
-        />
-      </div>
-    </div>
-  );
-};
-
-const PortfolioMockup = () => {
-  return (
-    <div className="relative w-full h-full min-h-[200px] bg-zinc-950/90 border border-orange-500/20 rounded-2xl overflow-hidden p-4 flex flex-col justify-between font-mono">
-      {/* Terminal Title */}
-      <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2 font-sans">
-        <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-red-500/60" />
-          <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
-          <span className="w-2 h-2 rounded-full bg-emerald-500/60" />
-        </div>
-        <span className="text-[8px] text-zinc-500 font-semibold uppercase font-mono">portfolio_build.sh</span>
-      </div>
-
-      {/* Code Area */}
-      <div className="flex-grow flex flex-col justify-start text-[9px] text-orange-400 font-mono leading-relaxed select-none overflow-hidden">
-        <p className="text-zinc-500 font-semibold">$ npx vite build</p>
-        <p className="text-emerald-500">✓ 8 chunks generated successfully</p>
-        <p className="text-zinc-500 mt-1">$ cat info.json</p>
-        <div className="text-[8px] text-orange-300/90 pl-2 mt-0.5 leading-normal">
-          <span>{"{"}</span>
-          <p className="pl-3">"name": <span className="text-emerald-400">"Santhosh"</span>,</p>
-          <p className="pl-3">"role": <span className="text-emerald-400">"Software Developer"</span>,</p>
-          <p className="pl-3">"focus": <span className="text-emerald-400">["React", "Django", "AI"]</span></p>
-          <span>{"}"}</span>
-        </div>
-      </div>
-
-      {/* Bar footer */}
-      <div className="flex justify-between items-center mt-2 border-t border-white/5 pt-2 text-[8px] text-zinc-500 font-sans font-semibold uppercase">
-        <span>Web Server</span>
-        <span className="text-emerald-500 flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          Live
-        </span>
-      </div>
-    </div>
-  );
-};
-
-const VLinkInventoryMockup = () => {
-  return (
-    <div className="relative w-full h-full min-h-[200px] bg-zinc-950/90 border border-amber-500/20 rounded-2xl overflow-hidden p-4 flex flex-col justify-between font-sans">
-      {/* Top Header Bar */}
-      <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2">
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500/60" />
-            <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
-            <span className="w-2 h-2 rounded-full bg-emerald-500/60" />
-          </div>
-          <span className="text-[9px] text-zinc-500 font-mono tracking-wider">VLINK_IMS_v2.0</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-          <span className="text-[8px] text-amber-400 font-bold uppercase tracking-wider">Secure</span>
-        </div>
-      </div>
-
-      {/* Analytics Dashboard Widgets */}
-      <div className="grid grid-cols-3 gap-2 my-1">
-        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between h-12">
-          <span className="text-[6.5px] text-zinc-500 uppercase font-semibold">Stock Level</span>
-          <span className="text-[10px] font-bold text-white font-display">14.2k <span className="text-[5.5px] font-normal text-emerald-400">Opt</span></span>
-        </div>
-        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between h-12">
-          <span className="text-[6.5px] text-zinc-500 uppercase font-semibold">Dispatched</span>
-          <span className="text-[10px] font-bold text-amber-400 font-display">180 pcs</span>
-        </div>
-        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-1.5 flex flex-col justify-between h-12">
-          <span className="text-[6.5px] text-zinc-500 uppercase font-semibold">Low Stock</span>
-          <span className="text-[10px] font-bold text-red-500 font-display">03 <span className="text-[5.5px] font-normal text-red-400 animate-pulse">Alert</span></span>
-        </div>
-      </div>
-
-      {/* Technician Dispatch Grid table */}
-      <div className="bg-white/[0.01] border border-white/5 rounded-lg p-2 flex-grow mt-1 font-mono text-[7px] text-zinc-400">
-        <div className="flex justify-between font-sans font-bold text-[6.5px] text-zinc-500 border-b border-white/5 pb-1 mb-1 uppercase">
-          <span>Tech</span>
-          <span>Material</span>
-          <span>Qty</span>
-          <span>Status</span>
-        </div>
-        <div className="space-y-1">
-          <div className="flex justify-between items-center">
-            <span className="text-zinc-300">Rahul M.</span>
-            <span>CAT-6 Cable</span>
-            <span>2 rolls</span>
-            <span className="text-emerald-400">Approved</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-zinc-300">Justin K.</span>
-            <span>Fiber ONT</span>
-            <span>5 units</span>
-            <span className="text-emerald-400">Approved</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const MarianExcellenceGridMockup = () => {
-  return (
-    <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-indigo-500/20 shadow-xl group/img">
-      <img
-        src="/MEG.png"
-        alt="Marian Excellence Grid"
-        className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-40 pointer-events-none" />
-    </div>
-  );
-};
-
-const ProjectMockup = ({ type }: { type: string }) => {
-  switch (type) {
-    case "agriculture":
-      return <NavaKrishiMockup />;
-    case "mobile-booking":
-      return <NavaYatraMockup />;
-    case "ecommerce":
-      return <NeXGeaRMockup />;
-    case "portfolio":
-      return <PortfolioMockup />;
-    case "vlink-inventory":
-      return <VLinkInventoryMockup />;
-    case "marian-excellence-grid":
-      return <MarianExcellenceGridMockup />;
-    default:
-      return null;
-  }
-};
-
-// ==========================================
-// 2. Project Data Definitions
-// ==========================================
-const projects = [
+const projects: Project[] = [
   {
+    id: "meg",
     title: "Marian Excellence Grid",
-    subtitle: "Academic Evaluation Platform",
-    desc: "A role-based academic evaluation platform developed for Marian College Kuttikkanam to manage class achievements, submit evaluation records, verify activities, and recognize student excellence through a centralized digital system.",
-    tech: ["React", "Django", "PostgreSQL", "Google OAuth", "REST API"],
+    subtitle: "Class Evaluation & Academic Analytics Platform",
+    category: "WEB",
+    desc: "A centralized digital evaluation & performance tracking platform engineered for Marian College Kuttikkanam to streamline role-based class achievement records, activity verification, and student recognition.",
+    problem: "Manual paper-based academic evaluation processes created data silos, delayed activity verification, and made class performance tracking inefficient.",
+    solution: "Designed a secure role-based web system with automated evaluation workflows, real-time analytics grid dashboards, and Google OAuth integration.",
+    tech: ["React", "Django", "PostgreSQL", "Google OAuth", "REST API", "Tailwind CSS"],
+    features: [
+      "Role-Based Access Control (Admin, Faculty, Student)",
+      "Automated evaluation score calculations",
+      "Interactive analytics grid dashboard",
+      "Official production cloud deployment"
+    ],
+    role: "Full-Stack Developer & System Architect",
     github: "https://github.com/santhoshkannan-dev/Marian-Excellence-Grid.git",
     live: "https://excellence.marian.cloud",
-    gradient: "from-indigo-500/20 via-blue-500/10 to-purple-500/20",
-    glowColor: "rgba(99, 102, 241, 0.15)",
-    badgeColor: "text-indigo-700 bg-indigo-50 border-indigo-200/50 dark:text-indigo-400 dark:bg-indigo-950/30 dark:border-indigo-500/20",
-    borderColor: "group-hover:border-indigo-500/30",
-    colSpan: "md:col-span-2",
-    rowSpan: "md:row-span-1",
-    mockupType: "marian-excellence-grid",
+    image: "/MEG.png",
   },
   {
-    title: "NavaKrishi",
-    subtitle: "AI Smart Agriculture Platform",
-    desc: "An AI-powered agriculture ecosystem connecting farmers and consumers. Features crop prediction, machine learning recommendations, secure authentication, marketplace management, and responsive dashboards.",
-    tech: ["React", "Django", "PostgreSQL", "Python", "Machine Learning"],
+    id: "navakrishi",
+    title: "NavaKrishi AI",
+    subtitle: "AI-Powered Agriculture & Yield Prediction Platform",
+    category: "AI / ML",
+    desc: "An intelligent smart-agriculture web ecosystem connecting farmers and consumers while leveraging machine learning algorithms to predict soil health and recommended crop yields.",
+    problem: "Small-scale farmers lack data-driven insights into soil moisture, crop suitability, and direct-to-consumer marketplace pricing.",
+    solution: "Built an integrated web portal featuring Scikit-Learn prediction models, machine learning advisory algorithms, and a direct buyer-farmer marketplace.",
+    tech: ["Python", "Machine Learning", "Scikit-Learn", "React", "Django", "PostgreSQL"],
+    features: [
+      "AI soil moisture & crop suitability predictions",
+      "Farmer marketplace & inventory tracking",
+      "Machine learning recommendation engine",
+      "Responsive analytics dashboard"
+    ],
+    role: "Lead Full-Stack & ML Developer",
     github: "https://github.com/santhoshkannan-dev/NavaKrishi",
     live: "#",
-    gradient: "from-emerald-500/20 via-green-500/10 to-teal-500/20",
-    glowColor: "rgba(16, 185, 129, 0.15)",
-    badgeColor: "text-emerald-700 bg-emerald-50 border-emerald-200/50 dark:text-emerald-400 dark:bg-emerald-950/30 dark:border-emerald-500/20",
-    borderColor: "group-hover:border-emerald-500/30",
-    colSpan: "md:col-span-2",
-    rowSpan: "md:row-span-2",
     mockupType: "agriculture",
   },
   {
+    id: "navayatra",
     title: "NavaYatra",
-    subtitle: "KSRTC Booking Platform",
-    desc: "Cross-platform mobile application for KSRTC ticket booking featuring authentication, seat reservation, ticket history, REST APIs, and optimized travel management.",
-    tech: ["React Native", "Django", "PostgreSQL", "REST API"],
+    subtitle: "KSRTC Bus Booking & Travel Management Mobile App",
+    category: "MOBILE",
+    desc: "A cross-platform mobile booking application engineered for KSRTC passengers featuring seat reservation, live route details, digital ticket generation, and REST API integration.",
+    problem: "Public transit passengers face inconvenient offline ticket booking procedures and lack mobile-friendly schedule tracking.",
+    solution: "Developed a cross-platform mobile app with intuitive seat layout selection, instant ticket booking, history tracking, and Django REST APIs.",
+    tech: ["React Native", "Django REST Framework", "PostgreSQL", "Expo", "REST API"],
+    features: [
+      "Interactive seat reservation layout",
+      "Secure user authentication & booking history",
+      "Digital ticket QR generation",
+      "Optimized mobile UI/UX design"
+    ],
+    role: "Mobile App Developer",
     github: "https://github.com/santhoshkannan-dev/NavaYatra",
     live: "#",
-    gradient: "from-blue-500/20 via-cyan-500/10 to-sky-500/20",
-    glowColor: "rgba(59, 130, 246, 0.15)",
-    badgeColor: "text-blue-700 bg-blue-50 border-blue-200/50 dark:text-blue-400 dark:bg-blue-950/30 dark:border-blue-500/20",
-    borderColor: "group-hover:border-blue-500/30",
-    colSpan: "md:col-span-1",
-    rowSpan: "md:row-span-1",
-    mockupType: "mobile-booking",
+    image: "/nava1.png",
   },
   {
+    id: "nexgear",
     title: "NeXGeaR",
-    subtitle: "Gaming PC E-Commerce",
-    desc: "Complete gaming computer marketplace with authentication, shopping cart, wishlist, product management, admin dashboard, and secure checkout.",
-    tech: ["React", "Django", "PostgreSQL"],
+    subtitle: "Gaming PC Customization & E-Commerce Platform",
+    category: "FULL STACK",
+    desc: "A full-featured e-commerce platform dedicated to custom gaming PC hardware building, part compatibility checking, shopping cart management, and admin inventory control.",
+    problem: "PC builders require clear component compatibility checks, specs visualization, and streamlined online purchasing.",
+    solution: "Engineered a responsive e-commerce web platform with dynamic component filtering, shopping cart/wishlist management, and relational database schema.",
+    tech: ["React", "Django", "PostgreSQL", "REST API", "Tailwind CSS"],
+    features: [
+      "Custom PC component compatibility checker",
+      "Shopping cart & wishlist management",
+      "Admin inventory management dashboard",
+      "Relational database schema"
+    ],
+    role: "Full-Stack Developer",
     github: "https://github.com/santhoshkannan-dev/NeXGeaR",
     live: "#",
-    gradient: "from-purple-500/20 via-violet-500/10 to-pink-500/20",
-    glowColor: "rgba(139, 92, 246, 0.15)",
-    badgeColor: "text-purple-700 bg-purple-50 border-purple-200/50 dark:text-purple-400 dark:bg-purple-950/30 dark:border-purple-500/20",
-    borderColor: "group-hover:border-purple-500/30",
-    colSpan: "md:col-span-1",
-    rowSpan: "md:row-span-1",
-    mockupType: "ecommerce",
-  },
-  {
-    title: "VLink Inventory",
-    subtitle: "Telecom Logistics & Inventory System",
-    desc: "A MERN stack inventory tracking web app engineered for telecom operations logistics management. Features stock logs, supplier shipments, technician dispatches with safety checks, RBAC controls, and automated PDF/Excel reports.",
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
-    github: "https://github.com/santhoshkannan-dev/vlink_inventory",
-    live: "https://vlink-inventory.vercel.app",
-    gradient: "from-amber-500/20 via-orange-500/10 to-yellow-500/20",
-    glowColor: "rgba(245, 158, 11, 0.15)",
-    badgeColor: "text-amber-700 bg-amber-50 border-amber-200/50 dark:text-amber-400 dark:bg-amber-950/30 dark:border-amber-500/20",
-    borderColor: "group-hover:border-amber-500/30",
-    colSpan: "md:col-span-2",
-    rowSpan: "md:row-span-1",
-    mockupType: "vlink-inventory",
+    image: "/nex1.png",
   },
 ];
 
-// ==========================================
-// 3. Project Card Component (3D Tilt & Spotlights)
-// ==========================================
+export const ProjectsSection: React.FC = () => {
+  const [filter, setFilter] = useState<"ALL" | "WEB" | "MOBILE" | "AI / ML" | "FULL STACK">("ALL");
 
-const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(cardRef, { once: true, margin: "-80px" });
-  const { theme } = useTheme();
-
-  const [hovered, setHovered] = useState(false);
-  const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
-
-  // 3D Tilt motion values
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springX = useSpring(mouseX, { stiffness: 100, damping: 15 });
-  const springY = useSpring(mouseY, { stiffness: 100, damping: 15 });
-
-  // Tilt transform values
-  const rotateX = useTransform(springY, [-0.5, 0.5], ["9deg", "-9deg"]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], ["-9deg", "9deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    // Calculate normalized relative mouse coordinates (-0.5 to 0.5)
-    const valX = (e.clientX - rect.left) / width - 0.5;
-    const valY = (e.clientY - rect.top) / height - 0.5;
-
-    mouseX.set(valX);
-    mouseY.set(valY);
-
-    // Calculate spotlight position in pixels relative to viewport client
-    setSpotlightPos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  const isLarge = project.colSpan === "md:col-span-2";
+  const filteredProjects = projects.filter(
+    (p) => filter === "ALL" || p.category === filter
+  );
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className={`
-        relative overflow-hidden rounded-[2rem] border border-border bg-card/40 backdrop-blur-md p-6 md:p-8 flex flex-col justify-between transition-all duration-500 group cursor-none
-        ${project.colSpan} ${project.rowSpan} ${project.borderColor} min-h-[360px]
-      `}
-    >
-      {/* Background Gradient Blob */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none`}
-        style={{ transform: "translateZ(-10px)" }}
-      />
-
-      {/* Cursor-Tracking Spotlight */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
-        style={{
-          background: `radial-gradient(350px circle at ${spotlightPos.x}px ${spotlightPos.y}px, ${project.glowColor}, transparent 80%)`,
-        }}
-      />
-
-      {/* Floating Shimmer Sweep */}
-      <motion.div
-        animate={{
-          x: hovered ? "180%" : "-180%",
-        }}
-        transition={{
-          duration: 1.4,
-          ease: "easeInOut",
-        }}
-        className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none"
-      />
-
-      {/* Interactive Layout */}
-      {isLarge ? (
-        // For larger grids (2 columns): Render text on left, mockup on right (stacked on mobile)
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full w-full relative z-20" style={{ transform: "translateZ(30px)" }}>
-          <div className="lg:col-span-7 flex flex-col justify-between h-full">
-            <div>
-              <p className="uppercase tracking-[3px] text-[10px] text-primary font-bold mb-2.5 font-display flex items-center gap-1.5">
-                <Sparkles size={12} className="text-primary animate-pulse" />
-                {project.subtitle}
-              </p>
-              <h3 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight leading-none mb-4">
-                {project.title}
-              </h3>
-              <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6 font-sans">
-                {project.desc}
-              </p>
-            </div>
-
-            <div>
-              {/* Tech Badges */}
-              <div className="flex flex-wrap gap-1.5 mb-6">
-                {project.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className={`px-3 py-1.5 rounded-full border text-xs font-semibold tracking-wide font-sans ${project.badgeColor}`}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex items-center gap-3">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-secondary border border-border hover:bg-secondary/80 text-secondary-foreground text-xs font-bold transition-all duration-300 cursor-none"
-                >
-                  <Github size={14} />
-                  GitHub
-                </a>
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-foreground text-background hover:bg-foreground/90 text-xs font-bold transition-all duration-300 cursor-none shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
-                >
-                  <ExternalLink size={14} />
-                  Live Demo
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5 w-full flex items-center justify-center">
-            <div className="w-full max-w-[280px] lg:max-w-none group-hover:scale-[1.03] transition-transform duration-500">
-              <ProjectMockup type={project.mockupType} />
-            </div>
-          </div>
-        </div>
-      ) : (
-        // For smaller grids (1 column): Text and visual mockup stacked
-        <div className="flex flex-col h-full justify-between w-full relative z-20" style={{ transform: "translateZ(30px)" }}>
-          <div className="flex flex-col">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <p className="uppercase tracking-[3px] text-[9px] text-primary font-bold mb-1 font-display">
-                  {project.subtitle}
-                </p>
-                <h3 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight leading-none">
-                  {project.title}
-                </h3>
-              </div>
-              <motion.div
-                animate={{ rotate: hovered ? 45 : 0 }}
-                transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                className="w-9 h-9 rounded-full border border-border flex items-center justify-center bg-secondary text-muted-foreground group-hover:text-primary group-hover:border-primary transition-colors"
-              >
-                <ArrowUpRight size={16} />
-              </motion.div>
-            </div>
-
-            <p className="text-muted-foreground text-xs md:text-sm leading-relaxed mb-6 font-sans">
-              {project.desc}
+    <section id="projects" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+          <div className="max-w-3xl">
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
+              CASE STUDIES & WORK
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1] mb-4">
+              Featured Projects
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Selected digital products and software systems I've designed, architected, and built.
             </p>
           </div>
 
-          {/* Embedded Mockup Widget */}
-          <div className="w-full my-4 group-hover:scale-[1.03] transition-transform duration-500">
-            <ProjectMockup type={project.mockupType} />
-          </div>
-
-          <div className="mt-auto">
-            {/* Badges */}
-            <div className="flex flex-wrap gap-1 mb-5">
-              {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className={`px-2 py-1 rounded-full border text-[10px] font-semibold font-sans ${project.badgeColor}`}
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-2">
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-secondary border border-border hover:bg-secondary/80 text-secondary-foreground text-[11px] font-bold transition-all duration-300 cursor-none flex-grow justify-center"
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap gap-2 p-1.5 rounded-xl bg-white/[0.03] border border-white/10 shrink-0">
+            {(["ALL", "WEB", "MOBILE", "AI / ML", "FULL STACK"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setFilter(tab)}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
+                  filter === tab
+                    ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                    : "text-muted-foreground hover:text-white hover:bg-white/5"
+                }`}
               >
-                <Github size={12} />
-                GitHub
-              </a>
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-foreground text-background hover:bg-foreground/90 text-[11px] font-bold transition-all duration-300 cursor-none shadow-md flex-grow justify-center"
-              >
-                <ExternalLink size={12} />
-                Live
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-    </motion.div>
-  );
-};
-
-// ==========================================
-// 4. Main Component (GSAP ScrollTrigger Pinning)
-// ==========================================
-
-const ProjectsSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const leftColRef = useRef<HTMLDivElement>(null);
-  const rightColRef = useRef<HTMLDivElement>(null);
-
-  const headingRef = useRef<HTMLDivElement>(null);
-  const isHeadingInView = useInView(headingRef, { once: true, margin: "-100px" });
-
-  useGSAP(() => {
-    // Only pin on desktop viewports to avoid mobile viewport issues
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: leftColRef.current,
-        pinSpacing: false,
-      });
-    });
-
-    gsap.fromTo(".section-title__square",
-      { rotation: 0 },
-      {
-        rotation: 360,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        }
-      }
-    );
-
-    return () => mm.revert();
-  }, { scope: containerRef });
-
-  return (
-    <section
-      id="projects"
-      ref={containerRef}
-      className="relative border-b border-border bg-background py-20 overflow-hidden"
-    >
-      {/* Background Animated Gradient Blobs */}
-      <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-emerald-500/5 filter blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: "8s" }} />
-      <div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-blue-500/5 filter blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: "12s" }} />
-
-      <div className="max-w-[85rem] mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-8 relative z-10">
-
-        {/* Left Column (GSAP Pinned Column) */}
-        <div
-          ref={leftColRef}
-          className="md:col-span-5 h-fit md:h-[85vh] flex flex-col justify-center py-8 relative z-20"
-        >
-          {/* Subtle rotating square decoration */}
-          <div className="section-title__square absolute w-[260px] h-[260px] border border-emerald-500/10 rounded-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" />
-          <div ref={headingRef} className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={isHeadingInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="space-y-4"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-950/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase">
-                <Monitor size={12} className="text-emerald-400" />
-                Featured Works
-              </div>
-
-              <h2 className="font-display text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-extrabold uppercase tracking-tighter text-foreground leading-none">
-                Real World
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-500 font-extrabold">
-                  Solutions
-                </span>
-              </h2>
-
-              <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
-                A selection of modular, production-ready applications engineered with React,
-                Django, PostgreSQL, React Native, and high-performance UI toolkits.
-              </p>
-            </motion.div>
-
-            {/* Interactive Stats Block */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="grid grid-cols-2 gap-4 border-t border-border pt-6 max-w-sm"
-            >
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-foreground font-display flex items-center gap-1.5">
-                  <Layers size={18} className="text-emerald-500" />
-                  04+
-                </div>
-                <div className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground font-sans">Full Builds</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-foreground font-display flex items-center gap-1.5">
-                  <Cpu size={18} className="text-blue-500" />
-                  10+
-                </div>
-                <div className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground font-sans">Tech Integrations</div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Right Column (Scrolling Bento Grid) */}
-        <div ref={rightColRef} className="md:col-span-7 w-full flex flex-col justify-start relative z-10 py-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-auto">
-            {projects.map((project, i) => (
-              <ProjectCard key={project.title} project={project} i={i} />
+                {tab}
+              </button>
             ))}
           </div>
         </div>
 
+        {/* Case Studies Container (Alternating Layout) */}
+        <div className="space-y-16 md:space-y-24">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, idx) => {
+              const isEven = idx % 2 === 0;
+
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl glass border border-border/60 hover:border-emerald-500/40 transition-all duration-500 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent shadow-2xl`}
+                >
+                  {/* Media Showcase Column */}
+                  <div
+                    className={`lg:col-span-6 w-full h-full flex items-center justify-center ${
+                      isEven ? "lg:order-1" : "lg:order-2"
+                    }`}
+                  >
+                    <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 bg-zinc-950 group">
+                      {project.image ? (
+                        <div className="relative w-full aspect-[16/10] overflow-hidden">
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60" />
+                        </div>
+                      ) : (
+                        <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
+                          <NavaKrishiMockup />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Case Study Details Column */}
+                  <div
+                    className={`lg:col-span-6 flex flex-col justify-between ${
+                      isEven ? "lg:order-2" : "lg:order-1"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                          {project.category}
+                        </span>
+                        <span className="text-xs font-mono text-muted-foreground">{project.role}</span>
+                      </div>
+
+                      <h3 className="text-2xl sm:text-3xl font-black text-foreground mb-1 tracking-tight">
+                        {project.title}
+                      </h3>
+                      <p className="text-xs font-mono text-emerald-400/90 mb-4 uppercase tracking-wider font-semibold">
+                        {project.subtitle}
+                      </p>
+
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                        {project.desc}
+                      </p>
+
+                      {/* Problem & Solution */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl bg-white/[0.02] border border-white/5 font-sans">
+                        <div>
+                          <span className="text-[10px] font-mono uppercase text-red-400 font-bold block mb-1">Problem</span>
+                          <p className="text-xs text-zinc-300 leading-snug">{project.problem}</p>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold block mb-1">Solution</span>
+                          <p className="text-xs text-zinc-300 leading-snug">{project.solution}</p>
+                        </div>
+                      </div>
+
+                      {/* Key Features */}
+                      <div className="space-y-1.5 mb-6">
+                        {project.features.map((feat, fIdx) => (
+                          <div key={fIdx} className="flex items-center gap-2 text-xs text-zinc-300">
+                            <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+                            <span>{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Tech Stack Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-8">
+                        {project.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-secondary/80 text-foreground/80 border border-border/50"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Links */}
+                    <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                      {project.live && project.live !== "#" && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-white text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <ExternalLink size={14} /> Live Demo
+                        </a>
+                      )}
+                      {project.github && project.github !== "#" && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <Github size={14} /> View Code
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

@@ -525,31 +525,53 @@ const HeroSection = () => {
       <div className="absolute inset-y-0 left-[10%] w-px bg-border/20 hidden md:block" />
       <div className="absolute inset-y-0 right-[10%] w-px bg-border/20 hidden md:block" />
 
-      {/* Main Intro Text Overlay with React Bits Hero 10 Integration */}
+      {/* Main Intro Text Overlay with React Bits Hero 7 Integration */}
       <div
         ref={introRef}
-        className="absolute inset-0 z-20 flex flex-col items-center justify-start pt-20 xs:pt-24 md:pt-24 lg:pt-28 pb-12 md:pb-16 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-start pt-20 xs:pt-24 md:pt-22 lg:pt-24 pb-12 md:pb-16 px-4 sm:px-6 text-center opacity-0 pointer-events-none overflow-y-auto md:overflow-hidden max-h-screen"
       >
-        <span className="intro-badge mb-2 md:mb-3 rounded-full border border-primary/30 bg-primary/10 px-4 md:px-5 py-1 md:py-1.5 text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary backdrop-blur-xl opacity-0">
+        <span className="intro-badge mb-3 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 md:px-5 py-1.5 text-[10px] md:text-xs font-mono font-semibold uppercase tracking-[0.35em] text-emerald-400 backdrop-blur-xl opacity-0">
           Software Developer
         </span>
 
         <h1
-          className="max-w-5xl text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight"
+          className="max-w-5xl text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight text-foreground"
           style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
         >
           <div className="block">{splitText("Building")}</div>
-          <div className="block my-1 sm:my-1.5">{splitText("Scalable Digital", true)}</div>
-          <div className="block">{splitText("Products")}</div>
+          <div className="block my-1 sm:my-1.5">{splitText("Digital Products", true)}</div>
+          <div className="block">{splitText("That Solve Real Problems.")}</div>
         </h1>
 
-        <p className="intro-desc mt-2 md:mt-3 max-w-2xl text-xs sm:text-sm text-muted-foreground leading-relaxed opacity-0">
-          Building scalable web applications, mobile apps, REST APIs, and AI-powered
-          solutions using React, Django, Python, PostgreSQL, and AWS.
+        <p className="intro-desc mt-3 md:mt-4 max-w-2xl text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed opacity-0">
+          I build scalable web applications, mobile apps, REST APIs, and AI-powered solutions using modern technologies.
         </p>
 
+        {/* Hero CTA Action Buttons */}
+        <div className="mt-5 md:mt-6 flex flex-wrap items-center justify-center gap-3 pointer-events-auto z-30">
+          <button
+            onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-6 py-2.5 md:py-3 rounded-xl bg-emerald-500 hover:bg-white text-black font-bold text-xs md:text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer"
+          >
+            View My Work
+          </button>
+          <button
+            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-6 py-2.5 md:py-3 rounded-xl border border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400 font-bold text-xs md:text-sm uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+          >
+            <Send size={14} /> Let's Talk
+          </button>
+          <a
+            href="/SANTHOSH_KANNAN.pdf"
+            download="SANTHOSH_KANNAN.pdf"
+            className="px-5 py-2.5 md:py-3 rounded-xl border border-white/10 hover:border-white/30 text-muted-foreground hover:text-white font-medium text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+          >
+            <Download size={14} /> Resume
+          </a>
+        </div>
+
         {/* React Bits Pro Hero 7 3D Rotating Image Carousel */}
-        <div className="hero-7-carousel-wrapper relative w-full max-w-[1100px] mx-auto mt-2 md:mt-4 pointer-events-auto">
+        <div className="hero-7-carousel-wrapper relative w-full max-w-[1100px] mx-auto mt-4 md:mt-6 pointer-events-auto">
           <Hero7Carousel items={hero7Items} />
         </div>
       </div>

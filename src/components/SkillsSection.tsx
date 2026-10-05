@@ -1,148 +1,138 @@
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import React from "react";
+import { motion } from "framer-motion";
+import { Layout, Server, Database as DbIcon, Cpu, Cloud, Smartphone } from "lucide-react";
 
-const skillCategories = [
+interface SkillCategory {
+  title: string;
+  icon: React.ElementType;
+  skills: { name: string; level?: string }[];
+}
+
+const skillCategories: SkillCategory[] = [
   {
-    title: "Frontend",
+    title: "FRONTEND",
+    icon: Layout,
     skills: [
-      "React.js",
-      "React Native",
-      "JavaScript",
-      "HTML5",
-      "CSS3",
-      "Responsive UI",
+      { name: "React" },
+      { name: "TypeScript" },
+      { name: "JavaScript (ES6+)" },
+      { name: "HTML5 & CSS3" },
+      { name: "Tailwind CSS" },
+      { name: "Vite" },
+      { name: "Next.js" },
     ],
-    color: "from-blue-500 to-cyan-500",
   },
   {
-    title: "Backend",
+    title: "BACKEND",
+    icon: Server,
     skills: [
-      "Node.js",
-      "Express.js",
-      "Django",
-      "Django REST Framework",
-      "REST APIs",
-      "Authentication",
+      { name: "Python" },
+      { name: "Django" },
+      { name: "Django REST Framework" },
+      { name: "RESTful APIs" },
+      { name: "Node.js" },
+      { name: "Express.js" },
     ],
-    color: "from-emerald-500 to-green-500",
   },
   {
-    title: "Databases",
+    title: "DATABASE",
+    icon: DbIcon,
     skills: [
-      "PostgreSQL",
-      "MongoDB",
-      "MySQL",
-      "Database Design",
-      "SQL",
-      "Optimization",
+      { name: "PostgreSQL" },
+      { name: "MySQL" },
+      { name: "MongoDB" },
+      { name: "Database Schema Design" },
+      { name: "ORMs & Querying" },
     ],
-    color: "from-orange-500 to-yellow-500",
   },
   {
-    title: "Programming",
+    title: "AI / DATA",
+    icon: Cpu,
     skills: [
-      "Python",
-      "JavaScript",
-      "C",
-      "SQL",
-      "Problem Solving",
-      "Data Structures",
+      { name: "Machine Learning" },
+      { name: "Scikit-Learn" },
+      { name: "OpenCV" },
+      { name: "Pandas & NumPy" },
+      { name: "Data Analytics" },
     ],
-    color: "from-violet-500 to-fuchsia-500",
   },
   {
-    title: "Cloud & DevOps",
+    title: "CLOUD / DEVOPS",
+    icon: Cloud,
     skills: [
-      "AWS",
-      "Linux",
-      "Git",
-      "GitHub",
-      "Docker",
-      "Deployment",
+      { name: "AWS" },
+      { name: "Docker" },
+      { name: "Linux Server Administration" },
+      { name: "Git & GitHub" },
+      { name: "CI/CD Workflows" },
     ],
-    color: "from-sky-500 to-indigo-500",
   },
   {
-    title: "Machine Learning",
+    title: "MOBILE",
+    icon: Smartphone,
     skills: [
-      "Machine Learning",
-      "Python",
-      "Data Analytics",
-      "OpenCV",
-      "AI Fundamentals",
-      "Model Integration",
+      { name: "React Native" },
+      { name: "Expo" },
+      { name: "Mobile UI Design" },
+      { name: "Cross-Platform Build" },
     ],
-    color: "from-pink-500 to-rose-500",
   },
 ];
 
-const SkillsSection = () => {
-  const ref = useRef(null);
-  const sectionRef = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], ["40px", "-40px"]);
-
+export const SkillsSection: React.FC = () => {
   return (
-    <section id="skills" className="section-padding relative overflow-hidden" ref={sectionRef}>
-      <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], ["60px", "-60px"]) }}
-        className="absolute -left-40 top-1/2 w-[400px] h-[400px] rounded-full bg-accent/5 blur-[130px] pointer-events-none"
-      />
-
-      <div className="max-w-6xl mx-auto relative" ref={ref}>
-        <motion.div
-          style={{ y: parallaxY }}
-          initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
-          animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-16"
-        >
-          <p className="text-primary font-medium tracking-widest uppercase text-sm mb-3">
-            Technical Skills
-          </p>
-
-          <h2 className="font-display text-3xl md:text-5xl font-bold">
-            Technologies I
-            <span className="gradient-text"> Work With</span>
+    <section id="stack" className="py-20 md:py-28 bg-zinc-950/80 border-b border-border/60 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-14 md:mb-20">
+          <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
+            TECHNICAL EXPERTISE
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1] mb-4">
+            Technology Stack
           </h2>
-
-          <p className="mt-4 max-w-2xl text-muted-foreground text-lg">
-            I enjoy building scalable web and mobile applications using modern
-            technologies while continuously expanding my expertise in cloud computing,
-            machine learning, and software engineering.
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+            Core programming languages, frameworks, databases, and deployment tools I utilize across production software development.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((cat, i) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 40, rotateX: 8 }}
-              animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 * i, ease: [0.25, 0.46, 0.45, 0.94] }}
-              whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
-              className="glass rounded-xl p-6 group hover:border-primary/30 transition-all duration-500 hover:neon-glow relative overflow-hidden"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${cat.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-              <h3 className="font-display font-semibold text-lg mb-4">{cat.title}</h3>
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill, si) => (
-                  <motion.span
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.4, delay: 0.1 * i + 0.05 * si }}
-                    className="px-3 py-1.5 rounded-md text-sm bg-secondary text-secondary-foreground border border-border hover:border-primary/40 hover:text-primary transition-all duration-300"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+        {/* Categories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {skillCategories.map((cat, idx) => {
+            const IconComponent = cat.icon;
+            return (
+              <motion.div
+                key={cat.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="p-6 md:p-7 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                    <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <IconComponent size={20} />
+                    </div>
+                    <h3 className="text-base font-mono font-bold tracking-wider text-foreground">
+                      {cat.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {cat.skills.map((skill) => (
+                      <span
+                        key={skill.name}
+                        className="text-xs font-mono px-3 py-1.5 rounded-lg bg-white/[0.04] text-zinc-200 border border-white/10 hover:border-emerald-500/40 hover:text-emerald-400 transition-colors"
+                      >
+                        {skill.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

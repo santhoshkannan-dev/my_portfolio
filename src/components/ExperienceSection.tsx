@@ -1,374 +1,123 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Trophy, Users, Target, Calendar, MapPin, Cpu, CheckCircle2, GraduationCap, Quote, BookOpen } from "lucide-react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React from "react";
+import { motion } from "framer-motion";
+import { GraduationCap, Code, Award, Calendar } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+interface TimelineItem {
+  period: string;
+  title: string;
+  subtitle: string;
+  desc: string;
+  tech?: string[];
+  icon: React.ElementType;
+}
 
-const achievements = [
+const timelineItems: TimelineItem[] = [
   {
-    icon: Cpu,
-    title: "AI Powered Applications",
-    desc: "Developed AI-integrated applications including crop prediction and recommendation systems using Python and Machine Learning."
+    period: "PRESENT",
+    title: "Master of Computer Applications (MCA)",
+    subtitle: "Marian College Kuttikkanam (Autonomous)",
+    desc: "Advanced postgraduate studies focusing on enterprise software architecture, full-stack web engineering, database administration, and artificial intelligence.",
+    tech: ["Advanced Java", "Python", "Web Frameworks", "Software Engineering"],
+    icon: GraduationCap,
   },
   {
-    icon: Trophy,
-    title: "Academic Projects",
-    desc: "Successfully completed multiple software development web and mobile projects using React, Django, PostgreSQL and React Native."
+    period: "2024 - PRESENT",
+    title: "Full-Stack & AI Project Development",
+    subtitle: "Autonomous & Academic Projects",
+    desc: "Designed, architected, and built production web platforms including Marian Excellence Grid, NavaKrishi AI, NavaYatra bus booking app, and NeXGeaR PC marketplace.",
+    tech: ["React", "Django", "PostgreSQL", "Machine Learning", "REST APIs"],
+    icon: Code,
   },
   {
-    icon: Users,
-    title: "Continuous Learning",
-    desc: "Actively improving problem-solving skills through LeetCode, HackerRank, NPTEL, Cisco, AWS and self-learning."
+    period: "COMPLETED",
+    title: "Bachelor of Computer Applications (BCA)",
+    subtitle: "Undergraduate Computer Science Education",
+    desc: "Graduated with foundational expertise in algorithms, relational databases, object-oriented programming, data structures, and web technologies.",
+    tech: ["C++", "Java", "SQL", "Web Fundamentals"],
+    icon: GraduationCap,
   },
   {
-    icon: Target,
-    title: "Open Source & GitHub",
-    desc: "Publishing projects on GitHub while continuously learning modern development practices."
-  }
+    period: "ONGOING",
+    title: "Certifications & Technical Workshops",
+    subtitle: "Continuous Professional Development",
+    desc: "Participated in hands-on technical workshops, full-stack development certifications, cloud deployment practice, and AI application development.",
+    tech: ["AWS Fundamentals", "Docker", "Python AI", "REST Architecture"],
+    icon: Award,
+  },
 ];
 
-const certifications = [
-  "Python Essentials — Cisco",
-  "Python for Data Science",
-  "Networking Fundamentals",
-  "SAP S4/HANA",
-  "Tally Essential",
-  "NPTEL Introduction to Machine Learning"
-];
-
-const timeline = [
-  {
-    year: "2021",
-    title: "Bachelor of Computer Applications",
-    subtitle: "Marian College",
-    details: null
-  },
-  {
-    year: "2024",
-    title: "Completed BCA",
-    subtitle: "Marian College",
-    details: null
-  },
-  {
-    year: "2024",
-    title: "Diploma in Finance & Accounting",
-    subtitle: "Axionz, Kochi",
-    details: ["Specialized in Finance & Accounts"]
-  },
-  {
-    year: "2025",
-    title: "Advanced Software Engineering",
-    subtitle: "Marian College Kuttikkanam Autonomous",
-    details: null
-  },
-  {
-    year: "Present",
-    title: "Building & Learning",
-    subtitle: "Marian College Kuttikkanam Autonomous",
-    details: [
-      "Building Software Applications",
-      "Learning AWS",
-      "Machine Learning",
-      "React Native"
-    ]
-  }
-];
-
-const TimelineItem = ({ item, idx }: { item: typeof timeline[number]; idx: number }) => {
-  const elementRef = useRef(null);
-  const isInView = useInView(elementRef, { once: true, margin: "-50px" });
-
+export const ExperienceSection: React.FC = () => {
   return (
-    <div ref={elementRef} className="relative">
-      {/* Timeline dot */}
-      <div className="absolute -left-[33px] md:-left-[49px] top-1.5 w-4 h-4 rounded-full bg-primary border-4 border-background animate-pulse shadow-[0_0_10px_hsl(var(--primary))]" />
-
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-        className="glass rounded-xl p-5 border border-border hover:border-primary/20 transition-all duration-300"
-      >
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold border border-primary/20">
-            {item.year}
+    <section id="journey" className="py-20 md:py-28 bg-zinc-950/90 border-b border-border/60 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-14 md:mb-20">
+          <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
+            CAREER & EDUCATION
           </span>
-          <h4 className="font-display font-semibold text-lg text-foreground">{item.title}</h4>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1] mb-4">
+            Journey & Background
+          </h2>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+            Academic milestones, full-stack software development history, and technical training.
+          </p>
         </div>
 
-        {item.subtitle && (
-          <p className="text-sm text-muted-foreground mb-2 font-medium">{item.subtitle}</p>
-        )}
-
-        {item.details && (
-          <ul className="mt-3 space-y-1.5">
-            {item.details.map((detail, index) => (
-              <li key={index} className="flex gap-2 text-sm text-muted-foreground items-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                <span>{detail}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </motion.div>
-    </div>
-  );
-};
-
-const AchievementCard = ({ item, i }: { item: typeof achievements[number]; i: number }) => {
-  const cardRef = useRef(null);
-  const inView = useInView(cardRef, { once: true, margin: "-50px" });
-
-  return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 30, scale: 0.98 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.6, delay: 0.1 * i, ease: "easeOut" }}
-      whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.3 } }}
-      className="glass rounded-xl p-6 md:p-8 group border border-border hover:border-primary/30 transition-all duration-500 hover:neon-glow"
-    >
-      <div className="flex gap-4 items-center mb-4">
-        <motion.div
-          className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors duration-300"
-          whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
-        >
-          <item.icon className="text-primary" size={20} />
-        </motion.div>
-        <h4 className="font-display font-semibold text-lg md:text-xl text-foreground">{item.title}</h4>
-      </div>
-      <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{item.desc}</p>
-    </motion.div>
-  );
-};
-
-const CertificationCard = ({ cert, index }: { cert: string; index: number }) => {
-  const cardRef = useRef(null);
-  const inView = useInView(cardRef, { once: true, margin: "-50px" });
-
-  return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
-      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-      className="glass rounded-xl p-4 flex items-center gap-3 border border-border hover:border-primary/20 transition-all duration-300 hover:neon-glow-small"
-    >
-      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary">
-        <CheckCircle2 size={16} />
-      </div>
-      <span className="text-foreground text-sm font-medium">{cert}</span>
-    </motion.div>
-  );
-};
-
-const ExperienceSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const leftColRef = useRef<HTMLDivElement>(null);
-  const rightColRef = useRef<HTMLDivElement>(null);
-
-  const inViewRef = useRef(null);
-  const inView = useInView(inViewRef, { once: true, margin: "-100px" });
-
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: leftColRef.current,
-        pinSpacing: false,
-      });
-    });
-
-    gsap.fromTo(".section-title__square",
-      { rotation: 0 },
-      {
-        rotation: 360,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        }
-      }
-    );
-
-    return () => mm.revert();
-  }, { scope: containerRef });
-
-  return (
-    <section id="journey" className="border-b border-border bg-background relative overflow-hidden" ref={containerRef}>
-      <div className="max-w-[90rem] mx-auto border-x border-border grid grid-cols-1 md:grid-cols-12 relative">
-
-        {/* Left Column - Pinned */}
-        <div
-          ref={leftColRef}
-          className="md:col-span-5 p-6 lg:p-8 border-b md:border-b-0 md:border-r border-border h-fit md:h-screen flex flex-col justify-center bg-glass backdrop-blur-md relative z-10"
-        >
-          {/* Subtle rotating square decoration */}
-          <div className="section-title__square absolute w-[260px] h-[260px] border border-primary/10 rounded-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" />
-          <div ref={inViewRef}>
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <p className="text-primary font-medium tracking-widest uppercase text-xs mb-4">Portfolio</p>
-              <h2 className="font-display text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold uppercase leading-[0.9] tracking-tighter text-foreground">
-                Learning<br />
-                &<br />
-                <span className="text-primary">Achievements</span>
-              </h2>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Right Column - Scrolling Content */}
-        <div ref={rightColRef} className="md:col-span-7 flex flex-col p-6 md:p-12 justify-center gap-16">
-
-          {/* Academic Journey (Education & Learning Journey) */}
-          <div>
-            <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
-              <GraduationCap size={16} /> Education & Learning Journey
-            </h3>
-
-            <div className="relative space-y-8">
-              {/* MCA Card */}
+        {/* Timeline List */}
+        <div className="relative border-l-2 border-white/10 ml-4 md:ml-8 space-y-12 pl-6 md:pl-10">
+          {timelineItems.map((item, idx) => {
+            const IconComp = item.icon;
+            return (
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="glass rounded-xl p-6 md:p-10 border border-border hover:border-primary/30 transition-all duration-500 hover:neon-glow"
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="relative group"
               >
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-border pb-6">
-                  <div>
-                    <h4 className="font-display font-semibold text-2xl md:text-3xl text-foreground">Master of Computer Applications (MCA)</h4>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-primary font-medium text-lg hover:underline cursor-pointer">Marian College Kuttikkanam Autonomous</span>
-                      <span className="text-xs px-2.5 py-0.5 rounded-full bg-secondary text-secondary-foreground flex items-center gap-1 border border-border">
-                        <MapPin size={12} className="text-primary" />
-                        <span>Kuttikkanam, Kerala</span>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium bg-card px-4 py-2 border border-border rounded-lg self-start md:self-center">
-                    <Calendar size={14} className="text-primary" />
-                    <span>2025 - Present</span>
-                  </div>
+                {/* Timeline Node Icon */}
+                <div className="absolute -left-[37px] md:-left-[53px] top-1 p-2 rounded-xl bg-zinc-950 border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
+                  <IconComp size={16} />
                 </div>
 
-                {/* Description */}
-                <p className="text-muted-foreground md:text-lg leading-relaxed mb-6 whitespace-pre-line">
-                  Software Developer with a strong focus on Software Engineering, Cloud Computing, Machine Learning, Data Analytics, and Web Development.
-                  {"\n\n"}
-                  Building modern web and mobile applications while continuously improving problem-solving skills through real-world projects.
-                </p>
-
-                {/* Technologies */}
-                <div>
-                  <h5 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Technologies</h5>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      "React",
-                      "React Native",
-                      "Django",
-                      "Node.js",
-                      "PostgreSQL",
-                      "MongoDB",
-                      "AWS",
-                      "Linux",
-                      "Git",
-                      "Python"
-                    ].map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs font-medium px-3 py-1 rounded-full border border-border bg-card/50 text-foreground transition-all duration-300 hover:border-primary/30 hover:text-primary"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                {/* Content Card */}
+                <div className="p-6 md:p-8 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
+                    <span className="text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 w-fit">
+                      {item.period}
+                    </span>
                   </div>
+
+                  <h3 className="text-xl font-bold text-foreground mb-1 tracking-tight">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs font-mono text-emerald-400/90 mb-4 font-semibold">
+                    {item.subtitle}
+                  </p>
+
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-6">
+                    {item.desc}
+                  </p>
+
+                  {item.tech && (
+                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/5">
+                      {item.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[9.5px] font-mono px-2.5 py-0.5 rounded bg-secondary/60 text-foreground/80 border border-border/40"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
-            </div>
-          </div>
-
-          {/* Education Timeline */}
-          <div>
-            <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
-              <BookOpen size={16} /> Education Timeline
-            </h3>
-
-            <div className="relative border-l border-border pl-6 md:pl-10 ml-4 md:ml-6 space-y-12">
-              {timeline.map((item, idx) => (
-                <TimelineItem key={idx} item={item} idx={idx} />
-              ))}
-            </div>
-          </div>
-
-          {/* Achievements Section */}
-          <div>
-            <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
-              <Trophy size={16} /> Achievements & Milestones
-            </h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {achievements.map((item, i) => (
-                <AchievementCard key={item.title} item={item} i={i} />
-              ))}
-            </div>
-          </div>
-
-          {/* Certifications Section */}
-          <div>
-            <h3 className="text-sm font-semibold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-primary" /> Certifications
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {certifications.map((cert, index) => (
-                <CertificationCard key={index} cert={cert} index={index} />
-              ))}
-            </div>
-          </div>
-
-          {/* Final Quote Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative glass rounded-2xl p-8 md:p-12 border border-border/80 hover:border-primary/20 transition-all duration-500 overflow-hidden group hover:neon-glow"
-          >
-            <div className="absolute right-6 bottom-6 text-primary/5 group-hover:text-primary/10 transition-colors duration-500">
-              <Quote size={120} style={{ transform: "rotate(180deg)" }} />
-            </div>
-
-            <div className="relative z-10 flex flex-col items-center text-center gap-6">
-              <Quote size={32} className="text-primary" />
-              <p className="text-xl md:text-2xl font-display font-medium text-foreground max-w-2xl leading-relaxed italic">
-                "I believe every project is an opportunity to learn, improve, and build something meaningful."
-              </p>
-              <div className="flex flex-col items-center">
-                <span className="w-8 h-[2px] bg-primary mb-3" />
-                <span className="font-semibold text-lg text-foreground tracking-wider uppercase">Santhosh Kannan</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Software Developer</span>
-              </div>
-            </div>
-          </motion.div>
-
+            );
+          })}
         </div>
-
       </div>
     </section>
   );

@@ -1,227 +1,84 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, memo } from "react";
-import { Sparkles, Brain, Palette, Code } from "lucide-react";
-import { Canvas } from "@react-three/fiber";
-import InteractiveModel from "./ui/InteractiveModel";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React from "react";
+import { motion } from "framer-motion";
+import { Code, BookOpen, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const ProfileImage = memo(() => (
-  <div className="flex justify-center md:justify-start items-center mb-8 w-full z-10">
-    <div className="relative group">
-      {/* Optimized gradient backgrounds with reduced complexity for mobile */}
-      <div className="absolute -inset-6 opacity-[25%] z-0 hidden sm:block">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-purple-600 rounded-full blur-2xl animate-spin-slower" />
-        <div className="absolute inset-0 bg-gradient-to-l from-fuchsia-500 via-rose-500 to-pink-600 rounded-full blur-2xl animate-pulse-slow opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-cyan-500 to-teal-400 rounded-full blur-2xl animate-float opacity-50" />
-      </div>
-
-      <div className="relative z-10">
-        <div className="w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden shadow-[0_0_40px_rgba(120,119,198,0.3)] transform transition-all duration-700 group-hover:scale-105 bg-zinc-950 border border-white/10">
-          <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105 pointer-events-none" />
-
-          {/* Optimized overlay effects - disabled on mobile */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block pointer-events-none" />
-
-          <img
-            src="/kannan.png"
-            alt="Santhosh Kannan"
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2 select-none"
-            loading="lazy"
-          />
-
-          {/* Advanced hover effects - desktop only */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 hidden sm:block pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-            <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-white/10 to-transparent transform translate-y-full group-hover:-translate-y-full transition-transform duration-1000 delay-100" />
-            <div className="absolute inset-0 rounded-full border-8 border-white/10 scale-0 group-hover:scale-100 transition-transform duration-700 animate-pulse-slow" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-));
-
-const timeline = [
-  {
-    year: "2021",
-    title: "Started BCA",
-    desc: "Began Bachelor of Computer Applications at Marian College Kuttikkanam Autonomous, building strong foundations in programming and software development.",
-  },
-  {
-    year: "2024",
-    title: "Diploma in Finance & Accounting",
-    desc: "Completed a professional Diploma in Finance & Accounting, specializing in Finance & Accounting at Axionz, Kochi.",
-  },
-  {
-    year: "2025",
-    title: "Master of Computer Applications",
-    desc: "Advanced expertise in cloud computing, machine learning, Linux administration, and scalable application development.",
-  },
-  {
-    year: "Present Developing",
-    title: "MERN & AI Developer",
-    desc: "Focused on building modern web experiences, AI-powered applications, cross-platform mobile apps, and continuously improving problem-solving skills.",
-  },
+const exploringTopics = [
+  "Advanced React & Next.js Ecosystems",
+  "Django REST Framework & Microservices",
+  "Cloud Deployment & Docker Containerization",
+  "Applied Machine Learning & Predictive Models",
+  "System Architecture & Scalable Database Design",
+  "Cross-Platform Mobile App Optimization"
 ];
 
-const AboutSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const leftColRef = useRef<HTMLDivElement>(null);
-  const rightColRef = useRef<HTMLDivElement>(null);
-
-  const inViewRef = useRef(null);
-  const inView = useInView(inViewRef, { once: true, margin: "-100px" });
-
-  useGSAP(() => {
-    // Only apply pinning on larger screens to avoid mobile jank
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: leftColRef.current,
-        pinSpacing: false,
-      });
-    });
-
-    gsap.fromTo(".section-title__square",
-      { rotation: 0 },
-      {
-        rotation: 360,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        }
-      }
-    );
-
-    return () => mm.revert();
-  }, { scope: containerRef });
-
+export const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="border-b border-border bg-background relative z-10 overflow-hidden" ref={containerRef}>
-      <div className="max-w-[90rem] mx-auto border-x border-border grid grid-cols-1 md:grid-cols-2 relative">
+    <section id="about" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column - Main Story */}
+          <div className="lg:col-span-7">
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
+              BIOGRAPHY & BACKGROUND
+            </span>
 
-        {/* Left Column - Pinned */}
-        <div
-          ref={leftColRef}
-          className="md:col-span-1 p-8 md:p-16 border-b md:border-b-0 md:border-r border-border h-fit md:h-screen flex flex-col justify-center relative overflow-hidden"
-        >
-          {/* Subtle 3D background integrated into the pinned section */}
-          <div className="absolute inset-0 opacity-30 pointer-events-none z-0">
-            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
-              <InteractiveModel color="hsl(151, 55%, 52%)" distort={0.4} speed={1} />
-            </Canvas>
-          </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1] mb-6">
+              About Me
+            </h2>
 
-          {/* Subtle rotating square decoration */}
-          <div className="section-title__square absolute w-[260px] h-[260px] border border-primary/10 rounded-3xl pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0" />
-
-          <div className="relative z-10" ref={inViewRef}>
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <ProfileImage />
-
-              <p className="text-primary font-medium tracking-widest uppercase text-xs mb-4">
-                About Me
+            <div className="prose prose-invert max-w-none text-muted-foreground text-sm sm:text-base leading-relaxed space-y-4">
+              <p>
+                I am <strong className="text-foreground font-semibold">Santhosh Kannan</strong>, a Software Developer and Master of Computer Applications (MCA) student at Marian College Kuttikkanam (Autonomous).
               </p>
-
-              <h2 className="font-display text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-foreground">
-                Software
-                <br />
-                <span className="text-primary">Developer</span>
-              </h2>
-
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-md font-sans font-light">
-                I'm <span className="text-foreground font-semibold">Santhosh Kannan</span>, a passionate
-                Software Developer.
-                I specialize in building scalable web and mobile applications using React,
-                React Native, Django, Python, and PostgreSQL while exploring Artificial
-                Intelligence, Cloud Computing, and modern software architecture. I enjoy
-                transforming ideas into fast, responsive, and user-focused digital products.
+              <p>
+                My engineering focus centers on building reliable full-stack web applications, scalable backend REST APIs, cross-platform mobile tools, and AI-powered data solutions using <span className="text-emerald-400 font-mono">React</span>, <span className="text-emerald-400 font-mono">Python</span>, <span className="text-emerald-400 font-mono">Django</span>, <span className="text-emerald-400 font-mono">PostgreSQL</span>, and cloud services.
               </p>
-            </motion.div>
-          </div>
-        </div>
+              <p>
+                Whether architecting database schemas, crafting responsive frontend interfaces, or training predictive machine learning models for agricultural and academic platforms, I emphasize clean code, functional UX, and system security.
+              </p>
+            </div>
 
-        {/* Right Column - Scrolling Content */}
-        <div ref={rightColRef} className="md:col-span-1 flex flex-col">
-
-          {/* Skills Grid - Bento Sub-grid */}
-          <div className="grid grid-cols-2 border-b border-border">
-            {[
-              {
-                icon: Code,
-                label: "Software Dev",
-                desc: "React, Python, Django, REST APIs",
-              },
-              {
-                icon: Brain,
-                label: "AI & ML",
-                desc: "Machine Learning, Python, OpenCV",
-              },
-              {
-                icon: Sparkles,
-                label: "Mobile Apps",
-                desc: "React Native, Android & iOS",
-              },
-              {
-                icon: Palette,
-                label: "Cloud & DevOps",
-                desc: "AWS, Linux, Git, PostgreSQL",
-              },
-            ].map((item, i) => (
-              <div
-                key={item.label}
-                className={`p-8 md:p-12 border-border hover:bg-card transition-colors duration-500 flex flex-col justify-center
-                  ${i % 2 === 0 ? "border-r" : ""} 
-                  ${i < 2 ? "border-b" : ""}
-                `}
-                style={{ minHeight: "250px" }}
-              >
-                <item.icon className="mb-6 text-primary" size={32} strokeWidth={1.5} />
-                <h3 className="font-display font-bold text-xl mb-2 text-foreground">{item.label}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+            {/* Quick Metrics / Focus Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/10">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                <span className="text-xs font-mono uppercase text-muted-foreground block mb-1">Education</span>
+                <span className="text-sm font-bold text-foreground">MCA Student</span>
               </div>
-            ))}
-          </div>
-
-          {/* Timeline Section */}
-          <div className="p-8 md:p-16 flex-grow flex flex-col justify-center min-h-screen">
-            <h3 className="font-display text-2xl font-bold uppercase mb-12 tracking-wider">The Journey</h3>
-
-            <div className="space-y-12">
-              {timeline.map((item, i) => (
-                <motion.div
-                  key={item.year}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: 0.1 * i }}
-                  className="relative pl-8 border-l border-border hover:border-primary transition-colors duration-300"
-                >
-                  <div className="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-border" />
-                  <span className="text-primary font-display font-bold text-lg leading-none block mb-2">{item.year}</span>
-                  <h4 className="font-display font-semibold text-xl mb-2 text-foreground">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </motion.div>
-              ))}
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                <span className="text-xs font-mono uppercase text-muted-foreground block mb-1">Core Tech</span>
+                <span className="text-sm font-bold text-emerald-400">React + Django</span>
+              </div>
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 col-span-2 sm:col-span-1">
+                <span className="text-xs font-mono uppercase text-muted-foreground block mb-1">Location</span>
+                <span className="text-sm font-bold text-foreground">Kerala, India</span>
+              </div>
             </div>
           </div>
 
+          {/* Right Column - Currently Exploring */}
+          <div className="lg:col-span-5">
+            <div className="p-6 sm:p-8 rounded-3xl glass border border-border/80 bg-zinc-950/80 shadow-2xl relative">
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
+                <Sparkles size={18} className="text-emerald-400 animate-pulse" />
+                <h3 className="text-base font-mono font-bold uppercase tracking-wider text-foreground">
+                  Currently Exploring
+                </h3>
+              </div>
+
+              <p className="text-xs text-muted-foreground mb-6 leading-relaxed">
+                As a developer continuously refining my craft, here are the technical topics and architectures I am actively mastering:
+              </p>
+
+              <div className="space-y-3">
+                {exploringTopics.map((topic, i) => (
+                  <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-emerald-500/30 transition-all">
+                    <CheckCircle2 size={15} className="text-emerald-400 shrink-0 mt-0.5" />
+                    <span className="text-xs font-medium text-zinc-200">{topic}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

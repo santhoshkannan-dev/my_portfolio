@@ -1,10 +1,16 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Send, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
-import GooeyNav from "./GooeyNav";
 
-const links = ["About", "Skills", "Projects", "Journey", "Contact"];
+const links = [
+  { label: "About", id: "about" },
+  { label: "Capabilities", id: "capabilities" },
+  { label: "Projects", id: "projects" },
+  { label: "Stack", id: "stack" },
+  { label: "Journey", id: "journey" },
+  { label: "Contact", id: "contact" },
+];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -24,12 +30,9 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Scrolled state for transition
       setScrolled(currentScrollY > 20);
 
-      // Hide navbar when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+      if (currentScrollY > lastScrollY.current && currentScrollY > 120) {
         setVisible(false);
       } else {
         setVisible(true);
@@ -37,48 +40,32 @@ const Navbar = () => {
 
       lastScrollY.current = currentScrollY;
 
-      // Section tracker
-      const sections = links.map((l) => l.toLowerCase());
-      const scrollPosition = currentScrollY + 150; // offset
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
+      // Section tracking
+      const scrollPosition = currentScrollY + 150;
+      for (const item of links) {
+        const el = document.getElementById(item.id);
         if (el) {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
+            setActiveSection(item.id);
             break;
           }
         }
       }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollTo = (id: string) => {
-    const element = document.getElementById(id.toLowerCase());
+    const element = document.getElementById(id);
     if (element) {
-      const win = window as Window & { lenis?: { scrollTo: (target: HTMLElement, opts?: { duration?: number }) => void } };
-      if (win.lenis) {
-        win.lenis.scrollTo(element, { duration: 1.2 });
-      } else {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      element.scrollIntoView({ behavior: "smooth" });
     }
     setMobileOpen(false);
   };
-
-  const gooeyItems = useMemo(() => links.map(l => ({
-    label: l,
-    href: `#${l.toLowerCase()}`
-  })), []);
-
-  const activeIndex = useMemo(() => {
-    const idx = links.findIndex(l => l.toLowerCase() === activeSection);
-    return idx === -1 ? 0 : idx;
-  }, [activeSection]);
 
   return (
     <motion.nav
@@ -88,91 +75,95 @@ const Navbar = () => {
         opacity: visible ? 1 : 0
       }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6 flex justify-center pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-50 px-4 py-3 md:py-4 flex justify-center pointer-events-none"
     >
       <div
-        className={`w-full max-w-5xl flex items-center justify-between pointer-events-auto transition-all duration-500 ${scrolled
-            ? "glass-strong rounded-full px-6 py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-border/60 backdrop-blur-lg"
-            : "px-6 py-2 bg-transparent"
-          }`}
+        className={`w-full max-w-6xl flex items-center justify-between pointer-events-auto transition-all duration-500 rounded-2xl ${
+          scrolled
+            ? "glass-strong px-5 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.6)] border border-border/80 backdrop-blur-xl bg-background/80"
+            : "px-4 py-2.5 bg-transparent"
+        }`}
       >
-        {/* Brand Logo */}
+        {/* Brand Logo & Name */}
         <div className="flex items-center gap-3 pointer-events-auto">
-          {/* Avatar button - opens full size profile image lightbox */}
+          {/* Avatar button */}
           <button
             onClick={() => setImageModalOpen(true)}
-            className="relative group focus:outline-none active:scale-95 transition-transform duration-150"
-            title="Click to view full image"
+            className="relative group focus:outline-none transition-transform duration-150 active:scale-95"
+            title="Click to view profile image"
           >
-            <div 
-              className="relative h-11 w-11 rounded-full overflow-hidden border-2 border-primary/50 shadow-[0_0_10px_hsl(var(--primary)/0.3)] group-hover:border-primary group-hover:shadow-[0_0_20px_hsl(var(--primary)/0.6)] transition-all duration-500 shrink-0 isolate z-0"
-              style={{ maskImage: "radial-gradient(circle, white 100%, transparent 100%)", WebkitMaskImage: "-webkit-radial-gradient(white, black)" }}
-            >
+            <div className="relative h-10 w-10 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-[0_0_12px_rgba(16,185,129,0.4)] group-hover:border-emerald-400 transition-all duration-300">
               <img
                 src="/kannan.png"
                 alt="Santhosh Kannan"
-                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500 cursor-zoom-in"
+                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
-              {/* Elegant metallic sheen sweep on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
             </div>
+            <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-zinc-950 animate-pulse" />
           </button>
-          
-          {/* Name & Title button - scrolls to top */}
+
+          {/* Name */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex flex-col items-start leading-tight focus:outline-none text-left group/text"
           >
-            <span className="text-sm font-bold tracking-tight text-foreground group-hover/text:text-primary transition-colors duration-300">
+            <span className="text-sm font-bold tracking-tight text-foreground group-hover/text:text-emerald-400 transition-colors duration-300">
               Santhosh Kannan
             </span>
-            <span className="text-[9px] font-semibold tracking-widest text-muted-foreground uppercase">
-              Portfolio
+            <span className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">
+              Software Developer
             </span>
           </button>
         </div>
 
-        {/* Desktop Links (Gooey Nav Layout) */}
-        <div className="hidden md:block">
-          <GooeyNav
-            items={gooeyItems}
-            activeIndex={activeIndex}
-            onItemClick={(item) => scrollTo(item.label)}
-            particleCount={15}
-            particleDistances={[90, 10]}
-            particleR={100}
-            animationTime={600}
-            timeVariance={300}
-          />
+        {/* Desktop Navigation Links */}
+        <div className="hidden lg:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10">
+          {links.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                }`}
+              >
+                {item.label}
+              </button>
+            );
+          })}
         </div>
 
-        <div className="flex items-center gap-2 pointer-events-auto">
+        {/* Action Buttons & Controls */}
+        <div className="flex items-center gap-2.5 pointer-events-auto">
           {/* Theme Toggle Button */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 rounded-full bg-secondary/30 hover:bg-secondary/60 text-foreground border border-border/40 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none"
+            className="p-2 rounded-xl bg-secondary/40 hover:bg-secondary/70 text-foreground border border-border/50 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none"
             title="Toggle Light/Dark Theme"
           >
             {!mounted ? (
-              <div className="w-[18px] h-[18px]" />
+              <div className="w-4 h-4" />
             ) : theme === "dark" ? (
-              <Sun size={18} className="text-yellow-400" />
+              <Sun size={16} className="text-yellow-400" />
             ) : (
-              <Moon size={18} className="text-indigo-600" />
+              <Moon size={16} className="text-indigo-600" />
             )}
           </button>
 
-          {/* Quick Contact Button */}
+          {/* Let's Talk CTA */}
           <button
-            onClick={() => scrollTo("Contact")}
-            className="hidden md:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all duration-300 text-xs font-semibold uppercase tracking-wider cursor-pointer"
+            onClick={() => scrollTo("contact")}
+            className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-500 text-black hover:bg-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer"
           >
             <Send size={12} /> Let's Talk
           </button>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Hamburger Toggle */}
           <button
-            className="md:hidden p-2 rounded-full bg-secondary/50 text-foreground border border-border/40 cursor-pointer"
+            className="lg:hidden p-2 rounded-xl bg-secondary/50 text-foreground border border-border/50 cursor-pointer"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
@@ -180,27 +171,28 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-20 left-4 right-4 glass-strong p-6 rounded-2xl border border-border/60 flex flex-col gap-4 shadow-2xl pointer-events-auto"
+            className="lg:hidden absolute top-20 left-4 right-4 glass-strong p-5 rounded-2xl border border-border/80 flex flex-col gap-2.5 shadow-2xl pointer-events-auto bg-zinc-950/95 backdrop-blur-xl"
           >
-            {links.map((l) => {
-              const isActive = activeSection === l.toLowerCase();
+            {links.map((item) => {
+              const isActive = activeSection === item.id;
               return (
                 <button
-                  key={l}
-                  onClick={() => scrollTo(l)}
-                  className={`w-full text-left py-2.5 px-4 rounded-xl text-sm font-semibold uppercase tracking-wider transition-all ${isActive
-                      ? "bg-primary/10 text-primary border-l-2 border-primary"
-                      : "text-muted-foreground hover:bg-secondary/40"
-                    }`}
+                  key={item.id}
+                  onClick={() => scrollTo(item.id)}
+                  className={`w-full text-left py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                    isActive
+                      ? "bg-emerald-500/15 text-emerald-400 border-l-2 border-emerald-400"
+                      : "text-muted-foreground hover:bg-white/5"
+                  }`}
                 >
-                  {l}
+                  {item.label}
                 </button>
               );
             })}
@@ -223,30 +215,27 @@ const Navbar = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-lg w-full max-h-[85vh] overflow-hidden rounded-2xl border border-border/40 shadow-2xl bg-card flex flex-col"
+              className="relative max-w-md w-full overflow-hidden rounded-2xl border border-border/60 shadow-2xl bg-zinc-950 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
               <button
                 onClick={() => setImageModalOpen(false)}
-                className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/60 hover:bg-background border border-border/40 text-foreground transition-colors cursor-pointer focus:outline-none"
+                className="absolute top-3 right-3 z-50 p-2 rounded-full bg-black/60 hover:bg-black text-white transition-colors cursor-pointer"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
               
-              {/* Image Container */}
-              <div className="w-full flex-1 overflow-hidden bg-black/40 flex items-center justify-center p-2">
+              <div className="w-full p-3 bg-black/40 flex items-center justify-center">
                 <img
                   src="/kannan.png"
                   alt="Santhosh Kannan"
-                  className="max-w-full max-h-[60vh] object-contain rounded-lg"
+                  className="max-w-full max-h-[55vh] object-contain rounded-lg"
                 />
               </div>
               
-              {/* Metadata */}
-              <div className="p-4 border-t border-border/40 text-center bg-secondary/10">
-                <h4 className="font-display font-semibold text-lg text-foreground">Santhosh Kannan</h4>
-                <p className="text-xs text-primary font-medium tracking-wide mt-0.5">Software Developer</p>
+              <div className="p-4 text-center border-t border-white/10">
+                <h4 className="font-bold text-base text-foreground">Santhosh Kannan</h4>
+                <p className="text-xs text-emerald-400 font-mono tracking-wider mt-0.5 uppercase">Software Developer</p>
               </div>
             </motion.div>
           </motion.div>
