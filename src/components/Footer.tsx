@@ -7,18 +7,18 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-12 md:py-16 bg-zinc-950 border-t border-white/10 text-zinc-400 text-xs">
+    <footer className="py-12 md:py-16 dark:bg-zinc-950 bg-zinc-100 border-t dark:border-white/10 border-zinc-200 dark:text-zinc-400 text-zinc-600 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-10 border-b border-white/5">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-10 border-b dark:border-white/5 border-zinc-200">
           {/* Brand Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <span className="text-base font-bold text-white tracking-tight">
+            <span className="text-base font-bold dark:text-white text-zinc-900 tracking-tight">
               Santhosh Kannan
             </span>
             <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 mt-0.5">
               Software Developer · Full Stack Engineer
             </span>
-            <p className="text-xs text-zinc-400 max-w-sm mt-2 leading-relaxed">
+            <p className="text-xs dark:text-zinc-400 text-zinc-600 max-w-sm mt-2 leading-relaxed">
               Building scalable web applications, REST APIs, mobile apps, and AI solutions with modern technologies.
             </p>
           </div>

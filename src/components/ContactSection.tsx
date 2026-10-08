@@ -158,11 +158,11 @@ export const ContactSection: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="p-6 sm:p-10 rounded-3xl glass border border-border/80 bg-zinc-950/90 shadow-2xl space-y-6"
+              className="p-6 sm:p-10 rounded-3xl glass border border-border/80 dark:bg-zinc-950/90 bg-card shadow-2xl space-y-6"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-wider text-zinc-300 mb-2 block">
+                  <label className="text-xs font-mono uppercase tracking-wider text-foreground mb-2 block">
                     Your Name <span className="text-emerald-400">*</span>
                   </label>
                   <input
@@ -172,12 +172,12 @@ export const ContactSection: React.FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Santhosh Kannan"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-zinc-600 focus:outline-none focus:border-emerald-400/80 focus:ring-1 focus:ring-emerald-400/30 transition-all"
+                    className="w-full dark:bg-white/[0.03] bg-background border dark:border-white/10 border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-emerald-400/80 focus:ring-1 focus:ring-emerald-400/30 transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-wider text-zinc-300 mb-2 block">
+                  <label className="text-xs font-mono uppercase tracking-wider text-foreground mb-2 block">
                     Your Email <span className="text-emerald-400">*</span>
                   </label>
                   <input
@@ -187,13 +187,13 @@ export const ContactSection: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="visitor@example.com"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-zinc-600 focus:outline-none focus:border-emerald-400/80 focus:ring-1 focus:ring-emerald-400/30 transition-all"
+                    className="w-full dark:bg-white/[0.03] bg-background border dark:border-white/10 border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-emerald-400/80 focus:ring-1 focus:ring-emerald-400/30 transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-mono uppercase tracking-wider text-zinc-300 mb-2 block">
+                <label className="text-xs font-mono uppercase tracking-wider text-foreground mb-2 block">
                   Your Message <span className="text-emerald-400">*</span>
                 </label>
                 <textarea
@@ -203,7 +203,7 @@ export const ContactSection: React.FC = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell me about your project, timeline, or engineering opportunity..."
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-zinc-600 focus:outline-none focus:border-emerald-400/80 focus:ring-1 focus:ring-emerald-400/30 transition-all resize-none"
+                  className="w-full dark:bg-white/[0.03] bg-background border dark:border-white/10 border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-emerald-400/80 focus:ring-1 focus:ring-emerald-400/30 transition-all resize-none"
                 />
               </div>
 

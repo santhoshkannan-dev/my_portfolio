@@ -81,7 +81,7 @@ const skillCategories: SkillCategory[] = [
 
 export const SkillsSection: React.FC = () => {
   return (
-    <section id="stack" className="py-20 md:py-28 bg-zinc-950/80 border-b border-border/60 relative overflow-hidden">
+    <section id="stack" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-14 md:mb-20">
@@ -110,7 +110,7 @@ export const SkillsSection: React.FC = () => {
                 className="p-6 md:p-7 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-white/10 border-border">
                     <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                       <IconComponent size={20} />
                     </div>
@@ -123,7 +123,7 @@ export const SkillsSection: React.FC = () => {
                     {cat.skills.map((skill) => (
                       <span
                         key={skill.name}
-                        className="text-xs font-mono px-3 py-1.5 rounded-lg bg-white/[0.04] text-zinc-200 border border-white/10 hover:border-emerald-500/40 hover:text-emerald-400 transition-colors"
+                        className="text-xs font-mono px-3 py-1.5 rounded-lg dark:bg-white/[0.04] bg-secondary/80 text-foreground border dark:border-white/10 border-border hover:border-emerald-500/40 hover:text-emerald-500 transition-colors"
                       >
                         {skill.name}
                       </span>

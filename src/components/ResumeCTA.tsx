@@ -4,7 +4,7 @@ import { Download, FileText, ArrowRight } from "lucide-react";
 
 export const ResumeCTA: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 border-b border-border/60 relative overflow-hidden">
+    <section className="py-16 md:py-24 dark:bg-gradient-to-br dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 bg-gradient-to-br from-zinc-100 via-zinc-50 to-zinc-100 border-b border-border/60 relative overflow-hidden">
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-32 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none -z-10" />
 
@@ -34,7 +34,7 @@ export const ResumeCTA: React.FC = () => {
           <a
             href="/Santhosh_Kannan.pdf"
             download="Santhosh_Kannan.pdf"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400 font-bold text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-zinc-300 dark:border-white/20 hover:border-emerald-400 text-foreground hover:text-emerald-500 font-bold text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
             <Download size={16} /> Download Resume
           </a>

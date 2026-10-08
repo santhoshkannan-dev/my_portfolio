@@ -244,7 +244,7 @@ export const ProjectsSection: React.FC = () => {
           </div>
 
           {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2 p-1.5 rounded-xl bg-white/[0.03] border border-white/10 shrink-0">
+          <div className="flex flex-wrap gap-2 p-1.5 rounded-xl dark:bg-white/[0.03] bg-zinc-100 border dark:border-white/10 border-zinc-200 shrink-0">
             {(["ALL", "WEB", "MOBILE", "AI / ML", "FULL STACK"] as const).map((tab) => (
               <button
                 key={tab}
@@ -252,7 +252,7 @@ export const ProjectsSection: React.FC = () => {
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
                   filter === tab
                     ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                    : "text-muted-foreground hover:text-white hover:bg-white/5"
+                    : "text-muted-foreground dark:hover:text-white hover:text-zinc-900 dark:hover:bg-white/5 hover:bg-zinc-200"
                 }`}
               >
                 {tab}
@@ -282,7 +282,7 @@ export const ProjectsSection: React.FC = () => {
                       isEven ? "lg:order-1" : "lg:order-2"
                     }`}
                   >
-                    <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 bg-zinc-950 group">
+                    <div className="relative w-full rounded-2xl overflow-hidden border dark:border-white/10 border-zinc-300 dark:bg-zinc-950 bg-zinc-900 group">
                       {project.image ? (
                         <div className="relative w-full aspect-[16/10] overflow-hidden">
                           <img
@@ -291,7 +291,7 @@ export const ProjectsSection: React.FC = () => {
                             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
                             loading="lazy"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60 pointer-events-none" />
                         </div>
                       ) : project.mockupType === "vlink" ? (
                         <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
@@ -331,21 +331,21 @@ export const ProjectsSection: React.FC = () => {
                       </p>
 
                       {/* Problem & Solution */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl bg-white/[0.02] border border-white/5 font-sans">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl dark:bg-white/[0.02] bg-zinc-100/80 border dark:border-white/5 border-zinc-200 font-sans">
                         <div>
-                          <span className="text-[10px] font-mono uppercase text-red-400 font-bold block mb-1">Problem</span>
-                          <p className="text-xs text-zinc-300 leading-snug">{project.problem}</p>
+                          <span className="text-[10px] font-mono uppercase text-red-500 font-bold block mb-1">Problem</span>
+                          <p className="text-xs dark:text-zinc-300 text-zinc-700 leading-snug">{project.problem}</p>
                         </div>
                         <div>
-                          <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold block mb-1">Solution</span>
-                          <p className="text-xs text-zinc-300 leading-snug">{project.solution}</p>
+                          <span className="text-[10px] font-mono uppercase text-emerald-500 font-bold block mb-1">Solution</span>
+                          <p className="text-xs dark:text-zinc-300 text-zinc-700 leading-snug">{project.solution}</p>
                         </div>
                       </div>
 
                       {/* Key Features */}
                       <div className="space-y-1.5 mb-6">
                         {project.features.map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-center gap-2 text-xs text-zinc-300">
+                          <div key={fIdx} className="flex items-center gap-2 text-xs dark:text-zinc-300 text-zinc-700">
                             <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
                             <span>{feat}</span>
                           </div>
@@ -366,13 +366,13 @@ export const ProjectsSection: React.FC = () => {
                     </div>
 
                     {/* Action Links */}
-                    <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-4 pt-4 border-t dark:border-white/10 border-border">
                       {project.live && project.live !== "#" && (
                         <a
                           href={project.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-white text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center gap-1.5 cursor-pointer"
+                          className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center gap-1.5 cursor-pointer"
                         >
                           <ExternalLink size={14} /> Live Demo
                         </a>
@@ -382,7 +382,7 @@ export const ProjectsSection: React.FC = () => {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-5 py-2.5 rounded-xl border border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+                          className="px-5 py-2.5 rounded-xl border dark:border-white/20 border-zinc-300 hover:border-emerald-400 dark:text-white text-zinc-900 hover:text-emerald-500 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
                         >
                           <Github size={14} /> View Code
                         </a>

@@ -48,7 +48,7 @@ const timelineItems: TimelineItem[] = [
 
 export const ExperienceSection: React.FC = () => {
   return (
-    <section id="journey" className="py-20 md:py-28 bg-zinc-950/90 border-b border-border/60 relative overflow-hidden">
+    <section id="journey" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-14 md:mb-20">
@@ -64,7 +64,7 @@ export const ExperienceSection: React.FC = () => {
         </div>
 
         {/* Timeline List */}
-        <div className="relative border-l-2 border-white/10 ml-4 md:ml-8 space-y-12 pl-6 md:pl-10">
+        <div className="relative border-l-2 dark:border-white/10 border-border ml-4 md:ml-8 space-y-12 pl-6 md:pl-10">
           {timelineItems.map((item, idx) => {
             const IconComp = item.icon;
             return (
@@ -77,7 +77,7 @@ export const ExperienceSection: React.FC = () => {
                 className="relative group"
               >
                 {/* Timeline Node Icon */}
-                <div className="absolute -left-[37px] md:-left-[53px] top-1 p-2 rounded-xl bg-zinc-950 border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
+                <div className="absolute -left-[37px] md:-left-[53px] top-1 p-2 rounded-xl dark:bg-zinc-950 bg-white border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
                   <IconComp size={16} />
                 </div>
 

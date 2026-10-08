@@ -19,7 +19,8 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const currentTheme = resolvedTheme || theme;
 
   useEffect(() => {
     setMounted(true);
@@ -140,13 +141,13 @@ const Navbar = () => {
         <div className="flex items-center gap-2.5 pointer-events-auto">
           {/* Theme Toggle Button */}
           <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
             className="p-2 rounded-xl bg-secondary/40 hover:bg-secondary/70 text-foreground border border-border/50 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none"
             title="Toggle Light/Dark Theme"
           >
             {!mounted ? (
               <div className="w-4 h-4" />
-            ) : theme === "dark" ? (
+            ) : currentTheme === "dark" ? (
               <Sun size={16} className="text-yellow-400" />
             ) : (
               <Moon size={16} className="text-indigo-600" />

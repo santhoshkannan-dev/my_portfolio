@@ -31,7 +31,7 @@ const steps = [
 
 export const EngineeringProcess: React.FC = () => {
   return (
-    <section className="py-20 md:py-28 bg-zinc-950/90 border-b border-border/60 relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-14 md:mb-20">
