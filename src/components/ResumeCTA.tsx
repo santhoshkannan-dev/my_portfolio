@@ -4,7 +4,7 @@ import { TerminalRevealItem } from "./terminal";
 
 export const ResumeCTA: React.FC = () => {
   return (
-    <div className="py-16 md:py-24 dark:bg-gradient-to-br dark:from-[#101014] dark:via-[#17171D] dark:to-[#050505] bg-gradient-to-br from-zinc-100 via-zinc-50 to-zinc-100 border-b border-border/60 relative overflow-hidden">
+    <div className="py-16 md:py-24 bg-transparent border-b border-border/60 relative overflow-hidden">
       {/* React Bits Dotted Pattern & Ambient Aurora Glow */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
       <div className="aurora-glow-violet w-[600px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60 pointer-events-none" />

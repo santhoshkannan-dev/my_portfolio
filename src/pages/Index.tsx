@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import GlobalGradientBackground from "@/components/GlobalGradientBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -30,6 +31,7 @@ const Index = () => {
       {!loading && (
         <SmoothScroll>
           <div className="min-h-screen bg-background text-foreground relative selection:bg-emerald-500 selection:text-black">
+            <GlobalGradientBackground />
             <ScrollProgress />
             <Navbar />
             <main>

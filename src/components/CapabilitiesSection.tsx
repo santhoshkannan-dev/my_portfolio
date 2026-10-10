@@ -35,7 +35,7 @@ const capabilities = [
 
 export const CapabilitiesSection: React.FC = () => {
   return (
-    <div id="capabilities" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden">
+    <div id="capabilities" className="py-20 md:py-28 bg-transparent border-b border-border/60 relative overflow-hidden">
       {/* React Bits Dotted Pattern & Ambient Aurora Glow */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
       <div className="aurora-glow-violet w-[600px] h-[600px] top-1/4 -right-32 opacity-70 pointer-events-none" />

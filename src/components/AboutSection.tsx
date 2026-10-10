@@ -26,7 +26,7 @@ const techPills = [
 
 export const AboutSection: React.FC = () => {
   return (
-    <div id="about" className="py-24 lg:py-36 dark:bg-[#050505] bg-zinc-50 border-b dark:border-white/10 border-zinc-200/80 relative overflow-hidden z-10">
+    <div id="about" className="py-24 lg:py-36 bg-transparent border-b dark:border-white/10 border-zinc-200/80 relative overflow-hidden z-10">
       {/* React Bits Fine Dotted Background Pattern & Grid */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#88888808_1px,transparent_1px),linear-gradient(to_bottom,#88888808_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />

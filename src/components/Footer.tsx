@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-12 md:py-16 dark:bg-[#050505] bg-zinc-100 border-t dark:border-white/10 border-zinc-200 dark:text-zinc-400 text-zinc-600 text-xs relative overflow-hidden">
+    <footer className="py-12 md:py-16 bg-transparent border-t dark:border-white/10 border-zinc-200 dark:text-zinc-400 text-zinc-600 text-xs relative overflow-hidden">
       {/* React Bits Dotted Pattern */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
 

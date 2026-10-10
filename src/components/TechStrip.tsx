@@ -19,7 +19,7 @@ const technologies = [
 
 export const TechStrip: React.FC = () => {
   return (
-    <section className="relative w-full py-8 md:py-12 dark:bg-zinc-950/80 bg-zinc-100/80 border-y dark:border-white/10 border-zinc-200 overflow-hidden select-none">
+    <section className="relative w-full py-8 md:py-12 dark:bg-zinc-950/40 bg-zinc-100/40 backdrop-blur-md border-y dark:border-white/10 border-zinc-200 overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 mb-4 text-center">
         <span className="text-[10px] md:text-xs font-mono font-semibold tracking-[0.25em] uppercase text-emerald-400/90">
           TECHNOLOGIES I WORK WITH

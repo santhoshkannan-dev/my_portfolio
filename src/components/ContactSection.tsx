@@ -68,7 +68,7 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <div id="contact" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden" ref={ref}>
+    <div id="contact" className="py-20 md:py-28 bg-transparent border-b border-border/60 relative overflow-hidden" ref={ref}>
       {/* React Bits Dotted Pattern & Ambient Aurora Glow */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
       <div className="aurora-glow-violet w-[700px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-70 pointer-events-none" />

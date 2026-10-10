@@ -31,7 +31,7 @@ const capabilities = [
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative w-full min-h-screen dark:bg-[#050505] bg-zinc-50 pt-20 pb-12 lg:pt-24 lg:pb-16 px-3 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden z-10 transition-colors duration-300">
+    <section className="relative w-full min-h-screen bg-transparent pt-20 pb-12 lg:pt-24 lg:pb-16 px-3 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden z-10 transition-colors duration-300">
       {/* React Bits Fine Dotted Background Pattern & Grid */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
       <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />

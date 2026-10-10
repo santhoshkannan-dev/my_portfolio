@@ -31,7 +31,7 @@ const steps = [
 
 export const EngineeringProcess: React.FC = () => {
   return (
-    <div className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden">
+    <div className="py-20 md:py-28 bg-transparent border-b border-border/60 relative overflow-hidden">
       {/* React Bits Dotted Pattern */}
       <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
 
