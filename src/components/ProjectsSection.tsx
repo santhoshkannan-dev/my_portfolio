@@ -302,8 +302,8 @@ export const ProjectsSection: React.FC = () => {
                             <img
                               src={project.image}
                               alt={project.title}
-                              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-                              loading="lazy"
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                              loading="eager"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60 pointer-events-none" />
                           </div>
