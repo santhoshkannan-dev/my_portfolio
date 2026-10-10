@@ -217,7 +217,7 @@ const projects: Project[] = [
     role: "Full-Stack Developer",
     github: "https://github.com/santhoshkannan-dev/NeXGeaR",
     live: "#",
-    image: "/nex1.png",
+    image: "/nexgear.jpg",
   },
 ];
 
