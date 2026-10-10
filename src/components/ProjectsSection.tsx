@@ -1,6 +1,7 @@
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, Sparkles, Code2, Layers, CheckCircle2, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { ExternalLink, Github, CheckCircle2 } from "lucide-react";
+import { TerminalRevealItem } from "./terminal";
 
 interface Project {
   id: string;
@@ -227,11 +228,11 @@ export const ProjectsSection: React.FC = () => {
   );
 
   return (
-    <section id="projects" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+    <div id="projects" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
-          <div className="max-w-3xl">
+          <TerminalRevealItem order={0} className="max-w-3xl">
             <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
               CASE STUDIES & WORK
             </span>
@@ -241,24 +242,26 @@ export const ProjectsSection: React.FC = () => {
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               Selected digital products and software systems I've designed, architected, and built.
             </p>
-          </div>
+          </TerminalRevealItem>
 
           {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2 p-1.5 rounded-xl dark:bg-white/[0.03] bg-zinc-100 border dark:border-white/10 border-zinc-200 shrink-0">
-            {(["ALL", "WEB", "MOBILE", "AI / ML", "FULL STACK"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setFilter(tab)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
-                  filter === tab
-                    ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                    : "text-muted-foreground dark:hover:text-white hover:text-zinc-900 dark:hover:bg-white/5 hover:bg-zinc-200"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+          <TerminalRevealItem order={1}>
+            <div className="flex flex-wrap gap-2 p-1.5 rounded-xl dark:bg-white/[0.03] bg-zinc-100 border dark:border-white/10 border-zinc-200 shrink-0">
+              {(["ALL", "WEB", "MOBILE", "AI / ML", "FULL STACK"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setFilter(tab)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
+                    filter === tab
+                      ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                      : "text-muted-foreground dark:hover:text-white hover:text-zinc-900 dark:hover:bg-white/5 hover:bg-zinc-200"
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </TerminalRevealItem>
         </div>
 
         {/* Case Studies Container (Alternating Layout) */}
@@ -268,134 +271,131 @@ export const ProjectsSection: React.FC = () => {
               const isEven = idx % 2 === 0;
 
               return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl glass border border-border/60 hover:border-emerald-500/40 transition-all duration-500 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent shadow-2xl`}
-                >
-                  {/* Media Showcase Column */}
+                <TerminalRevealItem key={project.id} order={1 + idx * 0.6}>
                   <div
-                    className={`lg:col-span-6 w-full h-full flex items-center justify-center ${
-                      isEven ? "lg:order-1" : "lg:order-2"
-                    }`}
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl glass border border-border/60 hover:border-emerald-500/40 transition-all duration-500 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent shadow-2xl`}
                   >
-                    <div className="relative w-full rounded-2xl overflow-hidden border dark:border-white/10 border-zinc-300 dark:bg-zinc-950 bg-zinc-900 group">
-                      {project.image ? (
-                        <div className="relative w-full aspect-[16/10] overflow-hidden">
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60 pointer-events-none" />
-                        </div>
-                      ) : project.mockupType === "vlink" ? (
-                        <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
-                          <VLinkInventoryMockup />
-                        </div>
-                      ) : (
-                        <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
-                          <NavaKrishiMockup />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Case Study Details Column */}
-                  <div
-                    className={`lg:col-span-6 flex flex-col justify-between ${
-                      isEven ? "lg:order-2" : "lg:order-1"
-                    }`}
-                  >
-                    <div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                          {project.category}
-                        </span>
-                        <span className="text-xs font-mono text-muted-foreground">{project.role}</span>
-                      </div>
-
-                      <h3 className="text-2xl sm:text-3xl font-black text-foreground mb-1 tracking-tight">
-                        {project.title}
-                      </h3>
-                      <p className="text-xs font-mono text-emerald-400/90 mb-4 uppercase tracking-wider font-semibold">
-                        {project.subtitle}
-                      </p>
-
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                        {project.desc}
-                      </p>
-
-                      {/* Problem & Solution */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl dark:bg-white/[0.02] bg-zinc-100/80 border dark:border-white/5 border-zinc-200 font-sans">
-                        <div>
-                          <span className="text-[10px] font-mono uppercase text-red-500 font-bold block mb-1">Problem</span>
-                          <p className="text-xs dark:text-zinc-300 text-zinc-700 leading-snug">{project.problem}</p>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono uppercase text-emerald-500 font-bold block mb-1">Solution</span>
-                          <p className="text-xs dark:text-zinc-300 text-zinc-700 leading-snug">{project.solution}</p>
-                        </div>
-                      </div>
-
-                      {/* Key Features */}
-                      <div className="space-y-1.5 mb-6">
-                        {project.features.map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-center gap-2 text-xs dark:text-zinc-300 text-zinc-700">
-                            <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-                            <span>{feat}</span>
+                    {/* Media Showcase Column */}
+                    <div
+                      className={`lg:col-span-6 w-full h-full flex items-center justify-center ${
+                        isEven ? "lg:order-1" : "lg:order-2"
+                      }`}
+                    >
+                      <div className="relative w-full rounded-2xl overflow-hidden border dark:border-white/10 border-zinc-300 dark:bg-zinc-950 bg-zinc-900 group">
+                        {project.image ? (
+                          <div className="relative w-full aspect-[16/10] overflow-hidden">
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-60 pointer-events-none" />
                           </div>
-                        ))}
-                      </div>
-
-                      {/* Tech Stack Tags */}
-                      <div className="flex flex-wrap gap-1.5 mb-8">
-                        {project.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-secondary/80 text-foreground/80 border border-border/50"
-                          >
-                            {t}
-                          </span>
-                        ))}
+                        ) : project.mockupType === "vlink" ? (
+                          <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
+                            <VLinkInventoryMockup />
+                          </div>
+                        ) : (
+                          <div className="p-2 w-full h-full min-h-[260px] flex items-center justify-center">
+                            <NavaKrishiMockup />
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Action Links */}
-                    <div className="flex items-center gap-4 pt-4 border-t dark:border-white/10 border-border">
-                      {project.live && project.live !== "#" && (
-                        <a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center gap-1.5 cursor-pointer"
-                        >
-                          <ExternalLink size={14} /> Live Demo
-                        </a>
-                      )}
-                      {project.github && project.github !== "#" && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-5 py-2.5 rounded-xl border dark:border-white/20 border-zinc-300 hover:border-emerald-400 dark:text-white text-zinc-900 hover:text-emerald-500 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
-                        >
-                          <Github size={14} /> View Code
-                        </a>
-                      )}
+                    {/* Case Study Details Column */}
+                    <div
+                      className={`lg:col-span-6 flex flex-col justify-between ${
+                        isEven ? "lg:order-2" : "lg:order-1"
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            {project.category}
+                          </span>
+                          <span className="text-xs font-mono text-muted-foreground">{project.role}</span>
+                        </div>
+
+                        <h3 className="text-2xl sm:text-3xl font-black text-foreground mb-1 tracking-tight">
+                          {project.title}
+                        </h3>
+                        <p className="text-xs font-mono text-emerald-400/90 mb-4 uppercase tracking-wider font-semibold">
+                          {project.subtitle}
+                        </p>
+
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                          {project.desc}
+                        </p>
+
+                        {/* Problem & Solution */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl dark:bg-white/[0.02] bg-zinc-100/80 border dark:border-white/5 border-zinc-200 font-sans">
+                          <div>
+                            <span className="text-[10px] font-mono uppercase text-red-500 font-bold block mb-1">Problem</span>
+                            <p className="text-xs dark:text-zinc-300 text-zinc-700 leading-snug">{project.problem}</p>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-mono uppercase text-emerald-500 font-bold block mb-1">Solution</span>
+                            <p className="text-xs dark:text-zinc-300 text-zinc-700 leading-snug">{project.solution}</p>
+                          </div>
+                        </div>
+
+                        {/* Key Features */}
+                        <div className="space-y-1.5 mb-6">
+                          {project.features.map((feat, fIdx) => (
+                            <div key={fIdx} className="flex items-center gap-2 text-xs dark:text-zinc-300 text-zinc-700">
+                              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+                              <span>{feat}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Tech Stack Tags */}
+                        <div className="flex flex-wrap gap-1.5 mb-8">
+                          {project.tech.map((t) => (
+                            <span
+                              key={t}
+                              className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-secondary/80 text-foreground/80 border border-border/50"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Action Links */}
+                      <div className="flex items-center gap-4 pt-4 border-t dark:border-white/10 border-border">
+                        {project.live && project.live !== "#" && (
+                          <a
+                            href={project.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <ExternalLink size={14} /> Live Demo
+                          </a>
+                        )}
+                        {project.github && project.github !== "#" && (
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-5 py-2.5 rounded-xl border dark:border-white/20 border-zinc-300 hover:border-emerald-400 dark:text-white text-zinc-900 hover:text-emerald-500 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <Github size={14} /> View Code
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </motion.div>
+                </TerminalRevealItem>
               );
             })}
           </AnimatePresence>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

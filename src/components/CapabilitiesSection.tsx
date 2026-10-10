@@ -1,6 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Monitor, Server, Cpu, Cloud } from "lucide-react";
+import { TerminalRevealItem } from "./terminal";
 
 const capabilities = [
   {
@@ -35,10 +35,10 @@ const capabilities = [
 
 export const CapabilitiesSection: React.FC = () => {
   return (
-    <section id="capabilities" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+    <div id="capabilities" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 md:mb-20">
+        <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
             CAPABILITIES
           </span>
@@ -48,54 +48,53 @@ export const CapabilitiesSection: React.FC = () => {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             From frontend user experiences to backend architecture and AI-powered features, I build complete, scalable digital products.
           </p>
-        </div>
+        </TerminalRevealItem>
 
         {/* Capability Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {capabilities.map((cap) => {
+          {capabilities.map((cap, idx) => {
             const IconComponent = cap.icon;
             return (
-              <motion.div
-                key={cap.num}
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.3 }}
-                className="group relative p-6 sm:p-8 rounded-2xl glass border border-border/60 hover:border-emerald-500/50 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-xl md:text-2xl font-mono font-bold text-emerald-400">
-                      {cap.num}
-                    </span>
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300">
-                      <IconComponent size={22} />
+              <TerminalRevealItem key={cap.num} order={1 + idx * 0.5}>
+                <div
+                  className="group relative p-6 sm:p-8 rounded-2xl glass border border-border/60 hover:border-emerald-500/50 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] transition-all duration-300 flex flex-col justify-between h-full"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <span className="text-xl md:text-2xl font-mono font-bold text-emerald-400">
+                        {cap.num}
+                      </span>
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300">
+                        <IconComponent size={22} />
+                      </div>
                     </div>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3 tracking-wide group-hover:text-emerald-400 transition-colors">
+                      {cap.title}
+                    </h3>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                      {cap.desc}
+                    </p>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3 tracking-wide group-hover:text-emerald-400 transition-colors">
-                    {cap.title}
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                    {cap.desc}
-                  </p>
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                    {cap.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] md:text-[11px] font-mono px-2.5 py-1 rounded-md bg-secondary/60 text-foreground/80 border border-border/40"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
-                  {cap.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] md:text-[11px] font-mono px-2.5 py-1 rounded-md bg-secondary/60 text-foreground/80 border border-border/40"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+              </TerminalRevealItem>
             );
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

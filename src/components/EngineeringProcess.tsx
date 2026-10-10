@@ -1,6 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Search, Compass, Code2, Rocket } from "lucide-react";
+import { TerminalRevealItem } from "./terminal";
 
 const steps = [
   {
@@ -31,10 +31,10 @@ const steps = [
 
 export const EngineeringProcess: React.FC = () => {
   return (
-    <section className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+    <div className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mb-14 md:mb-20">
+        <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
             ENGINEERING APPROACH
           </span>
@@ -44,52 +44,49 @@ export const EngineeringProcess: React.FC = () => {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             A structured 4-step process for turning complex requirements into reliable, maintainable software products.
           </p>
-        </div>
+        </TerminalRevealItem>
 
         {/* Timeline Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
           {steps.map((step, idx) => {
             const IconComponent = step.icon;
             return (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="relative p-6 rounded-2xl glass border border-border/50 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-2xl font-mono font-bold text-emerald-400">
-                      {step.num}
-                    </span>
-                    <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <IconComponent size={18} />
+              <TerminalRevealItem key={step.num} order={1 + idx * 0.5}>
+                <div
+                  className="relative p-6 rounded-2xl glass border border-border/50 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between h-full"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <span className="text-2xl font-mono font-bold text-emerald-400">
+                        {step.num}
+                      </span>
+                      <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <IconComponent size={18} />
+                      </div>
                     </div>
+
+                    <h3 className="text-lg font-bold text-foreground mb-2 tracking-wider">
+                      {step.title}
+                    </h3>
+
+                    <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                      {step.desc}
+                    </p>
                   </div>
 
-                  <h3 className="text-lg font-bold text-foreground mb-2 tracking-wider">
-                    {step.title}
-                  </h3>
-
-                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                    {step.desc}
-                  </p>
+                  {/* Connecting Line indicator on desktop */}
+                  {idx < steps.length - 1 && (
+                    <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-emerald-400/40 font-mono text-sm">
+                      →
+                    </div>
+                  )}
                 </div>
-
-                {/* Connecting Line indicator on desktop */}
-                {idx < steps.length - 1 && (
-                  <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-emerald-400/40 font-mono text-sm">
-                    →
-                  </div>
-                )}
-              </motion.div>
+              </TerminalRevealItem>
             );
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

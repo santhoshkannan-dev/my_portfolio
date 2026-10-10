@@ -1,6 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Layout, Server, Database as DbIcon, Cpu, Cloud, Smartphone } from "lucide-react";
+import { TerminalRevealItem } from "./terminal";
 
 interface SkillCategory {
   title: string;
@@ -81,10 +81,10 @@ const skillCategories: SkillCategory[] = [
 
 export const SkillsSection: React.FC = () => {
   return (
-    <section id="stack" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+    <div id="stack" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 md:mb-20">
+        <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
             TECHNICAL EXPERTISE
           </span>
@@ -94,48 +94,45 @@ export const SkillsSection: React.FC = () => {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             Core programming languages, frameworks, databases, and deployment tools I utilize across production software development.
           </p>
-        </div>
+        </TerminalRevealItem>
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {skillCategories.map((cat, idx) => {
             const IconComponent = cat.icon;
             return (
-              <motion.div
-                key={cat.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="p-6 md:p-7 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-white/10 border-border">
-                    <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <IconComponent size={20} />
+              <TerminalRevealItem key={cat.title} order={1 + idx * 0.4}>
+                <div
+                  className="p-6 md:p-7 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between h-full"
+                >
+                  <div>
+                    <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-white/10 border-border">
+                      <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <IconComponent size={20} />
+                      </div>
+                      <h3 className="text-base font-mono font-bold tracking-wider text-foreground">
+                        {cat.title}
+                      </h3>
                     </div>
-                    <h3 className="text-base font-mono font-bold tracking-wider text-foreground">
-                      {cat.title}
-                    </h3>
-                  </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    {cat.skills.map((skill) => (
-                      <span
-                        key={skill.name}
-                        className="text-xs font-mono px-3 py-1.5 rounded-lg dark:bg-white/[0.04] bg-secondary/80 text-foreground border dark:border-white/10 border-border hover:border-emerald-500/40 hover:text-emerald-500 transition-colors"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
+                    <div className="flex flex-wrap gap-2">
+                      {cat.skills.map((skill) => (
+                        <span
+                          key={skill.name}
+                          className="text-xs font-mono px-3 py-1.5 rounded-lg dark:bg-white/[0.04] bg-secondary/80 text-foreground border dark:border-white/10 border-border hover:border-emerald-500/40 hover:text-emerald-500 transition-colors"
+                        >
+                          {skill.name}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </TerminalRevealItem>
             );
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

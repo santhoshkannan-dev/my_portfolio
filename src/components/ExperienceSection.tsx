@@ -1,6 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { GraduationCap, Code, Award, Calendar } from "lucide-react";
+import { GraduationCap, Code, Award } from "lucide-react";
+import { TerminalRevealItem } from "./terminal";
 
 interface TimelineItem {
   period: string;
@@ -48,10 +48,10 @@ const timelineItems: TimelineItem[] = [
 
 export const ExperienceSection: React.FC = () => {
   return (
-    <section id="journey" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
+    <div id="journey" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 md:mb-20">
+        <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
             CAREER & EDUCATION
           </span>
@@ -61,21 +61,14 @@ export const ExperienceSection: React.FC = () => {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             Academic milestones, full-stack software development history, and technical training.
           </p>
-        </div>
+        </TerminalRevealItem>
 
         {/* Timeline List */}
         <div className="relative border-l-2 dark:border-white/10 border-border ml-4 md:ml-8 space-y-12 pl-6 md:pl-10">
           {timelineItems.map((item, idx) => {
             const IconComp = item.icon;
             return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="relative group"
-              >
+              <TerminalRevealItem key={idx} order={1 + idx * 0.5} effect="slide-right" className="relative group">
                 {/* Timeline Node Icon */}
                 <div className="absolute -left-[37px] md:-left-[53px] top-1 p-2 rounded-xl dark:bg-zinc-950 bg-white border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
                   <IconComp size={16} />
@@ -114,12 +107,12 @@ export const ExperienceSection: React.FC = () => {
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </TerminalRevealItem>
             );
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
