@@ -18,13 +18,17 @@ const GlobalGradientBackground: React.FC = () => {
         horizonColor: '#5227FF',
         waveColor: '#FF9FFC',
         crestColor: '#FFFFFF',
-        opacity: 0.65,
+        opacity: 0.75,
+        brightness: 1.15,
+        amplitude: 3.2,
       }
     : {
         horizonColor: '#E9E4FF',
         waveColor: '#F4C7ED',
         crestColor: '#FFFFFF',
-        opacity: 0.35,
+        opacity: 0.45,
+        brightness: 1.05,
+        amplitude: 2.8,
       };
 
   return (
@@ -34,18 +38,16 @@ const GlobalGradientBackground: React.FC = () => {
     >
       <GradientWaves
         {...themeColors}
-        speed={0.4}
-        amplitude={2.5}
-        waveScale={0.6}
+        speed={0.45}
+        waveScale={0.65}
         waveRatio={0.9}
         swell={35}
-        turbulence={20}
+        turbulence={22}
         tilt={1.11}
         zoom={1.0}
-        height={5.5}
-        fogDepth={15}
+        height={5.2}
+        fogDepth={16}
         detail="medium"
-        brightness={1.0}
         mouseInteraction={true}
         parallaxStrength={0.35}
         grain={true}

@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-to-r from-purple-600/10 via-violet-500/10 to-cyan-500/5 blur-[160px] rounded-full pointer-events-none" />
 
       {/* Main Hero Card Container */}
-      <div className="relative w-full max-w-[1400px] mx-auto rounded-[24px] sm:rounded-[32px] dark:bg-gradient-to-b dark:from-[#101014] dark:via-[#101014]/95 dark:to-[#050505] bg-white border dark:border-white/10 border-zinc-200/90 shadow-[0_15px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.9)] p-6 sm:p-10 lg:p-12 xl:p-14 overflow-hidden transition-colors duration-300">
+      <div className="relative w-full max-w-[1400px] mx-auto rounded-[24px] sm:rounded-[32px] dark:bg-gradient-to-b dark:from-[#101014]/80 dark:via-[#101014]/70 dark:to-[#050505]/80 bg-white/85 backdrop-blur-xl border dark:border-white/10 border-zinc-200/90 shadow-[0_15px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.9)] p-6 sm:p-10 lg:p-12 xl:p-14 overflow-hidden transition-colors duration-300">
         
         {/* Subtle Violet Ambient Radial Glow Inside Hero Card */}
         <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-r from-violet-600/15 via-emerald-500/15 to-cyan-500/15 blur-[130px] rounded-full pointer-events-none z-0" />
