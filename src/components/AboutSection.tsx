@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { TerminalRevealItem } from "./terminal";
+import ProfileCard from "./ProfileCard";
 
 const focusAreas = [
   { num: "01", title: "Full Stack Development", desc: "React, TypeScript, Django & REST APIs" },
@@ -36,38 +37,30 @@ export const AboutSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-          {/* LEFT COLUMN: Close-Up Sunglasses Editorial Portrait (5 cols) */}
-          <TerminalRevealItem order={1} effect="scale" className="lg:col-span-5 flex flex-col items-center lg:items-start">
-            <div className="relative w-full max-w-[420px] lg:max-w-[460px] group">
-              {/* Violet/Cyan Ambient Rim Backlight Glow */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-violet-600/25 via-emerald-500/20 to-cyan-500/25 blur-2xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px] sm:rounded-[40px]" />
-
-              {/* Main Portrait Framing */}
-              <div className="relative z-10 w-full aspect-[4/5] rounded-[28px] sm:rounded-[36px] overflow-hidden border dark:border-white/15 border-zinc-300 dark:bg-zinc-950 bg-white shadow-[0_25px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-                <img
-                  src="/santhosh_sunglasses.jpg"
-                  alt="Santhosh Kannan wearing sunglasses outdoors"
-                  className="w-full h-full object-cover object-top hover:scale-[1.03] transition-transform duration-700 ease-out"
-                  loading="lazy"
-                />
-                
-                {/* Subtle Bottom Gradient Vignette */}
-                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t dark:from-zinc-950 dark:via-zinc-950/60 from-black/80 via-black/40 to-transparent pointer-events-none" />
-
-                {/* Overlapping Pill Badge */}
-                <div className="absolute bottom-4 left-4 right-4 z-20 p-3 rounded-2xl dark:bg-zinc-950/85 bg-zinc-900/90 backdrop-blur-md border border-white/10 flex items-center justify-between text-white">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs font-mono text-zinc-200 font-semibold tracking-wide uppercase">
-                      Santhosh Kannan
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30">
-                    Developer
-                  </span>
-                </div>
-              </div>
-            </div>
+          {/* LEFT COLUMN: ProfileCard Interactive Visual (5 cols) */}
+          <TerminalRevealItem order={1} className="lg:col-span-5 flex flex-col items-center justify-center w-full">
+            <ProfileCard
+              name="Santhosh Kannan"
+              title="Full Stack Developer"
+              handle="santhoshkannan007"
+              status="Open to Opportunities"
+              contactText="Contact Me"
+              avatarUrl="/santhosh_sunglasses.jpg"
+              miniAvatarUrl="/santhosh_sunglasses.jpg"
+              showUserInfo={true}
+              enableTilt={true}
+              enableMobileTilt={false}
+              behindGlowEnabled={true}
+              behindGlowColor="rgba(34, 211, 238, 0.35)"
+              behindGlowSize="55%"
+              innerGradient="linear-gradient(145deg, rgba(168,85,247,0.22) 0%, rgba(34,211,238,0.12) 50%, rgba(16,185,129,0.10) 100%)"
+              onContactClick={() => {
+                document.getElementById('contact')?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
+            />
           </TerminalRevealItem>
 
           {/* RIGHT COLUMN: Editorial About Content (7 cols) */}
