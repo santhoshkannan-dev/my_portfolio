@@ -157,7 +157,7 @@ const projects: Project[] = [
     role: "Lead Full-Stack & ML Developer",
     github: "https://github.com/santhoshkannan-dev/NavaKrishi",
     live: "#",
-    mockupType: "agriculture",
+    image: "/navakrishi.jpg",
   },
   {
     id: "vlink",
@@ -256,11 +256,10 @@ export const ProjectsSection: React.FC = () => {
                 <button
                   key={tab}
                   onClick={() => setFilter(tab)}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
-                    filter === tab
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${filter === tab
                       ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
                       : "text-muted-foreground dark:hover:text-white hover:text-zinc-900 dark:hover:bg-white/5 hover:bg-zinc-200"
-                  }`}
+                    }`}
                 >
                   {tab}
                 </button>
@@ -292,9 +291,8 @@ export const ProjectsSection: React.FC = () => {
                   >
                     {/* Media Showcase Column */}
                     <div
-                      className={`lg:col-span-6 w-full h-full flex items-center justify-center ${
-                        isEven ? "lg:order-1" : "lg:order-2"
-                      }`}
+                      className={`lg:col-span-6 w-full h-full flex items-center justify-center ${isEven ? "lg:order-1" : "lg:order-2"
+                        }`}
                     >
                       <div className="relative w-full rounded-2xl overflow-hidden border dark:border-white/10 border-zinc-300 dark:bg-zinc-950 bg-zinc-900 group">
                         {project.image ? (
@@ -321,9 +319,8 @@ export const ProjectsSection: React.FC = () => {
 
                     {/* Case Study Details Column */}
                     <div
-                      className={`lg:col-span-6 flex flex-col justify-between ${
-                        isEven ? "lg:order-2" : "lg:order-1"
-                      }`}
+                      className={`lg:col-span-6 flex flex-col justify-between ${isEven ? "lg:order-2" : "lg:order-1"
+                        }`}
                     >
                       <div>
                         <div className="flex items-center gap-3 mb-3">
