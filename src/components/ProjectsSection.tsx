@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, CheckCircle2 } from "lucide-react";
 import { TerminalRevealItem } from "./terminal";
+import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 
 interface Project {
   id: string;
@@ -268,16 +269,26 @@ export const ProjectsSection: React.FC = () => {
           </TerminalRevealItem>
         </div>
 
-        {/* Case Studies Container (Alternating Layout) */}
-        <div className="space-y-16 md:space-y-24">
+        {/* Case Studies ScrollStack Container */}
+        <ScrollStack
+          useWindowScroll={true}
+          itemDistance={30}
+          itemStackDistance={24}
+          stackPosition="12%"
+          scaleEndPosition="8%"
+          baseScale={0.92}
+          itemScale={0.035}
+          rotationAmount={0}
+          blurAmount={0}
+        >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => {
               const isEven = idx % 2 === 0;
 
               return (
-                <TerminalRevealItem key={project.id} order={1 + idx * 0.6}>
+                <ScrollStackItem key={project.id}>
                   <div
-                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/40 hover:shadow-[0_20px_50px_rgba(168,85,247,0.12)] transition-all duration-500 shadow-2xl`}
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/40 hover:shadow-[0_20px_50px_rgba(168,85,247,0.12)] transition-all duration-500 shadow-2xl min-h-[460px]`}
                   >
                     {/* Media Showcase Column */}
                     <div
@@ -393,11 +404,11 @@ export const ProjectsSection: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                </TerminalRevealItem>
+                </ScrollStackItem>
               );
             })}
           </AnimatePresence>
-        </div>
+        </ScrollStack>
       </div>
     </div>
   );
