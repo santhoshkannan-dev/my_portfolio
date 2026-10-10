@@ -31,19 +31,20 @@ const capabilities = [
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative w-full min-h-screen dark:bg-black bg-zinc-50 pt-20 pb-12 lg:pt-24 lg:pb-16 px-3 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden z-10 transition-colors duration-300">
-      {/* Background Subtle Line Pattern */}
-      <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+    <section className="relative w-full min-h-screen dark:bg-[#050505] bg-zinc-50 pt-20 pb-12 lg:pt-24 lg:pb-16 px-3 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden z-10 transition-colors duration-300">
+      {/* React Bits Fine Dotted Background Pattern & Grid */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+      <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
       
-      {/* Ambient Background Glow Outside Container */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-emerald-500/5 blur-[160px] rounded-full pointer-events-none" />
+      {/* Subtle Purple/Violet Ambient Aurora Glow Outside Container */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-to-r from-purple-600/10 via-violet-500/10 to-cyan-500/5 blur-[160px] rounded-full pointer-events-none" />
 
       {/* Main Hero Card Container */}
-      <div className="relative w-full max-w-[1400px] mx-auto rounded-[24px] sm:rounded-[32px] dark:bg-gradient-to-b dark:from-zinc-950 dark:via-zinc-950/95 dark:to-black bg-white border dark:border-white/10 border-zinc-200/90 shadow-[0_15px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.9)] p-6 sm:p-10 lg:p-12 xl:p-14 overflow-hidden transition-colors duration-300">
+      <div className="relative w-full max-w-[1400px] mx-auto rounded-[24px] sm:rounded-[32px] dark:bg-gradient-to-b dark:from-[#101014] dark:via-[#101014]/95 dark:to-[#050505] bg-white border dark:border-white/10 border-zinc-200/90 shadow-[0_15px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.9)] p-6 sm:p-10 lg:p-12 xl:p-14 overflow-hidden transition-colors duration-300">
         
-        {/* Subtle Ambient Radial Glow Inside Hero Card */}
-        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-emerald-500/15 via-teal-400/20 to-cyan-500/15 blur-[120px] rounded-full pointer-events-none z-0" />
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none z-0" />
+        {/* Subtle Violet Ambient Radial Glow Inside Hero Card */}
+        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-r from-violet-600/15 via-emerald-500/15 to-cyan-500/15 blur-[130px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none z-0" />
 
         {/* 3-Column Desktop Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 items-center relative z-10">
@@ -130,7 +131,7 @@ const HeroSection: React.FC = () => {
             className="lg:col-span-4 flex flex-col items-center justify-end relative mt-6 lg:mt-0"
           >
             {/* Ambient Backlight Glow behind Portrait */}
-            <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/25 via-cyan-500/15 to-transparent blur-2xl rounded-full pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-violet-600/25 via-emerald-500/15 to-cyan-500/15 blur-2xl rounded-full pointer-events-none" />
 
             {/* Floating Tech Pill 1 (Top Right) */}
             <div className="absolute top-4 right-2 sm:right-6 z-30 px-3 py-1.5 rounded-xl dark:bg-zinc-950/80 bg-white/90 border border-emerald-500/30 backdrop-blur-md shadow-lg text-[11px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 hidden sm:flex">

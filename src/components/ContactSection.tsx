@@ -68,11 +68,12 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <div id="contact" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden" ref={ref}>
-      {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-64 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none -z-10" />
+    <div id="contact" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden" ref={ref}>
+      {/* React Bits Dotted Pattern & Ambient Aurora Glow */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+      <div className="aurora-glow-violet w-[700px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-70 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column - Headline & Contact Info */}
           <div className="lg:col-span-5 space-y-6">
@@ -95,7 +96,7 @@ export const ContactSection: React.FC = () => {
               <div className="space-y-4">
                 <a
                   href="mailto:santhoshkannan.dev@gmail.com"
-                  className="flex items-center justify-between p-4 rounded-xl glass border border-border/60 hover:border-emerald-500/50 bg-white/[0.01] hover:bg-white/[0.03] transition-all group"
+                  className="flex items-center justify-between p-4 rounded-xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/50 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">
@@ -115,7 +116,7 @@ export const ContactSection: React.FC = () => {
                   href="https://github.com/santhoshkannan-dev"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 rounded-xl glass border border-border/60 hover:border-emerald-500/50 bg-white/[0.01] hover:bg-white/[0.03] transition-all group"
+                  className="flex items-center justify-between p-4 rounded-xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/50 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">
@@ -135,7 +136,7 @@ export const ContactSection: React.FC = () => {
                   href="https://www.linkedin.com/in/santhosh-kannan-r/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 rounded-xl glass border border-border/60 hover:border-emerald-500/50 bg-white/[0.01] hover:bg-white/[0.03] transition-all group"
+                  className="flex items-center justify-between p-4 rounded-xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/50 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">
@@ -158,7 +159,7 @@ export const ContactSection: React.FC = () => {
           <TerminalRevealItem order={2} className="lg:col-span-7">
             <form
               onSubmit={handleSubmit}
-              className="p-6 sm:p-10 rounded-3xl glass border border-border/80 dark:bg-zinc-950/90 bg-card shadow-2xl space-y-6"
+              className="p-6 sm:p-10 rounded-3xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 shadow-2xl hover:shadow-[0_20px_50px_rgba(168,85,247,0.12)] transition-all duration-300 space-y-6"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>

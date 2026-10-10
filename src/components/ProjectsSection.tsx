@@ -228,8 +228,12 @@ export const ProjectsSection: React.FC = () => {
   );
 
   return (
-    <div id="projects" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="projects" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden">
+      {/* React Bits Dotted Pattern & Ambient Aurora Glow */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+      <div className="aurora-glow-violet w-[750px] h-[750px] top-1/3 left-1/2 -translate-x-1/2 opacity-70 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
           <TerminalRevealItem order={0} className="max-w-3xl">
@@ -273,7 +277,7 @@ export const ProjectsSection: React.FC = () => {
               return (
                 <TerminalRevealItem key={project.id} order={1 + idx * 0.6}>
                   <div
-                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl glass border border-border/60 hover:border-emerald-500/40 transition-all duration-500 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent shadow-2xl`}
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center p-6 md:p-10 rounded-3xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/40 hover:shadow-[0_20px_50px_rgba(168,85,247,0.12)] transition-all duration-500 shadow-2xl`}
                   >
                     {/* Media Showcase Column */}
                     <div

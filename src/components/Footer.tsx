@@ -8,8 +8,11 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-12 md:py-16 dark:bg-zinc-950 bg-zinc-100 border-t dark:border-white/10 border-zinc-200 dark:text-zinc-400 text-zinc-600 text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="py-12 md:py-16 dark:bg-[#050505] bg-zinc-100 border-t dark:border-white/10 border-zinc-200 dark:text-zinc-400 text-zinc-600 text-xs relative overflow-hidden">
+      {/* React Bits Dotted Pattern */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <TerminalRevealItem order={0}>
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-10 border-b dark:border-white/5 border-zinc-200">
             {/* Brand Info */}

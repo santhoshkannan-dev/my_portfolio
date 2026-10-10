@@ -35,8 +35,12 @@ const capabilities = [
 
 export const CapabilitiesSection: React.FC = () => {
   return (
-    <div id="capabilities" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="capabilities" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden">
+      {/* React Bits Dotted Pattern & Ambient Aurora Glow */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+      <div className="aurora-glow-violet w-[600px] h-[600px] top-1/4 -right-32 opacity-70 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
@@ -57,7 +61,7 @@ export const CapabilitiesSection: React.FC = () => {
             return (
               <TerminalRevealItem key={cap.num} order={1 + idx * 0.5}>
                 <div
-                  className="group relative p-6 sm:p-8 rounded-2xl glass border border-border/60 hover:border-emerald-500/50 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent hover:shadow-[0_15px_35px_rgba(0,0,0,0.5)] transition-all duration-300 flex flex-col justify-between h-full"
+                  className="group relative p-6 sm:p-8 rounded-2xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/50 hover:shadow-[0_15px_35px_rgba(168,85,247,0.12)] transition-all duration-300 flex flex-col justify-between h-full"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">

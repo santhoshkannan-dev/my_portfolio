@@ -25,12 +25,13 @@ const techPills = [
 
 export const AboutSection: React.FC = () => {
   return (
-    <div id="about" className="py-24 lg:py-36 dark:bg-black bg-zinc-50 border-b dark:border-white/10 border-zinc-200/80 relative overflow-hidden z-10">
-      {/* Background Grid Line Subtleties */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#88888810_1px,transparent_1px),linear-gradient(to_bottom,#88888810_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+    <div id="about" className="py-24 lg:py-36 dark:bg-[#050505] bg-zinc-50 border-b dark:border-white/10 border-zinc-200/80 relative overflow-hidden z-10">
+      {/* React Bits Fine Dotted Background Pattern & Grid */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#88888808_1px,transparent_1px),linear-gradient(to_bottom,#88888808_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 
-      {/* Ambient Radial Glow */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-cyan-500/5 via-emerald-500/5 to-transparent blur-[140px] rounded-full pointer-events-none" />
+      {/* Subtle Violet Ambient Radial Glow */}
+      <div className="absolute top-1/3 left-1/4 w-[700px] h-[700px] bg-gradient-to-tr from-purple-600/10 via-violet-500/5 to-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -38,8 +39,8 @@ export const AboutSection: React.FC = () => {
           {/* LEFT COLUMN: Close-Up Sunglasses Editorial Portrait (5 cols) */}
           <TerminalRevealItem order={1} effect="scale" className="lg:col-span-5 flex flex-col items-center lg:items-start">
             <div className="relative w-full max-w-[420px] lg:max-w-[460px] group">
-              {/* Cyan/Green Ambient Rim Backlight Glow */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-emerald-500/30 via-teal-400/20 to-cyan-500/30 blur-2xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px] sm:rounded-[40px]" />
+              {/* Violet/Cyan Ambient Rim Backlight Glow */}
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-violet-600/25 via-emerald-500/20 to-cyan-500/25 blur-2xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px] sm:rounded-[40px]" />
 
               {/* Main Portrait Framing */}
               <div className="relative z-10 w-full aspect-[4/5] rounded-[28px] sm:rounded-[36px] overflow-hidden border dark:border-white/15 border-zinc-300 dark:bg-zinc-950 bg-white shadow-[0_25px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)]">

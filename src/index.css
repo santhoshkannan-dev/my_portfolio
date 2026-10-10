@@ -14,44 +14,40 @@
 
 @layer base {
   :root {
-    /* Shopify Editions inspired Stark White & Black for light mode */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    /* Light mode palette - high contrast white with coherent soft purple & emerald accents */
+    --background: #FFFFFF;
+    --surface: #F4F4F6;
+    --surface-elevated: #FFFFFF;
+    --text-primary: #09090B;
+    --text-secondary: #52525B;
+    --accent-green: #059669;
+    --accent-cyan: #0891B2;
+    --accent-violet: #9333EA;
+    --border-subtle: rgba(0, 0, 0, 0.08);
 
+    /* Mappings for standard Tailwind HSL tokens */
+    --foreground: 0 0% 0%;
     --card: 0 0% 98%;
     --card-foreground: 0 0% 0%;
-
     --popover: 0 0% 98%;
     --popover-foreground: 0 0% 0%;
-
     --primary: 151 55% 42%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 0 0% 94%;
     --secondary-foreground: 0 0% 0%;
-
     --muted: 0 0% 92%;
     --muted-foreground: 0 0% 40%;
-
     --accent: 217 91% 50%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 84% 50%;
     --destructive-foreground: 0 0% 100%;
-
-    /* Bento Box Grid Lines */
     --border: 0 0% 88%;
     --input: 0 0% 88%;
     --ring: 151 55% 42%;
+    --radius: 0.5rem;
 
-    --radius: 0rem;
-    /* Shopify Editions uses sharp or very slightly rounded edges */
-
-    /* Custom utility colors */
     --neon-glow: 151 55% 42%;
-    --neon-purple: 217 91% 50%;
-
-    /* Strict glass effects for bento boxes */
+    --neon-purple: 271 91% 65%;
     --glass: 0 0% 100%;
     --glass-border: 0 0% 0% / 0.08;
 
@@ -66,54 +62,50 @@
   }
 
   .dark {
-    /* Shopify Editions inspired Stark Black & White with vibrant accents */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Dark mode React Bits Hybrid Theme tokens */
+    --background: #050505;
+    --surface: #101014;
+    --surface-elevated: #17171D;
+    --text-primary: #F5F5F5;
+    --text-secondary: #A1A1AA;
+    --accent-green: #10B981;
+    --accent-cyan: #22D3EE;
+    --accent-violet: #A855F7;
+    --border-subtle: rgba(255, 255, 255, 0.10);
 
-    --card: 0 0% 3%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 151 55% 52%;
-    /* Shopify Green */
+    /* Mappings for standard Tailwind HSL tokens */
+    --foreground: 0 0% 96%;
+    --card: 240 11% 7%; /* #101014 */
+    --card-foreground: 0 0% 96%;
+    --popover: 240 11% 7%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 160 84% 39%; /* #10B981 */
     --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 9%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-
-    --accent: 217 91% 60%;
-    /* Vibrant Blue accent */
-    --accent-foreground: 0 0% 100%;
-
+    --secondary: 240 9% 10%; /* #17171D */
+    --secondary-foreground: 0 0% 96%;
+    --muted: 240 6% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 187 85% 53%; /* #22D3EE */
+    --accent-foreground: 0 0% 0%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 16%;
+    --input: 240 6% 16%;
+    --ring: 160 84% 39%;
 
-    /* Bento Box Grid Lines */
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 151 55% 52%;
+    --neon-glow: 160 84% 39%;
+    --neon-purple: 271 91% 65%;
+    --glass: 240 11% 7%;
+    --glass-border: 0 0% 100% / 0.10;
 
-    /* Custom utility colors */
-    --neon-glow: 151 55% 52%;
-    --neon-purple: 217 91% 60%;
-
-    /* Strict glass effects for bento boxes */
-    --glass: 0 0% 4%;
-    --glass-border: 0 0% 20%;
-
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 151 55% 52%;
+    --sidebar-background: 240 11% 7%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 160 84% 39%;
     --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 151 55% 52%;
+    --sidebar-accent: 240 9% 10%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 240 6% 16%;
+    --sidebar-ring: 160 84% 39%;
   }
 }
 
@@ -123,7 +115,9 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans tracking-tight;
+    background-color: var(--background);
+    color: var(--text-primary);
+    @apply font-sans tracking-tight;
     font-family: 'Michroma', sans-serif;
   }
 
@@ -172,6 +166,36 @@
 
   .section-padding {
     @apply px-6 py-24 md:px-12 lg:px-20 xl:px-32;
+  }
+
+  /* React Bits Fine Dotted Background Pattern */
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  :root:not(.dark) .bg-dot-pattern {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Ambient Violet Aurora Glows */
+  .aurora-glow-violet {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(34, 211, 238, 0.04) 45%, transparent 70%);
+    filter: blur(80px);
+  }
+
+  .aurora-glow-cyan {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.10) 0%, rgba(16, 185, 129, 0.04) 45%, transparent 70%);
+    filter: blur(80px);
   }
 }
 

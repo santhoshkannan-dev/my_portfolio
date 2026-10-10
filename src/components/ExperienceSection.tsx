@@ -48,8 +48,11 @@ const timelineItems: TimelineItem[] = [
 
 export const ExperienceSection: React.FC = () => {
   return (
-    <div id="journey" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="journey" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden">
+      {/* React Bits Dotted Pattern */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
@@ -70,12 +73,12 @@ export const ExperienceSection: React.FC = () => {
             return (
               <TerminalRevealItem key={idx} order={1 + idx * 0.5} effect="slide-right" className="relative group">
                 {/* Timeline Node Icon */}
-                <div className="absolute -left-[37px] md:-left-[53px] top-1 p-2 rounded-xl dark:bg-zinc-950 bg-white border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
+                <div className="absolute -left-[37px] md:-left-[53px] top-1 p-2 rounded-xl dark:bg-[#101014] bg-white border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:scale-110 transition-transform">
                   <IconComp size={16} />
                 </div>
 
                 {/* Content Card */}
-                <div className="p-6 md:p-8 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300">
+                <div className="p-6 md:p-8 rounded-2xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/40 hover:shadow-[0_15px_35px_rgba(168,85,247,0.10)] transition-all duration-300">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
                     <span className="text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 w-fit">
                       {item.period}

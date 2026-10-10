@@ -81,8 +81,11 @@ const skillCategories: SkillCategory[] = [
 
 export const SkillsSection: React.FC = () => {
   return (
-    <div id="stack" className="py-20 md:py-28 bg-background border-b border-border/60 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="stack" className="py-20 md:py-28 dark:bg-[#050505] bg-zinc-50 border-b border-border/60 relative overflow-hidden">
+      {/* React Bits Dotted Pattern */}
+      <div className="absolute inset-0 bg-dot-pattern pointer-events-none opacity-80" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <TerminalRevealItem order={0} className="max-w-3xl mb-14 md:mb-20">
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3 block">
@@ -103,7 +106,7 @@ export const SkillsSection: React.FC = () => {
             return (
               <TerminalRevealItem key={cat.title} order={1 + idx * 0.4}>
                 <div
-                  className="p-6 md:p-7 rounded-2xl glass border border-border/60 hover:border-emerald-500/40 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-300 flex flex-col justify-between h-full"
+                  className="p-6 md:p-7 rounded-2xl dark:bg-[#101014] bg-white border dark:border-white/10 border-zinc-200 hover:border-emerald-500/40 hover:shadow-[0_15px_35px_rgba(168,85,247,0.10)] transition-all duration-300 flex flex-col justify-between h-full"
                 >
                   <div>
                     <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-white/10 border-border">
