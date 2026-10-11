@@ -1,33 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Send, Download, Code, Cpu, Smartphone, Database, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { Send, Download, ArrowUpRight, CheckCircle2, Github, Linkedin } from "lucide-react";
+import CodeDemo, { Code, CodeHeader, CodeBlock, ReactIcon } from "./CodeDemo";
 
-const capabilities = [
-  {
-    num: "01",
-    title: "FULL STACK DEVELOPMENT",
-    desc: "React, TypeScript, Django, REST APIs and modern web applications.",
-    icon: Code,
-  },
-  {
-    num: "02",
-    title: "AI & DATA SOLUTIONS",
-    desc: "Python, Machine Learning, Data Analytics and AI-powered applications.",
-    icon: Cpu,
-  },
-  {
-    num: "03",
-    title: "MOBILE APPLICATIONS",
-    desc: "React Native, Expo and API-driven mobile applications.",
-    icon: Smartphone,
-  },
-  {
-    num: "04",
-    title: "CLOUD & DATABASE",
-    desc: "AWS, PostgreSQL, Docker and scalable backend infrastructure.",
-    icon: Database,
-  },
-];
+// Re-export imports as required by user prompt
+export { Code, CodeHeader, CodeBlock, ReactIcon, CodeDemo };
 
 const HeroSection: React.FC = () => {
   return (
@@ -49,7 +26,7 @@ const HeroSection: React.FC = () => {
         {/* 3-Column Desktop Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 items-center relative z-10">
           
-          {/* LEFT COLUMN: Eyebrow, Headline, Intro, CTAs & Credibility (5 cols) */}
+          {/* LEFT COLUMN: Eyebrow, Headline, Intro, CTAs, Social Links & Stats (5 cols) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,11 +52,11 @@ const HeroSection: React.FC = () => {
 
             {/* Personal Intro */}
             <p className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal mb-8 max-w-xl">
-              Full Stack Software Developer specializing in high-performance web applications, mobile apps, REST APIs, and AI-powered solutions using React, Python, Django, PostgreSQL and modern cloud technologies.
+              Full Stack Software Developer specializing in high-performance web applications, mobile apps, REST APIs, and AI-powered solutions using React, Python, Django, PostgreSQL, Docker, AWS and modern cloud technologies.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 mb-10">
+            {/* CTA Buttons & Social Links */}
+            <div className="flex flex-wrap items-center gap-3.5 mb-8">
               <button
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-black text-black font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_0_25px_rgba(16,185,129,0.35)] flex items-center gap-2 cursor-pointer group"
@@ -104,6 +81,35 @@ const HeroSection: React.FC = () => {
                 <Download size={15} />
                 <span>Resume</span>
               </a>
+
+              {/* Social Icon Links */}
+              <div className="flex items-center gap-2 ml-1">
+                <a
+                  href="https://github.com/santhoshkannan-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-xl border border-zinc-200 dark:border-white/10 hover:border-emerald-400 dark:hover:border-emerald-400 text-zinc-600 dark:text-zinc-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="GitHub Profile"
+                  title="GitHub Profile"
+                >
+                  <Github size={16} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/santhosh-kannan-r/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-xl border border-zinc-200 dark:border-white/10 hover:border-emerald-400 dark:hover:border-emerald-400 text-zinc-600 dark:text-zinc-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="LinkedIn Profile"
+                  title="LinkedIn Profile"
+                >
+                  <Linkedin size={16} />
+                </a>
+              </div>
+            </div>
+
+            {/* Mobile CodeDemo: Stacked beneath intro & CTA buttons on mobile */}
+            <div className="block lg:hidden my-6 w-full">
+              <CodeDemo />
             </div>
 
             {/* Credibility / Quick Stats Block */}
@@ -117,18 +123,18 @@ const HeroSection: React.FC = () => {
                 <span className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">React & Django</span>
               </div>
               <div>
-                <span className="block text-lg sm:text-xl font-bold font-mono text-cyan-600 dark:text-cyan-400">AI / ML</span>
-                <span className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Solutions</span>
+                <span className="block text-lg sm:text-xl font-bold font-mono text-cyan-600 dark:text-cyan-400">AI & CLOUD</span>
+                <span className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">AWS / DevOps</span>
               </div>
             </div>
           </motion.div>
 
-          {/* CENTER COLUMN: Overlapping Portrait Anchor (4 cols) */}
+          {/* CENTER COLUMN: Overlapping Portrait Anchor (3.5 cols on desktop) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-            className="lg:col-span-4 flex flex-col items-center justify-end relative mt-6 lg:mt-0"
+            className="lg:col-span-3 xl:col-span-3 flex flex-col items-center justify-end relative mt-6 lg:mt-0"
           >
             {/* Ambient Backlight Glow behind Portrait */}
             <div className="absolute inset-0 bg-gradient-to-t from-violet-600/25 via-emerald-500/15 to-cyan-500/15 blur-2xl rounded-full pointer-events-none" />
@@ -146,7 +152,7 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Integrated Portrait Card Container */}
-            <div className="relative z-20 w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[460px] aspect-[3/4] rounded-t-[32px] sm:rounded-t-[40px] overflow-hidden border-t border-x border-zinc-200 dark:border-white/15 dark:bg-gradient-to-b dark:from-zinc-900/60 dark:via-zinc-950/80 dark:to-black bg-zinc-100 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-end justify-center">
+            <div className="relative z-20 w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[340px] xl:max-w-[360px] aspect-[3/4] rounded-t-[32px] sm:rounded-t-[40px] overflow-hidden border-t border-x border-zinc-200 dark:border-white/15 dark:bg-gradient-to-b dark:from-zinc-900/60 dark:via-zinc-950/80 dark:to-black bg-zinc-100 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-end justify-center">
               <img
                 src="/santhosh_fullbody.jpg"
                 alt="Santhosh Kannan - Full Stack Developer"
@@ -157,38 +163,14 @@ const HeroSection: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* RIGHT COLUMN: Capabilities "What I Build" (3 cols) */}
+          {/* RIGHT COLUMN: Desktop CodeDemo Window (4 cols on desktop) */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 25 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-            className="lg:col-span-3 flex flex-col justify-center space-y-3.5 mt-6 lg:mt-0"
+            className="hidden lg:flex lg:col-span-4 xl:col-span-4 flex-col justify-center w-full"
           >
-            <div className="mb-1">
-              <span className="text-[11px] font-mono font-semibold tracking-[0.25em] text-emerald-600 dark:text-emerald-400 uppercase block">
-                WHAT I BUILD
-              </span>
-            </div>
-
-            {capabilities.map((item) => {
-              const IconComponent = item.icon;
-              return (
-                <div
-                  key={item.num}
-                  className="p-4 rounded-2xl dark:bg-white/[0.03] bg-zinc-100/80 border dark:border-white/5 border-zinc-200/80 hover:border-emerald-500/30 hover:bg-zinc-100 dark:hover:bg-white/[0.05] transition-all duration-300 group"
-                >
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                      {item.num} — {item.title}
-                    </span>
-                    <IconComponent size={14} className="text-zinc-500 dark:text-zinc-400 group-hover:text-emerald-500 transition-colors" />
-                  </div>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed group-hover:text-zinc-900 dark:group-hover:text-zinc-300 transition-colors">
-                    {item.desc}
-                  </p>
-                </div>
-              );
-            })}
+            <CodeDemo />
           </motion.div>
 
         </div>
