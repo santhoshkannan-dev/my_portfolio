@@ -177,7 +177,7 @@ const projects: Project[] = [
     role: "Full-Stack MERN Developer",
     github: "https://github.com/santhoshkannan-dev/vlink_inventory",
     live: "https://vlink-inventory.vercel.app",
-    mockupType: "vlink",
+    image: "vlink.png",
   },
   {
     id: "navayatra",
@@ -257,8 +257,8 @@ export const ProjectsSection: React.FC = () => {
                   key={tab}
                   onClick={() => setFilter(tab)}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${filter === tab
-                      ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                      : "text-muted-foreground dark:hover:text-white hover:text-zinc-900 dark:hover:bg-white/5 hover:bg-zinc-200"
+                    ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                    : "text-muted-foreground dark:hover:text-white hover:text-zinc-900 dark:hover:bg-white/5 hover:bg-zinc-200"
                     }`}
                 >
                   {tab}
