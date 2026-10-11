@@ -15,7 +15,7 @@ const links = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState("");
   const [visible, setVisible] = useState(true);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -41,22 +41,44 @@ const Navbar = () => {
 
       lastScrollY.current = currentScrollY;
 
-      // Section tracking
-      const scrollPosition = currentScrollY + 150;
+      // When near top of the page (Hero section), no section tab is active
+      if (currentScrollY < 180) {
+        setActiveSection("");
+        return;
+      }
+
+      // Check if user has scrolled to the bottom of the page (Contact/Footer)
+      const isAtBottom =
+        window.innerHeight + currentScrollY >=
+        document.documentElement.scrollHeight - 120;
+      if (isAtBottom) {
+        setActiveSection("contact");
+        return;
+      }
+
+      // Viewport-based section tracking using getBoundingClientRect
+      const viewThreshold = 220;
+      let matchedSection = "";
+
       for (const item of links) {
         const el = document.getElementById(item.id);
         if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(item.id);
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= viewThreshold && rect.bottom > viewThreshold) {
+            matchedSection = item.id;
             break;
           }
         }
       }
+
+      if (matchedSection) {
+        setActiveSection(matchedSection);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Run once on mount to establish initial state
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -64,6 +86,7 @@ const Navbar = () => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(id);
     }
     setMobileOpen(false);
   };

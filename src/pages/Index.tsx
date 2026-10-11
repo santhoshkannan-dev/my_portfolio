@@ -47,7 +47,22 @@ const Index = () => {
                 <TechStrip />
               </TerminalSection>
 
-              {/* 3. Capabilities (What I Build) */}
+              {/* 3. About Me & ProfileCard */}
+              <TerminalSection
+                sectionName="about"
+                directory="santhosh"
+                command="whoami"
+                statusLines={[
+                  "role: software developer",
+                  "education: MCA",
+                  "focus: full stack / AI / cloud",
+                  "profile loaded."
+                ]}
+              >
+                <AboutSection />
+              </TerminalSection>
+
+              {/* 4. Capabilities (What I Build) */}
               <TerminalSection
                 sectionName="capabilities"
                 directory="capabilities"
@@ -62,7 +77,7 @@ const Index = () => {
                 <CapabilitiesSection />
               </TerminalSection>
 
-              {/* 4. Engineering Approach (How I Build) */}
+              {/* 5. Engineering Approach (How I Build) */}
               <TerminalSection
                 sectionName="process"
                 directory="process"
@@ -77,7 +92,7 @@ const Index = () => {
                 <EngineeringProcess />
               </TerminalSection>
 
-              {/* 5. Featured Projects Case Studies */}
+              {/* 6. Featured Projects Case Studies */}
               <TerminalSection
                 sectionName="projects"
                 directory="projects"
@@ -93,7 +108,7 @@ const Index = () => {
                 <ProjectsSection />
               </TerminalSection>
 
-              {/* 6. Technology Stack Grid */}
+              {/* 7. Technology Stack Grid */}
               <TerminalSection
                 sectionName="stack"
                 directory="stack"
@@ -108,21 +123,6 @@ const Index = () => {
                 ]}
               >
                 <SkillsSection />
-              </TerminalSection>
-
-              {/* 7. About Me & Currently Exploring */}
-              <TerminalSection
-                sectionName="about"
-                directory="santhosh"
-                command="whoami"
-                statusLines={[
-                  "role: software developer",
-                  "education: MCA",
-                  "focus: full stack / AI / cloud",
-                  "profile loaded."
-                ]}
-              >
-                <AboutSection />
               </TerminalSection>
 
               {/* 8. Journey & Career Timeline */}
