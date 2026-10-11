@@ -2,14 +2,24 @@ import React, { useLayoutEffect, useRef, useCallback } from 'react';
 import Lenis from 'lenis';
 import './ScrollStack.css';
 
-export interface ScrollStackItemProps {
+export interface ScrollStackItemProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   itemClassName?: string;
 }
 
-export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({ children, itemClassName = '' }) => (
-  <div className={`scroll-stack-card ${itemClassName}`.trim()}>{children}</div>
+export const ScrollStackItem = React.forwardRef<HTMLDivElement, ScrollStackItemProps>(
+  ({ children, itemClassName = '', className = '', ...props }, ref) => (
+    <div
+      ref={ref}
+      className={`scroll-stack-card ${itemClassName} ${className}`.trim()}
+      {...props}
+    >
+      {children}
+    </div>
+  )
 );
+
+ScrollStackItem.displayName = 'ScrollStackItem';
 
 export interface ScrollStackProps {
   children: React.ReactNode;
