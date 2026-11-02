@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { Play, Pause, RotateCcw, ExternalLink, Sparkles, Move3d } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Play, Pause, RotateCcw, Sparkles, Move3d, ExternalLink } from 'lucide-react';
 import { CircularGalleryItem } from './CircularGallery';
 
 export type GalleryMode = 'SPHERE' | 'RING' | 'BARREL' | 'HELIX';
@@ -19,7 +19,6 @@ interface CardTransform {
   z: number;
   rx: number;
   ry: number;
-  rz: number;
 }
 
 export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
@@ -42,9 +41,9 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
 
   // Rotation angles (degrees)
   const rotYRef = useRef(0);
-  const rotXRef = useRef(-6);
+  const rotXRef = useRef(-4);
   const targetRotYRef = useRef(0);
-  const targetRotXRef = useRef(-6);
+  const targetRotXRef = useRef(-4);
 
   // Drag interaction trackers
   const isPointerDownRef = useRef(false);
@@ -54,8 +53,8 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
   const lastTimeRef = useRef<number>(0);
 
   // Dimensions & Sphere Radius
-  const [radius, setRadius] = useState(380);
-  const [cardDim, setCardDim] = useState({ width: 175, height: 235 });
+  const [radius, setRadius] = useState(360);
+  const [cardDim, setCardDim] = useState({ width: 165, height: 220 });
 
   // Update sizes based on viewport width
   useEffect(() => {
@@ -64,13 +63,13 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
       const w = containerRef.current.clientWidth;
       if (w < 480) {
         setRadius(230);
-        setCardDim({ width: 130, height: 180 });
+        setCardDim({ width: 130, height: 175 });
       } else if (w < 768) {
         setRadius(290);
-        setCardDim({ width: 150, height: 205 });
+        setCardDim({ width: 145, height: 195 });
       } else {
-        setRadius(380);
-        setCardDim({ width: 175, height: 235 });
+        setRadius(360);
+        setCardDim({ width: 165, height: 220 });
       }
     };
 
@@ -95,28 +94,33 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  // Compute 3D Coordinates for each card based on the active mode
+  // Compute 3D Coordinates ensuring cards are NEVER upside down
   const cardTransforms = useMemo<CardTransform[]>(() => {
     const count = items.length;
     if (count === 0) return [];
 
     return items.map((_, i) => {
       if (mode === 'SPHERE') {
-        // Fibonacci sphere distribution for uniform spherical coverage
-        const phi = Math.acos(1 - (2 * (i + 0.5)) / count);
-        const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ~2.39996 rad
+        // Clamped latitude distribution (-45deg to +45deg) so cards never bunch or flip at poles
+        const v = (i + 0.5) / count;
+        const yNorm = 0.65 - v * 1.30; // Bounded between -0.65 and +0.65
+        const rXZ = Math.sqrt(Math.max(0.2, 1 - yNorm * yNorm));
+        const goldenAngle = 2.3999632;
         const theta = i * goldenAngle;
 
-        // Position on sphere
-        const x = radius * Math.sin(phi) * Math.cos(theta);
-        const y = radius * Math.cos(phi) * 0.95;
-        const z = radius * Math.sin(phi) * Math.sin(theta);
+        const x = radius * rXZ * Math.sin(theta);
+        const z = radius * rXZ * Math.cos(theta);
+        const y = radius * yNorm * 0.9;
 
-        // Angle card to face outward from sphere center
-        const ry = -(theta * (180 / Math.PI)) + 90;
-        const rx = -(phi * (180 / Math.PI) - 90) * 0.85;
+        // Azimuth (yaw) points outward radially from Y-axis
+        const ry = (Math.atan2(x, z) * 180) / Math.PI;
 
-        return { x, y, z, rx, ry, rz: 0 };
+        // Gentle elevation tilt (-18deg to +18deg max) - guarantees card stays upright!
+        const distXZ = Math.sqrt(x * x + z * z);
+        const elevation = Math.atan2(y, distXZ);
+        const rx = -(elevation * 180 / Math.PI) * 0.5;
+
+        return { x, y, z, rx, ry };
       }
 
       if (mode === 'RING') {
@@ -127,7 +131,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
         const y = 0;
         const ry = (angle * 180) / Math.PI;
 
-        return { x, y, z, rx: 0, ry, rz: 0 };
+        return { x, y, z, rx: 0, ry };
       }
 
       if (mode === 'BARREL') {
@@ -137,28 +141,28 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
         const tierIndex = Math.floor(i / perTier);
         const indexInTier = i % perTier;
 
-        const angle = (indexInTier / perTier) * 2 * Math.PI + tierIndex * 0.45;
+        const angle = (indexInTier / perTier) * 2 * Math.PI + tierIndex * 0.5;
         const x = radius * Math.sin(angle);
         const z = radius * Math.cos(angle);
-        const y = (tierIndex - (tiers - 1) / 2) * (cardDim.height + 30);
+        const y = (tierIndex - 1) * (cardDim.height + 26);
         const ry = (angle * 180) / Math.PI;
-        const rx = -(y / radius) * 12;
+        const rx = -(y / radius) * 10;
 
-        return { x, y, z, rx, ry, rz: 0 };
+        return { x, y, z, rx, ry };
       }
 
       if (mode === 'HELIX') {
-        // DNA-style vertical 3D spiral
-        const angle = i * 0.48;
+        // Vertical 3D helix spiral
+        const angle = i * 0.52;
         const x = radius * Math.sin(angle);
         const z = radius * Math.cos(angle);
-        const y = (i - (count - 1) / 2) * 44;
+        const y = (i - (count - 1) / 2) * 38;
         const ry = (angle * 180) / Math.PI;
 
-        return { x, y, z, rx: 0, ry, rz: 0 };
+        return { x, y, z, rx: 0, ry };
       }
 
-      return { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 };
+      return { x: 0, y: 0, z: 0, rx: 0, ry: 0 };
     });
   }, [items, mode, radius, cardDim.height]);
 
@@ -173,11 +177,11 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
       const dt = Math.min((timestamp - lastTimeRef.current) / 1000, 0.1);
       lastTimeRef.current = timestamp;
 
-      // Auto-rotation logic (pauses on hover or manual drag)
+      // Auto-rotation logic (pauses on card hover or active drag)
       if (isAutoRotating && !isPointerDownRef.current && hoveredIndex === null && isInViewport) {
         targetRotYRef.current += autoRotateSpeed * 60 * dt;
-        // Subtle undulating pitch wobble for organic 3D movement
-        targetRotXRef.current = -6 + Math.sin(timestamp * 0.0008) * 5;
+        // Subtle undulating pitch wobble (-7deg to +1deg)
+        targetRotXRef.current = -3 + Math.sin(timestamp * 0.0006) * 4;
       }
 
       // Drag inertia / momentum damping
@@ -188,14 +192,14 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
         velocityRef.current.y *= 0.92;
 
         // Pitch angle clamp to prevent upside-down flip
-        targetRotXRef.current = Math.max(-65, Math.min(65, targetRotXRef.current));
+        targetRotXRef.current = Math.max(-30, Math.min(30, targetRotXRef.current));
       }
 
       // Smooth Lerp towards target
       rotYRef.current += (targetRotYRef.current - rotYRef.current) * 0.12;
       rotXRef.current += (targetRotXRef.current - rotXRef.current) * 0.12;
 
-      // Apply 3D transform directly to the stage DOM element for 60-120fps performance
+      // Apply 3D transform directly to the stage DOM element
       if (stageRef.current) {
         stageRef.current.style.transform = `rotateX(${rotXRef.current}deg) rotateY(${rotYRef.current}deg)`;
       }
@@ -231,9 +235,8 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
       setIsDragging(true);
     }
 
-    // Update target angles
     targetRotYRef.current += dx * 0.35;
-    targetRotXRef.current = Math.max(-65, Math.min(65, targetRotXRef.current - dy * 0.35));
+    targetRotXRef.current = Math.max(-30, Math.min(30, targetRotXRef.current - dy * 0.35));
 
     velocityRef.current = { x: dx * 0.25, y: -dy * 0.25 };
     lastPointerPos.current = { x: e.clientX, y: e.clientY };
@@ -246,7 +249,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
 
   const resetView = () => {
     targetRotYRef.current = 0;
-    targetRotXRef.current = -6;
+    targetRotXRef.current = -4;
     velocityRef.current = { x: 0, y: 0 };
   };
 
@@ -263,7 +266,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
       className={`relative w-full h-[640px] md:h-[700px] overflow-hidden select-none bg-gradient-to-b from-[#090810] via-[#0d0c18] to-[#080710] flex flex-col justify-between ${className}`}
       style={{ touchAction: 'pan-y' }}
     >
-      {/* Subtle 3D Depth Lighting Gradients */}
+      {/* 3D Depth Lighting & Ambience */}
       <div className="absolute inset-0 bg-radial-vignette pointer-events-none opacity-70 z-10" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-purple-600/10 blur-[140px] rounded-full pointer-events-none" />
 
@@ -307,7 +310,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
       {/* 3D SCENE VIEWPORT & STAGE */}
       <div
         className="relative flex-1 w-full flex items-center justify-center cursor-grab active:cursor-grabbing overflow-visible"
-        style={{ perspective: '1100px', perspectiveOrigin: '50% 50%' }}
+        style={{ perspective: '1200px', perspectiveOrigin: '50% 50%' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -323,7 +326,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
           }}
         >
           {items.map((item, index) => {
-            const t = cardTransforms[index] || { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 };
+            const t = cardTransforms[index] || { x: 0, y: 0, z: 0, rx: 0, ry: 0 };
             const isHovered = hoveredIndex === index;
             const isSelected = selectedIndex === index;
 
@@ -343,30 +346,30 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
                     isHovered ? 'scale3d(1.18, 1.18, 1.18)' : 'scale3d(1, 1, 1)'
                   }`,
                   transformStyle: 'preserve-3d',
-                  backfaceVisibility: 'visible',
                   zIndex: isHovered ? 50 : 1,
                 }}
               >
-                {/* CARD BODY WITH SHOWCASE IMAGE & METADATA */}
+                {/* 1. FRONT FACE (VISIBLE ONLY WHEN FACING TOWARDS CAMERA - NEVER MIRRORED) */}
                 <div
-                  className={`relative w-full h-full rounded-2xl overflow-hidden border backdrop-blur-xl transition-all duration-300 flex flex-col justify-between shadow-2xl ${
+                  className={`absolute inset-0 rounded-2xl overflow-hidden border backdrop-blur-xl transition-all duration-300 flex flex-col justify-between shadow-2xl ${
                     isSelected
                       ? 'border-emerald-400 bg-emerald-950/40 shadow-[0_0_35px_rgba(16,185,129,0.45)]'
                       : isHovered
                       ? 'border-cyan-400 bg-zinc-900/95 shadow-[0_0_30px_rgba(34,211,238,0.35)]'
-                      : 'border-white/10 bg-zinc-950/85 hover:border-white/30'
+                      : 'border-white/10 bg-[#0e0d16]/95 hover:border-white/30'
                   }`}
                   style={{
-                    // Dim cards slightly that face away for realistic 3D volumetric depth
-                    opacity: isHovered || isSelected ? 1 : 0.88,
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'translateZ(1px)',
                   }}
                 >
                   {/* Top Header Mockup Bar */}
-                  <div className="flex items-center justify-between px-2.5 py-1.5 border-b border-white/10 bg-black/40">
-                    <div className="flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-red-500/80 inline-block" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/80 inline-block" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 inline-block" />
+                  <div className="flex items-center justify-between px-3 py-2 border-b border-white/10 bg-black/50">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-red-500/80 inline-block" />
+                      <span className="w-2 h-2 rounded-full bg-yellow-500/80 inline-block" />
+                      <span className="w-2 h-2 rounded-full bg-emerald-500/80 inline-block" />
                     </div>
                     <span className="text-[9px] font-mono text-emerald-400 font-bold flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -375,7 +378,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
                   </div>
 
                   {/* Showcase Image Container */}
-                  <div className="relative flex-1 w-full overflow-hidden bg-black/60 flex items-center justify-center p-1.5">
+                  <div className="relative flex-1 w-full overflow-hidden bg-black/60 flex items-center justify-center p-2">
                     <img
                       src={item.image}
                       alt={item.text}
@@ -383,31 +386,63 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
                       loading="lazy"
                     />
 
-                    {/* Gradient Overlay for Text Readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                    {/* Gradient Vignette for Text Legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
 
                     {/* Category Floating Pill */}
-                    <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
-                      <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-semibold bg-black/80 text-cyan-300 border border-cyan-500/30 backdrop-blur-sm truncate max-w-[90%]">
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                      <span className="px-2 py-0.5 rounded text-[8px] font-mono font-semibold bg-black/85 text-cyan-300 border border-cyan-500/30 backdrop-blur-sm truncate max-w-[90%]">
                         {item.category || item.framework || 'Vercel App'}
                       </span>
                     </div>
                   </div>
 
                   {/* Card Bottom Info Bar */}
-                  <div className="p-2.5 bg-zinc-950/90 border-t border-white/5 space-y-0.5">
-                    <h4 className="text-xs font-bold text-white tracking-tight truncate group-hover:text-emerald-400 transition-colors">
-                      {item.text}
-                    </h4>
-                    <p className="text-[10px] font-mono text-zinc-400 truncate">
-                      {item.framework || 'Next.js / Vite'}
-                    </p>
+                  <div className="p-3 bg-zinc-950/95 border-t border-white/10 flex items-center justify-between gap-2">
+                    <div className="min-w-0 space-y-0.5">
+                      <h4 className="text-xs font-bold text-white tracking-tight truncate group-hover:text-emerald-400 transition-colors">
+                        {item.text}
+                      </h4>
+                      <p className="text-[10px] font-mono text-zinc-400 truncate">
+                        {item.framework || 'Next.js / Vite'}
+                      </p>
+                    </div>
+                    <ExternalLink size={12} className="text-zinc-500 group-hover:text-emerald-400 shrink-0 transition-colors" />
                   </div>
 
-                  {/* Highlight Glow Border on Selected/Hovered */}
+                  {/* Glowing Border ring on Hover / Selected */}
                   {(isHovered || isSelected) && (
                     <div className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-emerald-400/80" />
                   )}
+                </div>
+
+                {/* 2. BACK FACE (VISIBLE WHEN CARD FACES AWAY IN 3D SPACE - SLEEK FROSTED VERCEL BACKPLATE) */}
+                <div
+                  className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10 bg-[#0c0b14]/90 backdrop-blur-md flex flex-col items-center justify-center p-4 shadow-xl select-none"
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg) translateZ(1px)',
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-2 shadow-inner">
+                    {/* Glowing Vercel Triangle Logo */}
+                    <svg width="22" height="20" viewBox="0 0 76 65" fill="none">
+                      <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="url(#vercelBackGrad)" />
+                      <defs>
+                        <linearGradient id="vercelBackGrad" x1="0" y1="0" x2="76" y2="65" gradientUnits="userSpaceOnUse">
+                          <stop stopColor="#34d399" />
+                          <stop offset="1" stopColor="#22d3ee" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-zinc-400 font-bold">
+                    VERCEL
+                  </span>
+                  <span className="text-[8px] font-mono text-emerald-400/80 mt-1">
+                    ENDPOINT
+                  </span>
                 </div>
               </div>
             );
@@ -420,7 +455,7 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
         {/* Drag Hint */}
         <div className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400 bg-black/50 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
           <Move3d size={12} className="text-cyan-400" />
-          <span>Drag to spin 3D · Click card to launch</span>
+          <span>Drag in 3D to spin · Click card to launch</span>
         </div>
 
         {/* Mode Selector Tabs (Matches User Screenshot) */}
