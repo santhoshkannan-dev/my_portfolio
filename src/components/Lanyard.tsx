@@ -46,13 +46,13 @@ const RING_RADIUS = 0.095;
 const RING_TUBE = 0.0135;
 const EYELET_RADIUS = 0.036;
 const CLAMP_BODY = 0.15;
-const FACE_WIDTH = 1024;
+const FACE_WIDTH = 2048;
 
 const FINISHES = {
-  glossy: { roughness: 0.42, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.06, foil: 0, anisotropy: 0 },
-  matte: { roughness: 0.85, metalness: 0, clearcoat: 0, clearcoatRoughness: 0.6, foil: 0, anisotropy: 0 },
-  holographic: { roughness: 0.3, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04, foil: 1, anisotropy: 0 },
-  metallic: { roughness: 0.36, metalness: 0.75, clearcoat: 0.5, clearcoatRoughness: 0.18, foil: 0, anisotropy: 0.7 }
+  glossy: { roughness: 0.22, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.03, foil: 0, anisotropy: 0 },
+  matte: { roughness: 0.65, metalness: 0, clearcoat: 0, clearcoatRoughness: 0.4, foil: 0, anisotropy: 0 },
+  holographic: { roughness: 0.22, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.03, foil: 1, anisotropy: 0 },
+  metallic: { roughness: 0.3, metalness: 0.7, clearcoat: 0.5, clearcoatRoughness: 0.12, foil: 0, anisotropy: 0.7 }
 };
 
 const BAND_COLUMNS = [0, 0.07, 0.93, 1];
@@ -376,7 +376,10 @@ const buildEnvironment = (renderer: THREE.WebGLRenderer) => {
 const makeCanvasTexture = (canvas: HTMLCanvasElement, anisotropy: number) => {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = anisotropy;
+  texture.anisotropy = Math.max(anisotropy, 8);
+  texture.minFilter = THREE.LinearMipmapLinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.generateMipmaps = true;
   return texture;
 };
 
@@ -949,12 +952,12 @@ export const Lanyard: React.FC<LanyardProps> = ({
     const frontMaterial = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
       normalMap: grain,
-      normalScale: new THREE.Vector2(0.06, 0.06)
+      normalScale: new THREE.Vector2(0.04, 0.04)
     });
     const backMaterial = new THREE.MeshPhysicalMaterial({
       map: backTexture,
       normalMap: grain,
-      normalScale: new THREE.Vector2(0.06, 0.06)
+      normalScale: new THREE.Vector2(0.015, 0.015)
     });
     frontMaterial.onBeforeCompile = injectFoil;
     backMaterial.onBeforeCompile = injectFoil;

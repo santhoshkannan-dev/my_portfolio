@@ -160,12 +160,6 @@ const HeroSection: React.FC = () => {
                 intro={true}
               />
             </div>
-
-            {/* Subtle Interactive Hint */}
-            <div className="relative z-20 mt-1 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 border border-white/10 text-[10px] font-mono text-zinc-400 backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Interactive 3D Card · Drag, throw &amp; click to flip</span>
-            </div>
           </motion.div>
 
           {/* RIGHT COLUMN: Desktop CodeDemo Window (4 cols on desktop) */}
