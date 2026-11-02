@@ -98,11 +98,12 @@ const Index = () => {
                 directory="projects"
                 command="./scan-projects.sh"
                 statusLines={[
-                  "[01] Marian Excellence Grid [OK]",
-                  "[02] NavaKrishi AI [OK]",
-                  "[03] VLink Inventory [OK]",
-                  "[04] NavaYatra [OK]",
-                  "[05] NeXGeaR [OK]"
+                  "[01] Cineverse 3D [OK]",
+                  "[02] Marian Excellence Grid [OK]",
+                  "[03] NavaKrishi AI [OK]",
+                  "[04] VLink Inventory [OK]",
+                  "[05] NavaYatra [OK]",
+                  "[06] NeXGeaR [OK]"
                 ]}
               >
                 <ProjectsSection />

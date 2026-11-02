@@ -120,6 +120,26 @@ const VLinkInventoryMockup = () => (
 
 const projects: Project[] = [
   {
+    id: "cineverse",
+    title: "Cineverse 3D",
+    subtitle: "3D Movie Ticket Booking Experience",
+    category: "WEB",
+    desc: "A next-generation 3D cinema booking web application engineered with Next.js 15, Three.js, and React 19. Features an interactive 3D cinema hall with real-time seat selection, cylindrical panorama hero, live city showtimes, and instant QR e-ticket generation.",
+    problem: "Traditional movie ticket booking platforms rely on static 2D seat maps and flat UI, lacking spatial preview of theater viewing angles and immersive movie exploration.",
+    solution: "Engineered an interactive 3D cinema experience with Three.js WebGL rendering, real-time spatial seat selection, Lenis smooth scrolling, and instant digital tickets.",
+    tech: ["Next.js 15", "Three.js", "React 19", "TypeScript", "Tailwind CSS", "Motion"],
+    features: [
+      "Interactive 3D cinema hall with real-time seat selection",
+      "3D cylindrical panorama hero & isometric poster wall",
+      "Live city showtimes with distance sorting across major hubs",
+      "Dynamic QR code e-ticket generation & storage"
+    ],
+    role: "Lead 3D Web & Frontend Developer",
+    github: "https://github.com/santhoshkannan-dev/cineverse-3d",
+    live: "https://cineverse-3d.vercel.app/",
+    image: "/Cineverse Cinematic UI Showcase.png",
+  },
+  {
     id: "meg",
     title: "Marian Excellence Grid",
     subtitle: "Class Evaluation & Academic Analytics Platform",
@@ -177,7 +197,7 @@ const projects: Project[] = [
     role: "Full-Stack MERN Developer",
     github: "https://github.com/santhoshkannan-dev/vlink_inventory",
     live: "https://vlink-inventory.vercel.app",
-    image: "vlink.png",
+    image: "/vlink.png",
   },
   {
     id: "navayatra",

@@ -25,7 +25,7 @@ const timelineItems: TimelineItem[] = [
     period: "2024 - PRESENT",
     title: "Full-Stack & AI Project Development",
     subtitle: "Autonomous & Academic Projects",
-    desc: "Designed, architected, and built production web platforms including Marian Excellence Grid, NavaKrishi AI, NavaYatra bus booking app, and NeXGeaR PC marketplace.",
+    desc: "Designed, architected, and built production web platforms including Cineverse 3D, Marian Excellence Grid, NavaKrishi AI, NavaYatra bus booking app, and NeXGeaR PC marketplace.",
     tech: ["React", "Django", "PostgreSQL", "Machine Learning", "REST APIs"],
     icon: Code,
   },
