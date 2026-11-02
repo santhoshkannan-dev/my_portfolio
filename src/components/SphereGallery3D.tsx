@@ -10,6 +10,7 @@ export interface SphereGallery3DProps {
   autoRotateSpeed?: number;
   onItemClick?: (item: CircularGalleryItem, index: number) => void;
   onActiveChange?: (index: number) => void;
+  onHoverItem?: (item: CircularGalleryItem | null, index: number | null) => void;
   className?: string;
 }
 
@@ -23,10 +24,11 @@ interface CardTransform {
 
 export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
   items,
-  defaultMode = 'SPHERE',
+  defaultMode = 'HELIX',
   autoRotateSpeed = 0.22,
   onItemClick,
   onActiveChange,
+  onHoverItem,
   className = '',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -275,7 +277,9 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-zinc-300 backdrop-blur-md shadow-lg">
             <Sparkles size={13} className="text-emerald-400" />
-            <span className="font-semibold tracking-wide">3D Vercel Sphere</span>
+            <span className="font-semibold tracking-wide">
+              3D Vercel {mode === 'HELIX' ? 'Helix' : mode === 'SPHERE' ? 'Sphere' : mode === 'RING' ? 'Ring' : 'Barrel'}
+            </span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
               {items.length} ENDPOINTS
             </span>
@@ -333,8 +337,14 @@ export const SphereGallery3D: React.FC<SphereGallery3DProps> = ({
             return (
               <div
                 key={item.text + index}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                onMouseEnter={() => {
+                  setHoveredIndex(index);
+                  if (onHoverItem) onHoverItem(item, index);
+                }}
+                onMouseLeave={() => {
+                  setHoveredIndex(null);
+                  if (onHoverItem) onHoverItem(null, null);
+                }}
                 onClick={() => handleCardClick(item, index)}
                 className="absolute top-0 left-0 transition-transform duration-500 ease-out cursor-pointer group"
                 style={{

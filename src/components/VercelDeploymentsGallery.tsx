@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import SphereGallery3D from './SphereGallery3D';
 import { CircularGalleryItem } from './CircularGallery';
 import { TerminalRevealItem } from './terminal';
-import { ExternalLink, Github, Radio, Layers } from 'lucide-react';
+import { ExternalLink, Github, Radio, Layers, Sparkles } from 'lucide-react';
 import { vercelProjects } from '../data/vercelProjects';
 
 export const VercelDeploymentsGallery: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<CircularGalleryItem>(vercelProjects[0]);
+  const [hoveredProject, setHoveredProject] = useState<CircularGalleryItem | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
+
+  const activeProject = hoveredProject || selectedProject;
 
   const filteredProjects = activeFilter === 'ALL'
     ? vercelProjects
@@ -42,7 +45,7 @@ export const VercelDeploymentsGallery: React.FC = () => {
               All Vercel Deployments
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Explore 20+ live applications, interactive 3D simulations, and production systems hosted across Vercel edge networks. Drag to rotate the 3D sphere, switch projection modes, or click any card to inspect and launch.
+              Explore 20+ live applications, interactive 3D simulations, and production systems hosted across Vercel edge networks. Hover over any card to inspect its details below, drag in 3D to rotate the helix, or click to launch live.
             </p>
           </TerminalRevealItem>
 
@@ -67,7 +70,10 @@ export const VercelDeploymentsGallery: React.FC = () => {
                           if (tab.id === 'VITE') return p.framework?.toLowerCase().includes('vite');
                           return true;
                         });
-                    if (matching.length > 0) setSelectedProject(matching[0]);
+                    if (matching.length > 0) {
+                      setSelectedProject(matching[0]);
+                      setHoveredProject(null);
+                    }
                   }}
                   className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
                     activeFilter === tab.id
@@ -82,13 +88,16 @@ export const VercelDeploymentsGallery: React.FC = () => {
           </TerminalRevealItem>
         </div>
 
-        {/* 3D Sphere / Dome Gallery Canvas Container */}
+        {/* 3D Helix & Sphere Gallery Canvas Container */}
         <TerminalRevealItem order={2}>
           <div className="w-full rounded-3xl overflow-hidden border dark:border-white/10 border-zinc-200 shadow-[0_25px_60px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
             <SphereGallery3D
               items={filteredProjects}
-              defaultMode="SPHERE"
+              defaultMode="HELIX"
               autoRotateSpeed={0.24}
+              onHoverItem={(item) => {
+                setHoveredProject(item);
+              }}
               onItemClick={(item) => {
                 setSelectedProject(item);
                 if (item.url) {
@@ -103,36 +112,45 @@ export const VercelDeploymentsGallery: React.FC = () => {
           </div>
         </TerminalRevealItem>
 
-        {/* Active Deployment Launchpad Card */}
-        {selectedProject && (
+        {/* Active Deployment Launchpad Card (Updates dynamically on Hover or Click) */}
+        {activeProject && (
           <TerminalRevealItem order={3} className="mt-6">
-            <div className="p-5 md:p-6 rounded-2xl dark:bg-[#101014]/90 bg-white/90 border dark:border-white/10 border-zinc-200 shadow-xl backdrop-blur-md flex flex-col md:flex-row items-start md:items-center justify-between gap-5 transition-all duration-300">
+            <div className={`p-5 md:p-6 rounded-2xl dark:bg-[#101014]/90 bg-white/90 border shadow-xl backdrop-blur-md flex flex-col md:flex-row items-start md:items-center justify-between gap-5 transition-all duration-300 ${
+              hoveredProject
+                ? 'border-cyan-400/80 shadow-[0_0_35px_rgba(34,211,238,0.25)]'
+                : 'dark:border-white/10 border-zinc-200'
+            }`}>
               <div className="space-y-1.5 max-w-2xl">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
-                    {selectedProject.category || 'Vercel Deployment'}
+                    {activeProject.category || 'Vercel Deployment'}
                   </span>
-                  {selectedProject.framework && (
+                  {activeProject.framework && (
                     <span className="px-2.5 py-0.5 rounded-md text-[10px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/25 flex items-center gap-1">
-                      <Layers size={11} /> {selectedProject.framework}
+                      <Layers size={11} /> {activeProject.framework}
+                    </span>
+                  )}
+                  {hoveredProject && (
+                    <span className="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 flex items-center gap-1 animate-pulse">
+                      <Sparkles size={10} /> Live Hover Preview
                     </span>
                   )}
                 </div>
 
-                <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
-                  {selectedProject.text}
+                <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
+                  {activeProject.text}
                 </h3>
 
                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                  {selectedProject.description}
+                  {activeProject.description}
                 </p>
               </div>
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
-                {selectedProject.github && (
+                {activeProject.github && (
                   <a
-                    href={selectedProject.github}
+                    href={activeProject.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold border dark:border-white/10 border-zinc-200 hover:border-zinc-400 dark:hover:bg-white/5 hover:bg-zinc-100 transition-all cursor-pointer"
@@ -142,9 +160,9 @@ export const VercelDeploymentsGallery: React.FC = () => {
                   </a>
                 )}
 
-                {selectedProject.url && (
+                {activeProject.url && (
                   <a
-                    href={selectedProject.url}
+                    href={activeProject.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-bold bg-emerald-500 hover:bg-emerald-400 text-black transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] cursor-pointer"
