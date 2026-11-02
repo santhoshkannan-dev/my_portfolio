@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import CircularGallery, { CircularGalleryItem } from './CircularGallery';
+import SphereGallery3D from './SphereGallery3D';
+import { CircularGalleryItem } from './CircularGallery';
 import { TerminalRevealItem } from './terminal';
-import { ExternalLink, Github, Radio, Layers, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, Radio, Layers } from 'lucide-react';
 import { vercelProjects } from '../data/vercelProjects';
 
 export const VercelDeploymentsGallery: React.FC = () => {
@@ -41,7 +42,7 @@ export const VercelDeploymentsGallery: React.FC = () => {
               All Vercel Deployments
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Explore 20+ live applications, interactive 3D simulations, and production systems hosted across Vercel edge networks. Drag or scroll to spin the 3D gallery.
+              Explore 20+ live applications, interactive 3D simulations, and production systems hosted across Vercel edge networks. Drag to rotate the 3D sphere, switch projection modes, or click any card to inspect and launch.
             </p>
           </TerminalRevealItem>
 
@@ -56,7 +57,18 @@ export const VercelDeploymentsGallery: React.FC = () => {
               ].map(tab => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveFilter(tab.id)}
+                  onClick={() => {
+                    setActiveFilter(tab.id);
+                    const matching = tab.id === 'ALL'
+                      ? vercelProjects
+                      : vercelProjects.filter(p => {
+                          if (tab.id === 'NEXTJS') return p.framework?.toLowerCase().includes('next');
+                          if (tab.id === '3D') return p.category?.toLowerCase().includes('3d') || p.framework?.toLowerCase().includes('three') || p.category?.toLowerCase().includes('motion');
+                          if (tab.id === 'VITE') return p.framework?.toLowerCase().includes('vite');
+                          return true;
+                        });
+                    if (matching.length > 0) setSelectedProject(matching[0]);
+                  }}
                   className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
                     activeFilter === tab.id
                       ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]'
@@ -70,33 +82,14 @@ export const VercelDeploymentsGallery: React.FC = () => {
           </TerminalRevealItem>
         </div>
 
-        {/* 3D CircularGallery Canvas Container */}
+        {/* 3D Sphere / Dome Gallery Canvas Container */}
         <TerminalRevealItem order={2}>
-          <div
-            style={{ height: '600px', position: 'relative' }}
-            className="w-full rounded-3xl overflow-hidden border dark:border-white/10 border-zinc-200 dark:bg-[#0c0a12]/90 bg-zinc-950/90 shadow-[0_25px_60px_rgba(0,0,0,0.5)] backdrop-blur-2xl group"
-          >
-            {/* Top Control Bar with Drag Hint */}
-            <div className="absolute top-4 left-6 right-6 z-20 flex items-center justify-between pointer-events-none">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-zinc-300 backdrop-blur-md">
-                <Sparkles size={12} className="text-cyan-400" />
-                <span className="hidden sm:inline">Interactive 3D Curved Gallery</span>
-                <span className="sm:hidden">3D Gallery</span>
-              </div>
-              <div className="text-[11px] font-mono text-zinc-400 bg-black/60 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
-                <span>Drag or Wheel to spin</span>
-              </div>
-            </div>
-
-            {/* CircularGallery Component */}
-            <CircularGallery
+          <div className="w-full rounded-3xl overflow-hidden border dark:border-white/10 border-zinc-200 shadow-[0_25px_60px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
+            <SphereGallery3D
               items={filteredProjects}
-              bend={3}
-              textColor="#ffffff"
-              borderRadius={0.05}
-              scrollEase={0.05}
-              onItemClick={(item, index) => {
-                console.log(item.text, index);
+              defaultMode="SPHERE"
+              autoRotateSpeed={0.24}
+              onItemClick={(item) => {
                 setSelectedProject(item);
                 if (item.url) {
                   window.open(item.url as string, '_blank', 'noopener,noreferrer');
@@ -129,31 +122,35 @@ export const VercelDeploymentsGallery: React.FC = () => {
                 <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
                   {selectedProject.text}
                 </h3>
-                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+
+                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
                   {selectedProject.description}
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 shrink-0 w-full md:w-auto">
-                {selectedProject.url && (
-                  <a
-                    href={selectedProject.url as string}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 md:flex-initial px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.35)] flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <ExternalLink size={14} /> Launch Live Demo
-                  </a>
-                )}
+              <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
                 {selectedProject.github && (
                   <a
-                    href={selectedProject.github as string}
+                    href={selectedProject.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 md:flex-initial px-5 py-2.5 rounded-xl border dark:border-white/20 border-zinc-300 hover:border-emerald-400 dark:text-white text-zinc-900 hover:text-emerald-500 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                    className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold border dark:border-white/10 border-zinc-200 hover:border-zinc-400 dark:hover:bg-white/5 hover:bg-zinc-100 transition-all cursor-pointer"
                   >
-                    <Github size={14} /> View Code
+                    <Github size={14} />
+                    <span>Source Code</span>
+                  </a>
+                )}
+
+                {selectedProject.url && (
+                  <a
+                    href={selectedProject.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-bold bg-emerald-500 hover:bg-emerald-400 text-black transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] cursor-pointer"
+                  >
+                    <span>Launch Live App</span>
+                    <ExternalLink size={14} />
                   </a>
                 )}
               </div>
