@@ -1334,7 +1334,11 @@ export const Lanyard: React.FC<LanyardProps> = ({
         target: hit.point.clone()
       };
       press = { x: event.clientX, y: event.clientY, time: performance.now(), point: hit.point.clone() };
-      canvas.setPointerCapture?.(event.pointerId);
+      try {
+        canvas.setPointerCapture?.(event.pointerId);
+      } catch {
+        // Safe fallback if pointer capture fails
+      }
       setCursor('grabbing');
       event.preventDefault();
       start();
@@ -1344,7 +1348,7 @@ export const Lanyard: React.FC<LanyardProps> = ({
       if (!settingsRef.current.interactive) return;
       toPointer(event);
       if (sim.grab) {
-        if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 6) press = null;
+        if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 14) press = null;
         raycaster.ray.at(sim.grab.reach, sim.grab.target);
         start();
         return;
@@ -1357,9 +1361,13 @@ export const Lanyard: React.FC<LanyardProps> = ({
     const onPointerUp = (event: PointerEvent) => {
       if (!sim.grab) return;
       sim.grab = null;
-      if (press && event.type === 'pointerup' && performance.now() - press.time < 450) flip(press.point);
+      if (press && event.type === 'pointerup' && performance.now() - press.time < 650) flip(press.point);
       press = null;
-      canvas.releasePointerCapture?.(event.pointerId);
+      try {
+        canvas.releasePointerCapture?.(event.pointerId);
+      } catch {
+        // Safe fallback if pointer capture already released
+      }
       setCursor(hovering && event.pointerType !== 'touch' ? 'grab' : '');
       start();
     };

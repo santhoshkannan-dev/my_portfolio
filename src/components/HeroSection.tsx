@@ -140,25 +140,30 @@ const HeroSection: React.FC = () => {
             {/* Ambient Backlight Glow behind Portrait */}
             <div className="absolute inset-0 bg-gradient-to-t from-violet-600/25 via-emerald-500/15 to-cyan-500/15 blur-2xl rounded-full pointer-events-none" />
 
-            {/* 3D Physics Lanyard Card */}
-            <div className="relative z-20 w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[360px] h-[480px] sm:h-[530px] flex items-center justify-center">
-              <Lanyard
-                frontImage="/lanyard-front.svg"
-                backImage="/lanyard-back.svg"
-                cardColor="#090810"
-                strapColor="#181824"
-                metal="silver"
-                finish="glossy"
-                size={0.65}
-                strapLength={0.42}
-                strapWidth={0.65}
-                gravity={1}
-                damping={0.5}
-                elasticity={0.55}
-                breeze={0.35}
-                interactive={true}
-                intro={true}
-              />
+            {/* Origin Slot Anchor for Shared-Element Profile Card with 3D Lanyard */}
+            <div
+              id="hero-profile-card-slot"
+              className="relative z-20 w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[360px] h-[480px] sm:h-[530px] flex items-center justify-center pointer-events-auto"
+            >
+              <div id="hero-lanyard-wrapper" className="w-full h-full pointer-events-auto">
+                <Lanyard
+                  frontImage="/lanyard-front.svg"
+                  backImage="/lanyard-back.svg"
+                  cardColor="#090810"
+                  strapColor="#181824"
+                  metal="silver"
+                  finish="glossy"
+                  size={0.65}
+                  strapLength={0.42}
+                  strapWidth={0.65}
+                  gravity={1}
+                  damping={0.5}
+                  elasticity={0.55}
+                  breeze={0.35}
+                  interactive={true}
+                  intro={true}
+                />
+              </div>
             </div>
           </motion.div>
 
