@@ -1,6 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useTerminalContext } from "./TerminalContext";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 
 export interface TerminalRevealItemProps {
   children: React.ReactNode;
@@ -15,7 +14,16 @@ export const TerminalRevealItem: React.FC<TerminalRevealItemProps> = ({
   className = "",
   effect = "fade-up",
 }) => {
-  const { isStarted, isComplete, isReducedMotion } = useTerminalContext();
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
+      setIsReducedMotion(true);
+    }
+  }, []);
 
   // If reduced motion is requested, render children immediately with zero animation delay
   if (isReducedMotion) {
@@ -28,7 +36,7 @@ export const TerminalRevealItem: React.FC<TerminalRevealItemProps> = ({
       opacity: 0,
       y: effect === "fade-up" ? 20 : 0,
       x: effect === "slide-right" ? -20 : 0,
-      scale: effect === "scale" ? 0.95 : 1,
+      scale: effect === "scale" ? 0.96 : 1,
     },
     visible: {
       opacity: 1,
@@ -37,7 +45,7 @@ export const TerminalRevealItem: React.FC<TerminalRevealItemProps> = ({
       scale: 1,
       transition: {
         duration: 0.45,
-        delay: order * 0.08 + 0.1, // Staggered entrance timing
+        delay: Math.min(order * 0.08, 0.4),
         ease: [0.25, 0.1, 0.25, 1],
       },
     },
@@ -45,8 +53,9 @@ export const TerminalRevealItem: React.FC<TerminalRevealItemProps> = ({
 
   return (
     <motion.div
+      ref={ref}
       initial="hidden"
-      animate={isStarted ? "visible" : "hidden"}
+      animate={isInView ? "visible" : "hidden"}
       variants={variants}
       className={className}
     >

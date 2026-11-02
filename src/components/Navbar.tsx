@@ -64,7 +64,7 @@ const Navbar = () => {
         const el = document.getElementById(item.id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          let top = rect.top;
+          const top = rect.top;
           let bottom = rect.bottom;
 
           if (item.id === "projects") {

@@ -8,7 +8,7 @@ interface TerminalContextType {
 }
 
 export const TerminalContext = createContext<TerminalContextType>({
-  isStarted: false,
+  isStarted: true,
   isComplete: true,
   isReducedMotion: false,
   stepIndex: 99,

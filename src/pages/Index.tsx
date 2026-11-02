@@ -18,8 +18,6 @@ import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import LoadingScreen from "@/components/LoadingScreen";
 
-import { TerminalSection } from "@/components/terminal";
-
 const Index = () => {
   const [loading, setLoading] = useState(true);
 
@@ -40,158 +38,38 @@ const Index = () => {
               <HeroSection />
 
               {/* 2. Technology Strip */}
-              <TerminalSection
-                sectionName="tech"
-                directory="technologies"
-                command="./load-stack-strip.sh"
-              >
-                <TechStrip />
-              </TerminalSection>
+              <TechStrip />
 
               {/* 3. About Me & ProfileCard */}
-              <TerminalSection
-                sectionName="about"
-                directory="santhosh"
-                command="whoami"
-                statusLines={[
-                  "role: software developer",
-                  "education: MCA",
-                  "focus: full stack / AI / cloud",
-                  "profile loaded."
-                ]}
-              >
-                <AboutSection />
-              </TerminalSection>
+              <AboutSection />
 
               {/* 4. Capabilities (What I Build) */}
-              <TerminalSection
-                sectionName="capabilities"
-                directory="capabilities"
-                command="./initialize-capabilities.sh"
-                statusLines={[
-                  "[OK] Full Stack Development",
-                  "[OK] AI & Machine Learning",
-                  "[OK] Mobile Development",
-                  "[OK] Cloud & DevOps"
-                ]}
-              >
-                <CapabilitiesSection />
-              </TerminalSection>
+              <CapabilitiesSection />
 
               {/* 5. Engineering Approach (How I Build) */}
-              <TerminalSection
-                sectionName="process"
-                directory="process"
-                command="./load-process.sh"
-                statusLines={[
-                  "[01] DISCOVER [OK]",
-                  "[02] DESIGN [OK]",
-                  "[03] DEVELOP [OK]",
-                  "[04] DEPLOY & IMPROVE [OK]"
-                ]}
-              >
-                <EngineeringProcess />
-              </TerminalSection>
+              <EngineeringProcess />
 
               {/* 6. Featured Projects Case Studies */}
-              <TerminalSection
-                sectionName="projects"
-                directory="projects"
-                command="./scan-projects.sh"
-                statusLines={[
-                  "[01] Cineverse 3D [OK]",
-                  "[02] Marian Excellence Grid [OK]",
-                  "[03] NavaKrishi AI [OK]",
-                  "[04] VLink Inventory [OK]",
-                  "[05] NavaYatra [OK]",
-                  "[06] NeXGeaR [OK]"
-                ]}
-              >
-                <ProjectsSection />
-              </TerminalSection>
+              <ProjectsSection />
 
               {/* 7. Vercel Cloud Deployments & 3D Interactive Lab */}
-              <TerminalSection
-                sectionName="deployments"
-                directory="vercel-cloud"
-                command="vercel list --scope santhoshkannan"
-                statusLines={[
-                  "[21/21] Vercel Deployments Synced",
-                  "cineverse-3d.vercel.app ........ [READY]",
-                  "vlink-inventory.vercel.app ..... [READY]",
-                  "nexgear.vercel.app ............. [READY]",
-                  "3D Circular Gallery Engine Active."
-                ]}
-              >
-                <VercelDeploymentsGallery />
-              </TerminalSection>
+              <VercelDeploymentsGallery />
 
               {/* 8. Technology Stack Grid */}
-              <TerminalSection
-                sectionName="stack"
-                directory="stack"
-                command="./load-stack.sh"
-                statusLines={[
-                  "FRONTEND ........ [OK]",
-                  "BACKEND ......... [OK]",
-                  "DATABASE ........ [OK]",
-                  "AI / ML ......... [OK]",
-                  "CLOUD ........... [OK]",
-                  "MOBILE .......... [OK]"
-                ]}
-              >
-                <SkillsSection />
-              </TerminalSection>
+              <SkillsSection />
 
-              {/* 8. Journey & Career Timeline */}
-              <TerminalSection
-                sectionName="journey"
-                directory="journey"
-                command="cat ~/journey.log"
-                statusLines={[
-                  "[01] MCA Studies [OK]",
-                  "[02] Full-Stack Projects [OK]",
-                  "[03] BCA Graduation [OK]",
-                  "[04] Continuous Learning [OK]"
-                ]}
-              >
-                <ExperienceSection />
-              </TerminalSection>
+              {/* 9. Journey & Career Timeline */}
+              <ExperienceSection />
 
-              {/* 9. Resume Banner CTA */}
-              <TerminalSection
-                sectionName="resume"
-                directory="profile"
-                command="cat resume.meta"
-              >
-                <ResumeCTA />
-              </TerminalSection>
+              {/* 10. Resume Banner CTA */}
+              <ResumeCTA />
 
-              {/* 10. Contact Form Section */}
-              <TerminalSection
-                sectionName="contact"
-                directory="contact"
-                command="./connect.sh"
-                statusLines={[
-                  "Email ........ [READY]",
-                  "GitHub ....... [READY]",
-                  "LinkedIn ..... [READY]",
-                  "contact.module loaded."
-                ]}
-              >
-                <ContactSection />
-              </TerminalSection>
+              {/* 11. Contact Form Section */}
+              <ContactSection />
             </main>
-            
-            {/* 11. Corporate Footer */}
-            <TerminalSection
-              sectionName="system"
-              directory="system"
-              command="exit"
-              statusLines={["session complete."]}
-            >
-              <Footer />
-            </TerminalSection>
+
+            {/* 12. Corporate Footer */}
+            <Footer />
           </div>
         </SmoothScroll>
       )}

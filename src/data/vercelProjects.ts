@@ -191,3 +191,4 @@ export const vercelProjects: CircularGalleryItem[] = [
     category: 'Experiments'
   }
 ];
+
