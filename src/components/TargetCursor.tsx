@@ -382,6 +382,10 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
 
       if (resumeTimeout) clearTimeout(resumeTimeout);
 
+      if (tickerFnRef.current) {
+        gsap.ticker.remove(tickerFnRef.current);
+      }
+
       spinTl.current?.kill();
       document.body.style.cursor = originalCursor;
 

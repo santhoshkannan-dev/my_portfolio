@@ -137,7 +137,7 @@ const projects: Project[] = [
     role: "Lead 3D Web & Frontend Developer",
     github: "https://github.com/santhoshkannan-dev/cineverse-3d",
     live: "https://cineverse-3d.vercel.app/",
-    image: "/Cineverse Cinematic UI Showcase.png",
+    image: "/cineverse.png",
   },
   {
     id: "meg",

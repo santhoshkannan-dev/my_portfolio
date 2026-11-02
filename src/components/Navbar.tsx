@@ -64,7 +64,17 @@ const Navbar = () => {
         const el = document.getElementById(item.id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= viewThreshold && rect.bottom > viewThreshold) {
+          let top = rect.top;
+          let bottom = rect.bottom;
+
+          if (item.id === "projects") {
+            const deploymentsEl = document.getElementById("deployments");
+            if (deploymentsEl) {
+              bottom = Math.max(bottom, deploymentsEl.getBoundingClientRect().bottom);
+            }
+          }
+
+          if (top <= viewThreshold && bottom > viewThreshold) {
             matchedSection = item.id;
             break;
           }

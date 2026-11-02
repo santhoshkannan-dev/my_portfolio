@@ -31,17 +31,16 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
     lenis.on('scroll', ScrollTrigger.update);
 
     // Sync GSAP ticker with Lenis
-    gsap.ticker.add((time) => {
+    const updateRaf = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(updateRaf);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();
       (window as Window & { lenis?: Lenis | null }).lenis = null;
-      gsap.ticker.remove((time) => {
-        lenis.raf(time * 1000);
-      });
+      gsap.ticker.remove(updateRaf);
     };
   }, []);
 
