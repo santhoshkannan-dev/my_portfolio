@@ -8,6 +8,7 @@ import TechStrip from "@/components/TechStrip";
 import CapabilitiesSection from "@/components/CapabilitiesSection";
 import EngineeringProcess from "@/components/EngineeringProcess";
 import ProjectsSection from "@/components/ProjectsSection";
+import VercelDeploymentsGallery from "@/components/VercelDeploymentsGallery";
 import SkillsSection from "@/components/SkillsSection";
 import AboutSection from "@/components/AboutSection";
 import ExperienceSection from "@/components/ExperienceSection";
@@ -109,7 +110,23 @@ const Index = () => {
                 <ProjectsSection />
               </TerminalSection>
 
-              {/* 7. Technology Stack Grid */}
+              {/* 7. Vercel Cloud Deployments & 3D Interactive Lab */}
+              <TerminalSection
+                sectionName="deployments"
+                directory="vercel-cloud"
+                command="vercel list --scope santhoshkannan"
+                statusLines={[
+                  "[21/21] Vercel Deployments Synced",
+                  "cineverse-3d.vercel.app ........ [READY]",
+                  "vlink-inventory.vercel.app ..... [READY]",
+                  "nexgear.vercel.app ............. [READY]",
+                  "3D Circular Gallery Engine Active."
+                ]}
+              >
+                <VercelDeploymentsGallery />
+              </TerminalSection>
+
+              {/* 8. Technology Stack Grid */}
               <TerminalSection
                 sectionName="stack"
                 directory="stack"
