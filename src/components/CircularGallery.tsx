@@ -20,7 +20,48 @@ const CLASSES = {
   hidden: 'circular-gallery-hidden'
 };
 const STEPS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
-const DEFAULT_ITEMS = [
+
+export interface CircularGalleryItem {
+  image: string;
+  text?: string;
+  description?: string;
+  alt?: string;
+  url?: string;
+  github?: string;
+  framework?: string;
+  category?: string;
+  [key: string]: unknown;
+}
+
+export interface CircularGalleryProps extends React.HTMLAttributes<HTMLDivElement> {
+  items?: CircularGalleryItem[];
+  bend?: number;
+  textColor?: string;
+  borderRadius?: number;
+  font?: string;
+  fontUrl?: string;
+  scrollSpeed?: number;
+  scrollEase?: number;
+  itemSize?: number;
+  itemAspect?: number;
+  gap?: number;
+  wave?: number;
+  fadeEdges?: number;
+  shadow?: number;
+  grayscale?: boolean;
+  showTitles?: boolean;
+  snap?: boolean;
+  autoScroll?: number;
+  openOnClick?: boolean;
+  intro?: boolean;
+  onItemClick?: (item: CircularGalleryItem, index: number) => void;
+  onActiveChange?: (index: number) => void;
+  dpr?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const DEFAULT_ITEMS: CircularGalleryItem[] = [
   { image: 'https://picsum.photos/seed/1/800/600', text: 'Bridge' },
   { image: 'https://picsum.photos/seed/2/800/600', text: 'Desk Setup' },
   { image: 'https://picsum.photos/seed/3/800/600', text: 'Waterfall' },
@@ -146,14 +187,14 @@ async function loadFontFromStylesheet(url) {
     const urlMatch = block.match(/url\(\s*['"]?([^'")]+)['"]?\s*\)/);
     if (!familyMatch || !urlMatch) continue;
     family = familyMatch[1].trim();
-    const descriptors = {};
+    const descriptors: Record<string, string> = {};
     const weightMatch = block.match(/font-weight:\s*([^;]+);/);
     const styleMatch = block.match(/font-style:\s*([^;]+);/);
     const rangeMatch = block.match(/unicode-range:\s*([^;]+);/);
     if (weightMatch) descriptors.weight = weightMatch[1].trim();
     if (styleMatch) descriptors.style = styleMatch[1].trim();
     if (rangeMatch) descriptors.unicodeRange = rangeMatch[1].trim();
-    fontFaces.push(new FontFace(family, `url(${urlMatch[1]})`, descriptors));
+    fontFaces.push(new FontFace(family, `url(${urlMatch[1]})`, descriptors as FontFaceDescriptors));
   }
   if (!family) throw new Error('No @font-face rule found in the stylesheet');
   await Promise.allSettled(
@@ -216,54 +257,14 @@ const link = gl => {
     gl.deleteProgram(program);
     return null;
   }
-  const uniforms = {};
+  const uniforms: Record<string, WebGLUniformLocation | null> = {};
   const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
   for (let i = 0; i < count; i++) {
     const info = gl.getActiveUniform(program, i);
     if (info) uniforms[info.name] = gl.getUniformLocation(program, info.name);
   }
-  return { program, uniforms };
+  return { program, uniforms: uniforms as Record<string, WebGLUniformLocation> };
 };
-
-export interface CircularGalleryItem {
-  image: string;
-  text?: string;
-  description?: string;
-  alt?: string;
-  url?: string;
-  github?: string;
-  framework?: string;
-  category?: string;
-  [key: string]: unknown;
-}
-
-export interface CircularGalleryProps extends React.HTMLAttributes<HTMLDivElement> {
-  items?: CircularGalleryItem[];
-  bend?: number;
-  textColor?: string;
-  borderRadius?: number;
-  font?: string;
-  fontUrl?: string;
-  scrollSpeed?: number;
-  scrollEase?: number;
-  itemSize?: number;
-  itemAspect?: number;
-  gap?: number;
-  wave?: number;
-  fadeEdges?: number;
-  shadow?: number;
-  grayscale?: boolean;
-  showTitles?: boolean;
-  snap?: boolean;
-  autoScroll?: number;
-  openOnClick?: boolean;
-  intro?: boolean;
-  onItemClick?: (item: CircularGalleryItem, index: number) => void;
-  onActiveChange?: (index: number) => void;
-  dpr?: number;
-  className?: string;
-  style?: React.CSSProperties;
-}
 
 const CircularGallery: React.FC<CircularGalleryProps> = ({
   items,
@@ -302,7 +303,7 @@ const CircularGallery: React.FC<CircularGalleryProps> = ({
   const fontRef = useRef(font);
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
-  const list = Array.isArray(items) && items.length ? items : DEFAULT_ITEMS;
+  const list: CircularGalleryItem[] = Array.isArray(items) && items.length ? items : DEFAULT_ITEMS;
   const settings = {
     items: list,
     bend,
@@ -434,7 +435,7 @@ const CircularGallery: React.FC<CircularGalleryProps> = ({
     let raf = 0;
     let last = 0;
     let visible = true;
-    let snapTimer = 0;
+    let snapTimer: ReturnType<typeof setTimeout> | number = 0;
     let lastItems = null;
     let typing = false;
 
@@ -1087,7 +1088,7 @@ const CircularGallery: React.FC<CircularGalleryProps> = ({
   });
 
   const count = list.length;
-  const current = list[active % count] || list[0];
+  const current: CircularGalleryItem | undefined = list[active % count] || list[0];
 
   return (
     <div
