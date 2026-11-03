@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { TerminalRevealItem } from "./terminal";
+import ProfileCard from "./ProfileCard";
 
 const focusAreas = [
   { num: "01", title: "Full Stack Development", desc: "React, TypeScript, Django & REST APIs" },
@@ -36,12 +37,40 @@ export const AboutSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-          {/* LEFT COLUMN: Shared Profile Card Target Destination (5 cols) */}
+          {/* LEFT COLUMN: ProfileCard Interactive Visual & Target Destination (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center w-full">
             <div
               id="about-profile-card-slot"
               className="relative z-20 w-full max-w-[440px] h-[520px] flex items-center justify-center"
-            />
+            >
+              <div
+                id="about-profile-card-wrapper"
+                className="w-full h-full opacity-0 pointer-events-none transition-opacity duration-300"
+              >
+                <ProfileCard
+                  name="Santhosh Kannan"
+                  title="Full Stack Developer"
+                  handle="santhoshkannan007"
+                  status="Open to Opportunities"
+                  contactText="Contact Me"
+                  avatarUrl="/santhosh_sunglasses.jpg"
+                  miniAvatarUrl="/santhosh_sunglasses.jpg"
+                  showUserInfo={true}
+                  enableTilt={true}
+                  enableMobileTilt={false}
+                  behindGlowEnabled={true}
+                  behindGlowColor="rgba(34, 211, 238, 0.35)"
+                  behindGlowSize="55%"
+                  innerGradient="linear-gradient(145deg, rgba(168,85,247,0.22) 0%, rgba(34,211,238,0.12) 50%, rgba(16,185,129,0.10) 100%)"
+                  onContactClick={() => {
+                    document.getElementById("contact")?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
+                />
+              </div>
+            </div>
           </div>
 
           {/* RIGHT COLUMN: Editorial About Content (7 cols) */}
