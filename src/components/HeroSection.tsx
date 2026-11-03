@@ -130,17 +130,17 @@ const HeroSection: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* CENTER COLUMN: 3D Interactive Lanyard Card Slot (3.5 cols on desktop) */}
+          {/* CENTER COLUMN: Shared-Element ID Badge Origin Slot (3.5 cols on desktop) */}
           <div className="lg:col-span-3 xl:col-span-3 flex flex-col items-center justify-center relative mt-6 lg:mt-0 w-full">
             {/* Ambient Backlight Glow behind Portrait */}
             <div className="absolute inset-0 bg-gradient-to-t from-violet-600/25 via-emerald-500/15 to-cyan-500/15 blur-2xl rounded-full pointer-events-none" />
 
-            {/* React Bits 3D Interactive Lanyard Component */}
+            {/* Origin Slot Anchor for Shared-Element Profile Card with React Bits 3D Lanyard */}
             <div
               id="hero-profile-card-slot"
               className="relative z-20 w-full max-w-[340px] sm:max-w-[360px] h-[520px] sm:h-[560px] flex items-center justify-center pointer-events-auto"
             >
-              <div className="w-full h-full relative pointer-events-auto">
+              <div id="hero-lanyard-wrapper" className="w-full h-full relative pointer-events-auto transition-opacity duration-300">
                 <Lanyard
                   frontImage="/santhosh_fullbody.jpg"
                   backImage="/santhosh_fullbody.jpg"

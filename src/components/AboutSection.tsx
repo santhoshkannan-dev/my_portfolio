@@ -1,7 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { TerminalRevealItem } from "./terminal";
-import ProfileCard from "./ProfileCard";
 
 const focusAreas = [
   { num: "01", title: "Full Stack Development", desc: "React, TypeScript, Django & REST APIs" },
@@ -41,27 +40,8 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-5 flex flex-col items-center justify-center w-full">
             <div
               id="about-profile-card-slot"
-              className="relative z-20 w-full max-w-[420px] min-h-[520px] flex items-center justify-center pointer-events-auto"
-            >
-              <ProfileCard
-                avatarUrl="/santhosh_sunglasses.jpg"
-                miniAvatarUrl="/santhosh_sunglasses.jpg"
-                name="Santhosh Kannan"
-                title="Full Stack Developer"
-                handle="santhoshkannan007"
-                status="Open to Opportunities"
-                statusColor="#22c55e"
-                contactText="Contact Me"
-                theme="dark"
-                radius={16}
-                holo={0.8}
-                glare={0.5}
-                enableTilt={true}
-                onContactClick={() => {
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                }}
-              />
-            </div>
+              className="relative z-20 w-full max-w-[420px] h-[560px] sm:h-[580px] flex items-center justify-center pointer-events-auto"
+            />
           </div>
 
           {/* RIGHT COLUMN: Editorial About Content (7 cols) */}

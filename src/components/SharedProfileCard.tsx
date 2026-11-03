@@ -158,7 +158,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       const targetW = aboutRect.width || 420;
       const targetH = aboutRect.height || 580;
 
-      // Position card initially over Hero origin slot
+      // Position card initially over Hero origin slot (invisible at rest in Hero to let 3D Lanyard be fully interactive)
       gsap.set(card, {
         position: "absolute",
         top: 0,
@@ -168,10 +168,10 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         width: originW,
         height: originH,
         borderRadius: 28,
-        opacity: 1,
+        opacity: 0,
         visibility: "visible",
         zIndex: 35,
-        pointerEvents: "auto",
+        pointerEvents: "none",
       });
 
       // Strict initial layer states
@@ -208,6 +208,14 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         },
       });
 
+      // 0. Seamless handoff from interactive 3D Lanyard to traveling flight card
+      tl.fromTo(
+        "#hero-lanyard-wrapper",
+        { opacity: 1, pointerEvents: "auto" },
+        { opacity: 0, pointerEvents: "none", duration: 0.12, ease: "power1.out" },
+        0
+      );
+
       // 1. Travel card from Hero slot coordinates to About slot coordinates
       tl.fromTo(
         card,
@@ -217,6 +225,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           width: originW,
           height: originH,
           borderRadius: 28,
+          opacity: 0,
+          pointerEvents: "none",
         },
         {
           x: targetX,
@@ -224,6 +234,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           width: targetW,
           height: targetH,
           borderRadius: 32,
+          opacity: 1,
+          pointerEvents: "auto",
           ease: "power1.inOut",
           duration: 1,
         },
