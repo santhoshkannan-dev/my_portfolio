@@ -129,7 +129,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
 
       const c = getCoords();
 
-      // Initial placement at Hero slot coordinates
+      // Initial placement at Hero slot coordinates (invisible initially until scroll starts)
       gsap.set(card, {
         position: "absolute",
         top: 0,
@@ -139,7 +139,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         width: c.originW,
         height: c.originH,
         borderRadius: 24,
-        opacity: 1,
+        opacity: 0,
+        pointerEvents: "none",
         visibility: "visible",
         zIndex: 35,
       });
@@ -182,7 +183,19 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           },
         });
 
-        // 1. Travel card from Hero slot coordinates to About slot coordinates
+        // Seamless handoff from interactive 3D Lanyard to traveling scroll card
+        tl.fromTo(
+          "#hero-lanyard-wrapper",
+          { opacity: 1, pointerEvents: "auto" },
+          {
+            opacity: 0,
+            pointerEvents: "none",
+            duration: 0.1,
+            ease: "power1.out",
+          },
+          0
+        );
+
         tl.fromTo(
           card,
           {
@@ -191,6 +204,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             width: () => getCoords().originW,
             height: () => getCoords().originH,
             borderRadius: 24,
+            opacity: 0,
+            pointerEvents: "none",
           },
           {
             x: () => getCoords().targetX,
@@ -198,6 +213,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             width: () => getCoords().targetW,
             height: () => getCoords().targetH,
             borderRadius: 28,
+            opacity: 1,
+            pointerEvents: "auto",
             ease: "power2.inOut",
             duration: 1,
           },

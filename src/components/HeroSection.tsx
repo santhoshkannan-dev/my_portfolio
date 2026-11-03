@@ -1,7 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Send, Download, ArrowUpRight, Github, Linkedin } from "lucide-react";
+import { Send, Download, ArrowUpRight, Github, Linkedin, CheckCircle2 } from "lucide-react";
 import CodeDemo, { Code, CodeHeader, CodeBlock, ReactIcon } from "./CodeDemo";
+import Lanyard from "./Lanyard";
 
 // Re-export imports as required by user prompt
 export { Code, CodeHeader, CodeBlock, ReactIcon, CodeDemo };
@@ -129,7 +130,7 @@ const HeroSection: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* CENTER COLUMN: Shared-Element ID Badge Slot (3.5 cols on desktop) */}
+          {/* CENTER COLUMN: Interactive 3D Lanyard & Origin Slot (3.5 cols on desktop) */}
           <div className="lg:col-span-3 xl:col-span-3 flex flex-col items-center justify-center relative mt-6 lg:mt-0 w-full">
             {/* Ambient Backlight Glow behind Portrait */}
             <div className="absolute inset-0 bg-gradient-to-t from-violet-600/25 via-emerald-500/15 to-cyan-500/15 blur-2xl rounded-full pointer-events-none" />
@@ -138,7 +139,39 @@ const HeroSection: React.FC = () => {
             <div
               id="hero-profile-card-slot"
               className="relative z-20 w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[360px] h-[480px] sm:h-[530px] flex items-center justify-center pointer-events-auto"
-            />
+            >
+              {/* React Bits 3D Interactive Lanyard (Draggable anywhere & flippable) */}
+              <div id="hero-lanyard-wrapper" className="w-full h-full pointer-events-auto relative">
+                <Lanyard
+                  frontImage="/santhosh_fullbody.jpg"
+                  backImage="/santhosh_fullbody.jpg"
+                  cardColor="#101014"
+                  strapColor="#181824"
+                  metal="silver"
+                  finish="glossy"
+                  size={0.65}
+                  strapLength={0.46}
+                  strapWidth={0.65}
+                  gravity={1}
+                  damping={0.5}
+                  elasticity={0.55}
+                  breeze={0.35}
+                  interactive={true}
+                  intro={true}
+                />
+
+                {/* Tech Badges overlaid on Hero slot */}
+                <div className="absolute top-5 right-5 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 border border-emerald-500/40 backdrop-blur-md shadow-lg text-[11px] font-mono font-medium text-emerald-400 pointer-events-none">
+                  <CheckCircle2 size={13} className="text-emerald-400" />
+                  <span>Python & Django</span>
+                </div>
+
+                <div className="absolute bottom-6 left-6 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 border border-cyan-500/40 backdrop-blur-md shadow-lg text-[11px] font-mono font-medium text-cyan-400 pointer-events-none">
+                  <CheckCircle2 size={13} className="text-cyan-400" />
+                  <span>React & TypeScript</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* RIGHT COLUMN: Desktop CodeDemo Window (4 cols on desktop) */}
