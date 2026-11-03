@@ -86,10 +86,11 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
   useEffect(() => {
     const heroSlot = document.getElementById("hero-profile-card-slot");
     const aboutSlot = document.getElementById("about-profile-card-slot");
+    const heroSection = document.getElementById("hero") || heroSlot?.closest("section");
     const card = cardRef.current;
     const main = document.querySelector("main");
 
-    if (!heroSlot || !aboutSlot || !card || !main) {
+    if (!heroSlot || !aboutSlot || !heroSection || !card || !main) {
       const retryTimer = setTimeout(() => {
         setIsReady((prev) => !prev);
       }, 100);
@@ -98,8 +99,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
 
     const ctx = gsap.context(() => {
       const getCoords = () => {
-        const scrollY = window.scrollY || window.pageYOffset;
-        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const scrollX = window.scrollX || window.pageXOffset || 0;
 
         const heroRect = heroSlot.getBoundingClientRect();
         const aboutRect = aboutSlot.getBoundingClientRect();
@@ -143,7 +144,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         zIndex: 35,
       });
 
-      // Initial element state managed strictly by GSAP (not React inline styles)
+      // Strict initial element states
       gsap.set(".shared-card-hero-photo", { opacity: 1 });
       gsap.set(".shared-card-about-photo", { opacity: 0 });
       gsap.set(".shared-card-about-layer", { opacity: 0, y: 24 });
@@ -166,16 +167,16 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       function buildScrollAnimation(isDesktop: boolean) {
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: heroSlot,
-            start: () => (isDesktop ? "top 120px" : "top 80px"),
+            trigger: heroSection,
+            start: "top top",
             endTrigger: aboutSlot,
-            end: () => (isDesktop ? "top 160px" : "top 100px"),
+            end: () => (isDesktop ? "center 55%" : "top 30%"),
             scrub: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               scrollProgressRef.current = self.progress;
-              // When user scrolls, unflip to front side
-              if (self.progress > 0.05) {
+              // When user scrolls away from hero, unflip to front side
+              if (self.progress > 0.03) {
                 setIsFlipped(false);
               }
             },
@@ -226,73 +227,79 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         }
 
         // 3. Hanging strap retracts upward and fades out cleanly
-        tl.to(
+        tl.fromTo(
           ".shared-card-strap",
+          { y: 0, opacity: 1, scaleY: 1 },
           {
             y: -120,
             opacity: 0,
             scaleY: 0.1,
-            duration: 0.25,
-            ease: "power2.in",
-          },
-          0
-        );
-
-        // 4. Hero ID-specific badges & barcode fade out cleanly
-        tl.to(
-          ".shared-card-hero-badge",
-          {
-            opacity: 0,
-            scale: 0.85,
             duration: 0.22,
             ease: "power2.in",
           },
           0
         );
 
-        // 5. Tech Badges fade out cleanly as card leaves Hero
-        tl.to(
-          ".shared-card-tech-badge",
+        // 4. Hero ID-specific badges & barcode fade out cleanly
+        tl.fromTo(
+          ".shared-card-hero-badge",
+          { opacity: 1, scale: 1 },
           {
             opacity: 0,
             scale: 0.85,
-            duration: 0.25,
+            duration: 0.20,
             ease: "power2.in",
           },
-          0.08
+          0
+        );
+
+        // 5. Tech Badges fade out cleanly as card leaves Hero
+        tl.fromTo(
+          ".shared-card-tech-badge",
+          { opacity: 1, scale: 1 },
+          {
+            opacity: 0,
+            scale: 0.85,
+            duration: 0.22,
+            ease: "power2.in",
+          },
+          0.05
         );
 
         // 6. Seamless photo crossfade: Hero linen shirt photo -> About sunglasses photo
-        tl.to(
+        tl.fromTo(
           ".shared-card-hero-photo",
+          { opacity: 1 },
           {
             opacity: 0,
             duration: 0.45,
             ease: "power1.inOut",
           },
-          0.25
+          0.20
         );
 
-        tl.to(
+        tl.fromTo(
           ".shared-card-about-photo",
+          { opacity: 0 },
           {
             opacity: 1,
             duration: 0.45,
             ease: "power1.inOut",
           },
-          0.25
+          0.20
         );
 
         // 7. About ProfileCard details slide up and bloom in
-        tl.to(
+        tl.fromTo(
           ".shared-card-about-layer",
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.4,
+            duration: 0.35,
             ease: "power2.out",
           },
-          0.5
+          0.50
         );
 
         // 8. Ambient behind-glow intensifies to About cyan glow
@@ -304,7 +311,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             duration: 0.4,
             ease: "power2.out",
           },
-          0.5
+          0.50
         );
       }
     }, main);
