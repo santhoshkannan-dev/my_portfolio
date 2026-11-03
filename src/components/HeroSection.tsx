@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Send, Download, ArrowUpRight, Github, Linkedin } from "lucide-react";
 import CodeDemo, { Code, CodeHeader, CodeBlock, ReactIcon } from "./CodeDemo";
-import Lanyard from "./Lanyard";
 
 // Re-export imports as required by user prompt
 export { Code, CodeHeader, CodeBlock, ReactIcon, CodeDemo };
@@ -130,42 +129,17 @@ const HeroSection: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* CENTER COLUMN: Overlapping 3D Hanging Lanyard Badge (3.5 cols on desktop) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-            className="lg:col-span-3 xl:col-span-3 flex flex-col items-center justify-center relative mt-6 lg:mt-0 w-full"
-          >
+          {/* CENTER COLUMN: Shared-Element ID Badge Slot (3.5 cols on desktop) */}
+          <div className="lg:col-span-3 xl:col-span-3 flex flex-col items-center justify-center relative mt-6 lg:mt-0 w-full">
             {/* Ambient Backlight Glow behind Portrait */}
             <div className="absolute inset-0 bg-gradient-to-t from-violet-600/25 via-emerald-500/15 to-cyan-500/15 blur-2xl rounded-full pointer-events-none" />
 
-            {/* Origin Slot Anchor for Shared-Element Profile Card with 3D Lanyard */}
+            {/* Origin Slot Anchor for Shared-Element Profile Card */}
             <div
               id="hero-profile-card-slot"
               className="relative z-20 w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[360px] h-[480px] sm:h-[530px] flex items-center justify-center pointer-events-auto"
-            >
-              <div id="hero-lanyard-wrapper" className="w-full h-full pointer-events-auto">
-                <Lanyard
-                  frontImage="/lanyard-front.svg"
-                  backImage="/lanyard-back.svg"
-                  cardColor="#090810"
-                  strapColor="#181824"
-                  metal="silver"
-                  finish="glossy"
-                  size={0.65}
-                  strapLength={0.42}
-                  strapWidth={0.65}
-                  gravity={1}
-                  damping={0.5}
-                  elasticity={0.55}
-                  breeze={0.35}
-                  interactive={true}
-                  intro={true}
-                />
-              </div>
-            </div>
-          </motion.div>
+            />
+          </div>
 
           {/* RIGHT COLUMN: Desktop CodeDemo Window (4 cols on desktop) */}
           <motion.div
