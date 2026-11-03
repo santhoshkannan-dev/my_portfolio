@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CheckCircle2, RotateCw, Sparkles, ShieldCheck } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -149,7 +149,6 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       gsap.set(".shared-card-about-photo", { opacity: 0 });
       gsap.set(".shared-card-about-layer", { opacity: 0, y: 24 });
       gsap.set(".shared-card-strap", { opacity: 1, y: 0, scaleY: 1 });
-      gsap.set(".shared-card-hero-badge", { opacity: 1, scale: 1 });
       gsap.set(".shared-card-tech-badge", { opacity: 1, scale: 1 });
 
       const mm = gsap.matchMedia();
@@ -240,20 +239,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           0
         );
 
-        // 4. Hero ID-specific badges & barcode fade out cleanly
-        tl.fromTo(
-          ".shared-card-hero-badge",
-          { opacity: 1, scale: 1 },
-          {
-            opacity: 0,
-            scale: 0.85,
-            duration: 0.20,
-            ease: "power2.in",
-          },
-          0
-        );
-
-        // 5. Tech Badges fade out cleanly as card leaves Hero
+        // 4. Hero Tech Badges fade out cleanly as card leaves Hero
         tl.fromTo(
           ".shared-card-tech-badge",
           { opacity: 1, scale: 1 },
@@ -266,7 +252,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           0.05
         );
 
-        // 6. Seamless photo crossfade: Hero linen shirt photo -> About sunglasses photo
+        // 5. Seamless photo crossfade: Hero linen shirt photo -> About sunglasses photo
         tl.fromTo(
           ".shared-card-hero-photo",
           { opacity: 1 },
@@ -289,7 +275,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           0.20
         );
 
-        // 7. About ProfileCard details slide up and bloom in
+        // 6. About ProfileCard details slide up and bloom in
         tl.fromTo(
           ".shared-card-about-layer",
           { opacity: 0, y: 24 },
@@ -302,7 +288,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           0.50
         );
 
-        // 8. Ambient behind-glow intensifies to About cyan glow
+        // 7. Ambient behind-glow intensifies to About cyan glow
         tl.fromTo(
           ".shared-card-glow",
           { opacity: 0.25 },
@@ -433,11 +419,11 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
               loading="eager"
               className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.04]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#090810] via-[#090810]/35 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#090810]/40 via-transparent to-transparent z-10" />
           </div>
 
           {/* 2. About Photo (Cross-faded during scroll flight) */}
-          <div className="shared-card-about-photo absolute inset-0 z-10 overflow-hidden rounded-[inherit] pointer-events-none">
+          <div className="shared-card-about-photo absolute inset-0 z-10 overflow-hidden rounded-[inherit] pointer-events-none opacity-0">
             <img
               src={aboutAvatarUrl}
               alt={`${name} about portrait`}
@@ -451,44 +437,28 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             <div className="absolute inset-0 bg-gradient-to-t from-[#090810] via-[#090810]/45 to-transparent z-10" />
           </div>
 
-          {/* HERO BADGE 1: Dev Pass Eyebrow (Top Left) */}
-          <div className="shared-card-hero-badge absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/65 border border-cyan-500/35 backdrop-blur-md shadow-lg text-[10px] sm:text-[11px] font-mono font-medium text-cyan-400 pointer-events-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            <span>DEV PASS // 2026</span>
-          </div>
-
           {/* FLOATING TECH BADGE 1: Python & Django (Top Right) */}
-          <div className="shared-card-tech-badge absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/65 border border-emerald-500/35 backdrop-blur-md shadow-lg text-[10px] sm:text-[11px] font-mono font-medium text-emerald-400 pointer-events-none">
+          <div className="shared-card-tech-badge absolute top-5 right-5 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 border border-emerald-500/40 backdrop-blur-md shadow-lg text-[11px] font-mono font-medium text-emerald-400 pointer-events-none">
             <CheckCircle2 size={13} className="text-emerald-400" />
             <span>Python & Django</span>
-            <span className="text-[9px] text-zinc-400 font-mono ml-0.5">#007</span>
           </div>
 
-          {/* FLOATING TECH BADGE 2: React & TypeScript (Left Middle) */}
-          <div className="shared-card-tech-badge absolute bottom-20 left-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/65 border border-cyan-500/35 backdrop-blur-md shadow-lg text-[10px] sm:text-[11px] font-mono font-medium text-cyan-400 pointer-events-none">
+          {/* FLOATING TECH BADGE 2: React & TypeScript (Bottom Left) */}
+          <div className="shared-card-tech-badge absolute bottom-6 left-6 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 border border-cyan-500/40 backdrop-blur-md shadow-lg text-[11px] font-mono font-medium text-cyan-400 pointer-events-none">
             <CheckCircle2 size={13} className="text-cyan-400" />
             <span>React & TypeScript</span>
           </div>
 
-          {/* HERO BARCODE & FLIP HINT (Bottom Center) */}
-          <div className="shared-card-hero-badge absolute bottom-3 inset-x-0 z-20 flex flex-col items-center pointer-events-none space-y-1">
-            <div className="flex items-center gap-1 text-[10px] font-mono text-cyan-400/90 tracking-widest uppercase">
-              <RotateCw size={10} className="animate-spin text-cyan-400" style={{ animationDuration: '6s' }} />
-              <span>CLICK TO FLIP ID</span>
-            </div>
-            {/* Barcode Graphic */}
-            <div className="h-6 flex items-center gap-[2px] opacity-75">
-              {[4, 2, 6, 1, 3, 5, 2, 4, 1, 6, 3, 2, 5, 1, 4, 2, 6, 3, 1, 4, 5, 2, 3, 1, 6, 4, 2, 5].map((w, i) => (
-                <div key={i} className="bg-white/90 h-full" style={{ width: `${w}px` }} />
-              ))}
-            </div>
-            <span className="text-[9px] font-mono text-zinc-400 tracking-[0.25em] uppercase">
-              SANTHOSH KANNAN • FULL STACK
-            </span>
+          {/* CAMERA FOCUS RETICLE (Hero Aesthetic Accent) */}
+          <div className="shared-card-tech-badge absolute top-[36%] right-[22%] w-7 h-7 pointer-events-none opacity-60">
+            <span className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-amber-300/80" />
+            <span className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-amber-300/80" />
+            <span className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-amber-300/80" />
+            <span className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-amber-300/80" />
           </div>
 
           {/* ABOUT SECTION PROFILECARD SPECIFICS (Blooms in during scroll) */}
-          <div className="shared-card-about-layer absolute inset-0 z-20 w-full h-full flex flex-col justify-end p-5 sm:p-6 pointer-events-none">
+          <div className="shared-card-about-layer absolute inset-0 z-20 w-full h-full flex flex-col justify-end p-5 sm:p-6 pointer-events-none opacity-0">
             {/* User Info Bar with Mini Avatar, Handle, Status & Contact CTA Button */}
             <div className="p-3 rounded-2xl bg-black/85 border border-white/10 backdrop-blur-md flex items-center justify-between gap-3 shadow-xl mb-3 pointer-events-auto">
               <div className="flex items-center gap-2.5 min-w-0">
