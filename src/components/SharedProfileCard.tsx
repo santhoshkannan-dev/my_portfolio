@@ -81,77 +81,26 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       return () => clearTimeout(retryTimer);
     }
 
-    // Mutually exclusive visibility state controller: Exactly ONE card is active at any time
-    const setCardState = (state: "hero" | "flight" | "about") => {
-      const lanyardWrapper = document.getElementById("hero-lanyard-wrapper");
-      const aboutWrapper = document.getElementById("about-profile-card-wrapper");
-
-      if (state === "hero") {
-        // 1. HERO: Only Lanyard 3D physics card is rendered and interactive
+    // Top scroll guard: When at the top of the page, Hero Lanyard is 100% active
+    const handleTopScroll = () => {
+      if (window.scrollY < 20) {
+        const lanyardWrapper = document.getElementById("hero-lanyard-wrapper");
+        const aboutWrapper = document.getElementById("about-profile-card-wrapper");
         if (lanyardWrapper) {
-          lanyardWrapper.style.display = "block";
           lanyardWrapper.style.opacity = "1";
           lanyardWrapper.style.visibility = "visible";
           lanyardWrapper.style.pointerEvents = "auto";
         }
         if (card) {
-          card.style.display = "none";
           card.style.opacity = "0";
           card.style.visibility = "hidden";
           card.style.pointerEvents = "none";
         }
         if (aboutWrapper) {
-          aboutWrapper.style.display = "none";
           aboutWrapper.style.opacity = "0";
           aboutWrapper.style.visibility = "hidden";
           aboutWrapper.style.pointerEvents = "none";
         }
-      } else if (state === "flight") {
-        // 2. FLIGHT: Only Traveling card is rendered
-        if (lanyardWrapper) {
-          lanyardWrapper.style.display = "none";
-          lanyardWrapper.style.opacity = "0";
-          lanyardWrapper.style.visibility = "hidden";
-          lanyardWrapper.style.pointerEvents = "none";
-        }
-        if (aboutWrapper) {
-          aboutWrapper.style.display = "none";
-          aboutWrapper.style.opacity = "0";
-          aboutWrapper.style.visibility = "hidden";
-          aboutWrapper.style.pointerEvents = "none";
-        }
-        if (card) {
-          card.style.display = "block";
-          card.style.opacity = "1";
-          card.style.visibility = "visible";
-          card.style.pointerEvents = "none";
-        }
-      } else if (state === "about") {
-        // 3. ABOUT: Only genuine ProfileCard is rendered and interactive
-        if (lanyardWrapper) {
-          lanyardWrapper.style.display = "none";
-          lanyardWrapper.style.opacity = "0";
-          lanyardWrapper.style.visibility = "hidden";
-          lanyardWrapper.style.pointerEvents = "none";
-        }
-        if (card) {
-          card.style.display = "none";
-          card.style.opacity = "0";
-          card.style.visibility = "hidden";
-          card.style.pointerEvents = "none";
-        }
-        if (aboutWrapper) {
-          aboutWrapper.style.display = "block";
-          aboutWrapper.style.opacity = "1";
-          aboutWrapper.style.visibility = "visible";
-          aboutWrapper.style.pointerEvents = "auto";
-        }
-      }
-    };
-
-    const handleTopScroll = () => {
-      if (window.scrollY < 20) {
-        setCardState("hero");
       }
     };
 
@@ -161,7 +110,11 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
     const ctx = gsap.context(() => {
       const getCoords = () => {
         const heroRect = heroSlot.getBoundingClientRect();
-        const aboutRect = aboutSlot.getBoundingClientRect();
+        const aboutTarget =
+          aboutSlot.querySelector(".pc-card-wrapper") ||
+          aboutSlot.querySelector(".pc-card") ||
+          aboutSlot;
+        const aboutRect = aboutTarget.getBoundingClientRect();
         const mainRect = main.getBoundingClientRect();
 
         return {
@@ -178,7 +131,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
 
       const c = getCoords();
 
-      // Initial placement at Hero slot - completely hidden while Lanyard handles Hero
+      // Initial placement at Hero slot coordinates - completely hidden until scroll triggers
       gsap.set(card, {
         position: "absolute",
         top: 0,
@@ -189,10 +142,16 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         height: c.originH,
         borderRadius: 24,
         opacity: 0,
-        display: "none",
+        visibility: "hidden",
         pointerEvents: "none",
         zIndex: 35,
       });
+
+      // Initial state of About card: hidden if user is near top
+      const aboutWrapper = document.getElementById("about-profile-card-wrapper");
+      if (aboutWrapper && window.scrollY < 150) {
+        gsap.set(aboutWrapper, { opacity: 0, visibility: "hidden", pointerEvents: "none" });
+      }
 
       const mm = gsap.matchMedia();
 
@@ -210,28 +169,83 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: heroSlot,
-            start: () => (isDesktop ? "top 40px" : "top 30%"),
+            start: () => (isDesktop ? "top 50px" : "top 30%"),
             endTrigger: aboutSlot,
-            end: () => (isDesktop ? "center 50%" : "top 25%"),
+            end: () => (isDesktop ? "center 50%" : "top 20%"),
             scrub: 1,
             invalidateOnRefresh: true,
-            onEnter: () => setCardState("flight"),
-            onLeave: () => setCardState("about"),
-            onEnterBack: () => setCardState("flight"),
-            onLeaveBack: () => setCardState("hero"),
             onUpdate: (self) => {
-              if (self.progress <= 0.01) {
-                setCardState("hero");
-              } else if (self.progress >= 0.99) {
-                setCardState("about");
+              const lanyardWrapper = document.getElementById("hero-lanyard-wrapper");
+              const aboutWrapperEl = document.getElementById("about-profile-card-wrapper");
+
+              if (self.progress <= 0.005) {
+                // At Hero resting state
+                if (lanyardWrapper) {
+                  lanyardWrapper.style.opacity = "1";
+                  lanyardWrapper.style.visibility = "visible";
+                  lanyardWrapper.style.pointerEvents = "auto";
+                }
+                if (card) {
+                  card.style.opacity = "0";
+                  card.style.visibility = "hidden";
+                  card.style.pointerEvents = "none";
+                }
+                if (aboutWrapperEl) {
+                  aboutWrapperEl.style.opacity = "0";
+                  aboutWrapperEl.style.visibility = "hidden";
+                  aboutWrapperEl.style.pointerEvents = "none";
+                }
+              } else if (self.progress >= 0.995) {
+                // At About resting state
+                if (lanyardWrapper) {
+                  lanyardWrapper.style.opacity = "0";
+                  lanyardWrapper.style.visibility = "hidden";
+                  lanyardWrapper.style.pointerEvents = "none";
+                }
+                if (card) {
+                  card.style.opacity = "0";
+                  card.style.visibility = "hidden";
+                  card.style.pointerEvents = "none";
+                }
+                if (aboutWrapperEl) {
+                  aboutWrapperEl.style.opacity = "1";
+                  aboutWrapperEl.style.visibility = "visible";
+                  aboutWrapperEl.style.pointerEvents = "auto";
+                }
               } else {
-                setCardState("flight");
+                // In Flight: Traveling card active; clean hides on extremes
+                if (card) {
+                  card.style.visibility = "visible";
+                  card.style.pointerEvents = "none";
+                }
+                if (lanyardWrapper && self.progress > 0.06) {
+                  lanyardWrapper.style.visibility = "hidden";
+                  lanyardWrapper.style.pointerEvents = "none";
+                }
+                if (aboutWrapperEl && self.progress < 0.94) {
+                  aboutWrapperEl.style.visibility = "hidden";
+                  aboutWrapperEl.style.pointerEvents = "none";
+                }
               }
             },
           },
         });
 
-        // 1. Move card from Hero slot coordinates to About slot coordinates (responsive fromTo)
+        // 1. Crossfade from Lanyard to Traveling Card (at origin, with 0px displacement)
+        tl.to(
+          "#hero-lanyard-wrapper",
+          { opacity: 0, duration: 0.05, ease: "power1.out" },
+          0
+        );
+
+        tl.fromTo(
+          card,
+          { opacity: 0, visibility: "visible" },
+          { opacity: 1, duration: 0.05, ease: "power1.in" },
+          0
+        );
+
+        // 2. Flight Motion: Card moves from Hero slot to About slot
         tl.fromTo(
           card,
           {
@@ -248,12 +262,12 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             height: () => getCoords().targetH,
             borderRadius: 28,
             ease: "power2.inOut",
-            duration: 1,
+            duration: 0.9,
           },
-          0
+          0.05
         );
 
-        // 2. Cinematic 3D banking / flight rotation (Desktop only)
+        // 3. Cinematic 3D banking / flight rotation (Desktop only)
         if (isDesktop) {
           tl.to(
             card,
@@ -262,32 +276,32 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
               ease: "power1.in",
               duration: 0.45,
             },
-            0
+            0.05
           ).to(
             card,
             {
               rotateZ: 0,
               ease: "power1.out",
-              duration: 0.55,
+              duration: 0.45,
             },
-            0.45
+            0.5
           );
         }
 
-        // 3. Hanging strap retracts upward and fades out cleanly
+        // 4. Hanging strap retracts upward and fades out cleanly
         tl.to(
           ".shared-card-strap",
           {
-            y: -110,
+            y: -120,
             opacity: 0,
             scaleY: 0.1,
             duration: 0.22,
             ease: "power2.in",
           },
-          0
+          0.05
         );
 
-        // 4. Tech Badges fade out cleanly as card leaves Hero
+        // 5. Tech Badges fade out cleanly as card leaves Hero
         tl.to(
           ".shared-card-badge",
           {
@@ -299,7 +313,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           0.1
         );
 
-        // 5. Seamless photo transition: Hero fullbody photo morphs into About sunglasses photo
+        // 6. Seamless photo transition: Hero fullbody photo morphs into About sunglasses photo
         tl.to(
           ".shared-card-hero-photo",
           {
@@ -307,7 +321,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             duration: 0.35,
             ease: "power1.inOut",
           },
-          0.25
+          0.3
         );
 
         tl.fromTo(
@@ -318,10 +332,10 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             duration: 0.35,
             ease: "power1.inOut",
           },
-          0.25
+          0.3
         );
 
-        // 6. About ProfileCard details slide up and bloom in
+        // 7. About ProfileCard details slide up and bloom in
         tl.fromTo(
           ".shared-card-about-layer",
           { opacity: 0, y: 24 },
@@ -331,19 +345,33 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             duration: 0.35,
             ease: "power2.out",
           },
-          0.45
+          0.5
         );
 
-        // 7. Ambient behind-glow intensifies to About cyan glow
+        // 8. Ambient behind-glow intensifies to About cyan glow
         tl.fromTo(
           ".shared-card-glow",
           { opacity: 0.2 },
           {
             opacity: 1,
-            duration: 0.45,
+            duration: 0.35,
             ease: "power2.out",
           },
-          0.48
+          0.55
+        );
+
+        // 9. Crossfade from Traveling Card to Genuine ProfileCard (at destination, with 0px displacement)
+        tl.to(
+          card,
+          { opacity: 0, duration: 0.05, ease: "power1.out" },
+          0.95
+        );
+
+        tl.fromTo(
+          "#about-profile-card-wrapper",
+          { opacity: 0, visibility: "visible", pointerEvents: "none" },
+          { opacity: 1, visibility: "visible", pointerEvents: "auto", duration: 0.05, ease: "power1.in" },
+          0.95
         );
       }
     }, main);
