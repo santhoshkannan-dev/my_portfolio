@@ -40,7 +40,7 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-5 flex flex-col items-center justify-center w-full">
             <div
               id="about-profile-card-slot"
-              className="relative z-20 w-full max-w-[440px] h-[520px] flex items-center justify-center"
+              className="relative z-20 w-full max-w-[420px] h-[560px] sm:h-[580px] flex items-center justify-center pointer-events-auto"
             />
           </div>
 
