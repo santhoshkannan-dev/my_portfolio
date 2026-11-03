@@ -11,7 +11,6 @@ import ProjectsSection from "@/components/ProjectsSection";
 import VercelDeploymentsGallery from "@/components/VercelDeploymentsGallery";
 import SkillsSection from "@/components/SkillsSection";
 import AboutSection from "@/components/AboutSection";
-import SharedProfileCard from "@/components/SharedProfileCard";
 import ExperienceSection from "@/components/ExperienceSection";
 import ResumeCTA from "@/components/ResumeCTA";
 import ContactSection from "@/components/ContactSection";
@@ -43,9 +42,6 @@ const Index = () => {
 
               {/* 3. About Me & ProfileCard */}
               <AboutSection />
-
-              {/* Continuous Shared-Element Profile Card (Hero -> About) */}
-              <SharedProfileCard />
 
               {/* 4. Capabilities (What I Build) */}
               <CapabilitiesSection />
