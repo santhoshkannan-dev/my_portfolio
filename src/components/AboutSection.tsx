@@ -43,28 +43,30 @@ export const AboutSection: React.FC = () => {
               id="about-profile-card-slot"
               className="relative z-20 w-full max-w-[440px] h-[520px] flex items-center justify-center"
             >
-              <ProfileCard
-                name="Santhosh Kannan"
-                title="Full Stack Developer"
-                handle="santhoshkannan007"
-                status="Open to Opportunities"
-                contactText="Contact Me"
-                avatarUrl="/santhosh_sunglasses.jpg"
-                miniAvatarUrl="/santhosh_sunglasses.jpg"
-                showUserInfo={true}
-                enableTilt={true}
-                enableMobileTilt={false}
-                behindGlowEnabled={true}
-                behindGlowColor="rgba(34, 211, 238, 0.35)"
-                behindGlowSize="55%"
-                innerGradient="linear-gradient(145deg, rgba(168,85,247,0.22) 0%, rgba(34,211,238,0.12) 50%, rgba(16,185,129,0.10) 100%)"
-                onContactClick={() => {
-                  document.getElementById("contact")?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }}
-              />
+              <div id="about-profile-card-wrapper" className="w-full h-full flex items-center justify-center">
+                <ProfileCard
+                  name="Santhosh Kannan"
+                  title="Full Stack Developer"
+                  handle="santhoshkannan007"
+                  status="Open to Opportunities"
+                  contactText="Contact Me"
+                  avatarUrl="/santhosh_sunglasses.jpg"
+                  miniAvatarUrl="/santhosh_sunglasses.jpg"
+                  showUserInfo={true}
+                  enableTilt={true}
+                  enableMobileTilt={false}
+                  behindGlowEnabled={true}
+                  behindGlowColor="rgba(34, 211, 238, 0.35)"
+                  behindGlowSize="55%"
+                  innerGradient="linear-gradient(145deg, rgba(168,85,247,0.22) 0%, rgba(34,211,238,0.12) 50%, rgba(16,185,129,0.10) 100%)"
+                  onContactClick={() => {
+                    document.getElementById("contact")?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
+                />
+              </div>
             </div>
           </TerminalRevealItem>
 
