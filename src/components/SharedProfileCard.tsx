@@ -158,9 +158,9 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: heroSlot,
-            start: () => "top 40px",
+            start: () => (isDesktop ? "top 40px" : "top 30%"),
             endTrigger: aboutSlot,
-            end: "center 50%",
+            end: () => (isDesktop ? "center 50%" : "top 25%"),
             scrub: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
@@ -213,9 +213,16 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           0
         );
 
-        // 1. Move card from Hero slot coordinates to About slot coordinates
-        tl.to(
+        // 1. Move card from Hero slot coordinates to About slot coordinates (responsive fromTo)
+        tl.fromTo(
           card,
+          {
+            x: () => getCoords().originX,
+            y: () => getCoords().originY,
+            width: () => getCoords().originW,
+            height: () => getCoords().originH,
+            borderRadius: 24,
+          },
           {
             x: () => getCoords().targetX,
             y: () => getCoords().targetY,
@@ -311,6 +318,11 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       }
     }, main);
 
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("resize", handleResize);
+
     const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 400);
@@ -318,6 +330,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
     return () => {
       clearTimeout(refreshTimer);
       window.removeEventListener("scroll", handleWindowScroll);
+      window.removeEventListener("resize", handleResize);
       ctx.revert();
     };
   }, [isReady]);
