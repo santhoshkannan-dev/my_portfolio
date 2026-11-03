@@ -27,10 +27,10 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
   onContactClick,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const scrollProgressRef = useRef(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
   const [isFlipped, setIsFlipped] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
 
   const handleContactClick = useCallback(
@@ -60,8 +60,8 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
+    const rotateX = ((y - centerY) / centerY) * -6;
+    const rotateY = ((x - centerX) / centerX) * 6;
 
     const glareX = (x / rect.width) * 100;
     const glareY = (y / rect.height) * 100;
@@ -75,10 +75,9 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
     setGlare((prev) => ({ ...prev, opacity: 0 }));
   };
 
-  // Flip card when in Hero section
+  // Flip card when resting in Hero section
   const handleCardClick = () => {
-    // Only allow flip when resting in Hero section
-    if (scrollProgress < 0.1) {
+    if (scrollProgressRef.current < 0.08) {
       setIsFlipped((prev) => !prev);
     }
   };
@@ -99,18 +98,30 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
 
     const ctx = gsap.context(() => {
       const getCoords = () => {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const scrollX = window.scrollX || window.pageXOffset;
+
         const heroRect = heroSlot.getBoundingClientRect();
         const aboutRect = aboutSlot.getBoundingClientRect();
         const mainRect = main.getBoundingClientRect();
 
+        const mainDocTop = mainRect.top + scrollY;
+        const mainDocLeft = mainRect.left + scrollX;
+
+        const heroDocTop = heroRect.top + scrollY;
+        const heroDocLeft = heroRect.left + scrollX;
+
+        const aboutDocTop = aboutRect.top + scrollY;
+        const aboutDocLeft = aboutRect.left + scrollX;
+
         return {
-          originX: heroRect.left - mainRect.left,
-          originY: heroRect.top - mainRect.top,
+          originX: heroDocLeft - mainDocLeft,
+          originY: heroDocTop - mainDocTop,
           originW: heroRect.width || 340,
           originH: heroRect.height || 480,
-          targetX: aboutRect.left - mainRect.left,
-          targetY: aboutRect.top - mainRect.top,
-          targetW: aboutRect.width || 380,
+          targetX: aboutDocLeft - mainDocLeft,
+          targetY: aboutDocTop - mainDocTop,
+          targetW: aboutRect.width || 420,
           targetH: aboutRect.height || 520,
         };
       };
@@ -132,14 +143,22 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         zIndex: 35,
       });
 
+      // Initial element state managed strictly by GSAP (not React inline styles)
+      gsap.set(".shared-card-hero-photo", { opacity: 1 });
+      gsap.set(".shared-card-about-photo", { opacity: 0 });
+      gsap.set(".shared-card-about-layer", { opacity: 0, y: 24 });
+      gsap.set(".shared-card-strap", { opacity: 1, y: 0, scaleY: 1 });
+      gsap.set(".shared-card-hero-badge", { opacity: 1, scale: 1 });
+      gsap.set(".shared-card-tech-badge", { opacity: 1, scale: 1 });
+
       const mm = gsap.matchMedia();
 
-      // Desktop layout transition
+      // Desktop layout transition (screens >= 1024px)
       mm.add("(min-width: 1024px)", () => {
         buildScrollAnimation(true);
       });
 
-      // Mobile/Tablet layout transition
+      // Mobile/Tablet layout transition (screens < 1024px)
       mm.add("(max-width: 1023px)", () => {
         buildScrollAnimation(false);
       });
@@ -148,14 +167,14 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: heroSlot,
-            start: () => (isDesktop ? "top 50px" : "top 30%"),
+            start: () => (isDesktop ? "top 120px" : "top 80px"),
             endTrigger: aboutSlot,
-            end: () => (isDesktop ? "center 50%" : "top 25%"),
+            end: () => (isDesktop ? "top 160px" : "top 100px"),
             scrub: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-              setScrollProgress(self.progress);
-              // When scrolling begins, auto-unflip to front
+              scrollProgressRef.current = self.progress;
+              // When user scrolls, unflip to front side
               if (self.progress > 0.05) {
                 setIsFlipped(false);
               }
@@ -163,7 +182,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           },
         });
 
-        // 1. Move card from Hero slot coordinates to About slot coordinates
+        // 1. Travel card from Hero slot coordinates to About slot coordinates
         tl.fromTo(
           card,
           {
@@ -190,7 +209,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           tl.to(
             card,
             {
-              rotateZ: -3.8,
+              rotateZ: -3.5,
               ease: "power1.in",
               duration: 0.45,
             },
@@ -240,42 +259,40 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
             duration: 0.25,
             ease: "power2.in",
           },
-          0.1
+          0.08
         );
 
-        // 6. Seamless photo transition: Hero fullbody photo morphs into About sunglasses photo
+        // 6. Seamless photo crossfade: Hero linen shirt photo -> About sunglasses photo
         tl.to(
           ".shared-card-hero-photo",
           {
             opacity: 0,
-            duration: 0.38,
+            duration: 0.45,
             ease: "power1.inOut",
           },
-          0.28
+          0.25
         );
 
-        tl.fromTo(
+        tl.to(
           ".shared-card-about-photo",
-          { opacity: 0 },
           {
             opacity: 1,
-            duration: 0.38,
+            duration: 0.45,
             ease: "power1.inOut",
           },
-          0.28
+          0.25
         );
 
         // 7. About ProfileCard details slide up and bloom in
-        tl.fromTo(
+        tl.to(
           ".shared-card-about-layer",
-          { opacity: 0, y: 28 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.38,
+            duration: 0.4,
             ease: "power2.out",
           },
-          0.48
+          0.5
         );
 
         // 8. Ambient behind-glow intensifies to About cyan glow
@@ -284,7 +301,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           { opacity: 0.25 },
           {
             opacity: 1,
-            duration: 0.38,
+            duration: 0.4,
             ease: "power2.out",
           },
           0.5
@@ -296,14 +313,24 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       ScrollTrigger.refresh();
     };
     window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
 
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 400);
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+      });
+    }
+
+    const t1 = setTimeout(() => ScrollTrigger.refresh(), 100);
+    const t2 = setTimeout(() => ScrollTrigger.refresh(), 500);
+    const t3 = setTimeout(() => ScrollTrigger.refresh(), 1500);
 
     return () => {
-      clearTimeout(refreshTimer);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
       ctx.revert();
     };
   }, [isReady]);
@@ -314,9 +341,7 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       onClick={handleCardClick}
-      className={`shared-profile-card select-none ${
-        scrollProgress < 0.1 ? "cursor-pointer" : "cursor-default"
-      }`}
+      className="shared-profile-card select-none cursor-pointer"
       style={{
         perspective: "1000px",
       }}
@@ -405,14 +430,15 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           </div>
 
           {/* 2. About Photo (Cross-faded during scroll flight) */}
-          <div
-            className="shared-card-about-photo absolute inset-0 z-10 overflow-hidden rounded-[inherit] pointer-events-none"
-            style={{ opacity: 0 }}
-          >
+          <div className="shared-card-about-photo absolute inset-0 z-10 overflow-hidden rounded-[inherit] pointer-events-none">
             <img
               src={aboutAvatarUrl}
               alt={`${name} about portrait`}
               loading="eager"
+              onError={(e) => {
+                // Failover if sunglasses image is not found
+                (e.currentTarget as HTMLImageElement).src = heroAvatarUrl;
+              }}
               className="w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.04]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#090810] via-[#090810]/45 to-transparent z-10" />
@@ -455,12 +481,9 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
           </div>
 
           {/* ABOUT SECTION PROFILECARD SPECIFICS (Blooms in during scroll) */}
-          <div
-            className="shared-card-about-layer absolute inset-0 z-20 w-full h-full flex flex-col justify-end p-5 sm:p-6"
-            style={{ opacity: 0, transform: "translateY(28px)" }}
-          >
+          <div className="shared-card-about-layer absolute inset-0 z-20 w-full h-full flex flex-col justify-end p-5 sm:p-6 pointer-events-none">
             {/* User Info Bar with Mini Avatar, Handle, Status & Contact CTA Button */}
-            <div className="p-3 rounded-2xl bg-black/75 border border-white/10 backdrop-blur-md flex items-center justify-between gap-3 shadow-xl mb-3 pointer-events-auto">
+            <div className="p-3 rounded-2xl bg-black/85 border border-white/10 backdrop-blur-md flex items-center justify-between gap-3 shadow-xl mb-3 pointer-events-auto">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-9 h-9 rounded-full overflow-hidden border border-emerald-400/50 shrink-0">
                   <img
@@ -502,18 +525,20 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
         </div>
 
         {/* ======================================================== */}
-        {/* BACK FACE: Developer ID Pass Back (Flipped in Hero)      */}
+        {/* BACK FACE: Dark Carbon Developer Pass Specs             */}
         {/* ======================================================== */}
         <div
-          className="absolute inset-0 w-full h-full rounded-[inherit] overflow-hidden border dark:border-white/15 border-zinc-700 bg-gradient-to-b from-[#111118] via-[#090810] to-[#040407] p-6 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+          className="absolute inset-0 w-full h-full rounded-[inherit] overflow-hidden border dark:border-white/12 border-zinc-400/50 dark:bg-[#0c0c12] bg-zinc-900 shadow-[0_20px_50px_rgba(0,0,0,0.7)] p-6 flex flex-col justify-between"
           style={{
             transform: "rotateY(180deg)",
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
+            backgroundImage:
+              "radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.12) 0%, transparent 60%), radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.12) 0%, transparent 60%)",
           }}
         >
-          {/* Top Magnetic Security Stripe */}
-          <div className="w-full h-10 -mx-6 -mt-6 bg-[#030305] border-b border-white/10 flex items-center justify-between px-6">
+          {/* Top Magnetic Data Stripe */}
+          <div className="w-full h-8 bg-zinc-950 border-y border-white/10 -mx-6 px-6 flex items-center justify-between">
             <span className="text-[8px] font-mono text-zinc-500 tracking-widest">
               DEV-SEC-PASS // MAGNETIC DATA TRACK
             </span>
