@@ -27,6 +27,33 @@ const Navbar = () => {
   }, []);
 
   const lastScrollY = useRef(0);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile menu on outside click or Escape key
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node)
+      ) {
+        setMobileOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [mobileOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,6 +152,7 @@ const Navbar = () => {
             onClick={() => setImageModalOpen(true)}
             className="relative group focus:outline-none transition-transform duration-150 active:scale-95"
             title="Click to view profile image"
+            aria-label="View Santhosh Kannan profile photo"
           >
             <div className="relative h-10 w-10 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-[0_0_12px_rgba(16,185,129,0.4)] group-hover:border-emerald-400 transition-all duration-300">
               <img
@@ -140,12 +168,13 @@ const Navbar = () => {
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex flex-col items-start leading-tight focus:outline-none text-left group/text"
+            aria-label="Scroll to top of page"
           >
             <span className="text-sm font-bold tracking-tight text-foreground group-hover/text:text-emerald-400 transition-colors duration-300">
               Santhosh Kannan
             </span>
             <span className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">
-              Software Developer
+              Full Stack Developer
             </span>
           </button>
         </div>
@@ -177,6 +206,7 @@ const Navbar = () => {
             onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
             className="p-2 rounded-xl bg-secondary/40 hover:bg-secondary/70 text-foreground border border-border/50 transition-all duration-300 flex items-center justify-center cursor-pointer focus:outline-none"
             title="Toggle Light/Dark Theme"
+            aria-label="Toggle theme mode"
           >
             {!mounted ? (
               <div className="w-4 h-4" />
@@ -199,6 +229,8 @@ const Navbar = () => {
           <button
             className="lg:hidden p-2 rounded-xl bg-secondary/50 text-foreground border border-border/50 cursor-pointer"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -209,6 +241,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

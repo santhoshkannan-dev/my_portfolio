@@ -51,6 +51,7 @@ export const ContactSection: React.FC = () => {
       title: "Contact Form Submission",
       from_name: trimmedName,
       from_email: trimmedEmail,
+      reply_to: trimmedEmail,
     };
 
     try {

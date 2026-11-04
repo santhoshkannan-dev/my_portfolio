@@ -61,7 +61,9 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
     setIsDragging(true);
     try {
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch {}
+    } catch (err) {
+      void err;
+    }
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -105,7 +107,9 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
     setIsDragging(false);
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-    } catch {}
+    } catch (err) {
+      void err;
+    }
 
     // If pointer didn't drag significantly, trigger 3D card flip
     if (!hasMovedRef.current) {
@@ -572,28 +576,31 @@ export const SharedProfileCard: React.FC<SharedProfileCardProps> = ({
                 {name}
               </h3>
 
-              {/* SVG Barcode Graphic with Overlay */}
-              <div className="relative flex items-center justify-center h-6 w-full mb-1">
-                <div className="h-full flex items-center justify-center gap-[2px] opacity-75 w-full max-w-[260px]">
+              {/* Verified Title Pill Badge */}
+              <div className="flex items-center justify-center mb-1.5">
+                <span className="px-3 py-0.5 rounded-full bg-black/80 border border-emerald-500/30 text-[10px] sm:text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-widest backdrop-blur-md shadow-sm">
+                  {title}
+                </span>
+              </div>
+
+              {/* Clean SVG Barcode Graphic */}
+              <div className="flex items-center justify-center h-4 w-full opacity-60 max-w-[240px] mx-auto mb-1">
+                <div className="h-full flex items-center justify-center gap-[2px] w-full">
                   {[3, 1, 4, 2, 5, 1, 3, 2, 6, 1, 4, 3, 2, 5, 1, 3, 4, 2, 6, 1, 3, 2, 5, 4, 1, 3, 2, 4].map(
                     (w, i) => (
                       <div
                         key={i}
-                        className="bg-white/90 h-full rounded-[0.5px]"
+                        className="bg-white/80 h-full rounded-[0.5px]"
                         style={{ width: `${w}px` }}
                       />
                     )
                   )}
                 </div>
-
-                <span className="absolute inset-0 flex items-center justify-center text-[10px] sm:text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-widest bg-black/60 px-2.5 py-0.5 rounded backdrop-blur-[2px]">
-                  {title}
-                </span>
               </div>
 
               {/* Subtitle Caption */}
               <div className="text-[8px] sm:text-[9px] font-mono text-zinc-400 tracking-[0.25em] uppercase text-center pb-0.5">
-                SANTHOSH KANNAN • FULL STACK
+                SK-PASS // VERIFIED PROFILE
               </div>
             </div>
           </div>

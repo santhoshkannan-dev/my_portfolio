@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
                 Santhosh Kannan
               </span>
               <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 mt-0.5">
-                Software Developer · Full Stack Engineer
+                Full Stack Developer · Software Engineer
               </span>
               <p className="text-xs dark:text-zinc-400 text-zinc-600 max-w-sm mt-2 leading-relaxed">
                 Building scalable web applications, REST APIs, mobile apps, and AI solutions with modern technologies.
@@ -71,6 +71,7 @@ export const Footer: React.FC = () => {
             
             <button
               onClick={scrollToTop}
+              aria-label="Back to top"
               className="flex items-center gap-1.5 text-zinc-400 hover:text-emerald-400 transition-colors font-mono cursor-pointer"
             >
               <span>Back to Top</span>

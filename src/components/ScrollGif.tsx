@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 const ScrollGif = () => {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [isScrollingUp, setIsScrollingUp] = useState(false);
-    const [lastScrollY, setLastScrollY] = useState(0);
+    const lastScrollYRef = useRef(0);
     const [isScrolling, setIsScrolling] = useState(false);
 
     // Mouse tracking state for the eye
@@ -33,13 +33,13 @@ const ScrollGif = () => {
             const safeProgress = Math.min(Math.max(progress, 0), 1);
             setScrollProgress(safeProgress);
 
-            if (currentScrollY < lastScrollY - 2) {
+            if (currentScrollY < lastScrollYRef.current - 2) {
                 setIsScrollingUp(true);
-            } else if (currentScrollY > lastScrollY + 2) {
+            } else if (currentScrollY > lastScrollYRef.current + 2) {
                 setIsScrollingUp(false);
             }
 
-            setLastScrollY(currentScrollY);
+            lastScrollYRef.current = currentScrollY;
 
             setIsScrolling(true);
             if (timeoutRef.current) {
@@ -62,7 +62,7 @@ const ScrollGif = () => {
                 clearTimeout(timeoutRef.current);
             }
         };
-    }, [lastScrollY]);
+    }, []);
 
     // Handle global mouse movement for the eye
     useEffect(() => {
@@ -126,7 +126,7 @@ const ScrollGif = () => {
 
     return (
         <div
-            className="fixed z-[100] pointer-events-none transition-all duration-300 ease-out flex items-center justify-center p-0"
+            className="fixed z-[100] pointer-events-none transition-all duration-300 ease-out hidden sm:flex items-center justify-center p-0"
             style={{
                 right: '0.8px',
                 top: `${topPercentage}%`,
