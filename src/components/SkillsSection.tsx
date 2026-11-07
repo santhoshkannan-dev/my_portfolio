@@ -16,10 +16,10 @@ export const SkillsSection: React.FC = () => {
             TECHNICAL EXPERTISE
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1] mb-4">
-            Technology Stack
+            Technical Stack & Core Skills
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Core programming languages, frameworks, databases, and deployment tools I utilize across production software development.
+            Core programming languages, frameworks, and cloud tools I utilize across full stack software development — including React, Python, Django, PostgreSQL, Docker, and AWS.
           </p>
         </TerminalRevealItem>
 

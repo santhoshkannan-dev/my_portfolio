@@ -177,7 +177,7 @@ export const ExperienceSection: React.FC = () => {
             Journey & Background
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Academic milestones, full-stack software development history, and technical training.
+            Academic milestones, postgraduate MCA education at Marian College Kuttikkanam, and full stack software development experience in Kerala, India.
           </p>
         </TerminalRevealItem>
 

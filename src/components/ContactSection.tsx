@@ -88,7 +88,7 @@ export const ContactSection: React.FC = () => {
               </h2>
 
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Have an idea, project, software development opportunity, or collaboration in mind? I'm always open to discussing new technical products and engineering roles.
+                Have a project, full stack software development role, or engineering opportunity in mind? Feel free to reach out — I am always open to discussing new technical products, React/Python architectures, and developer opportunities.
               </p>
             </TerminalRevealItem>
 

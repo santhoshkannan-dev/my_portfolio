@@ -67,10 +67,10 @@ export const AboutSection: React.FC = () => {
             <TerminalRevealItem order={1}>
               <div className="space-y-3">
                 <p className="text-sm sm:text-base dark:text-zinc-300 text-zinc-700 leading-relaxed font-normal">
-                  I'm <strong className="dark:text-white text-zinc-900 font-semibold">Santhosh Kannan</strong>, a software developer focused on building practical digital products across web, mobile, backend, and AI solutions.
+                  I'm <strong className="dark:text-white text-zinc-900 font-semibold">Santhosh Kannan</strong>, a Full Stack Developer & software engineer based in Kerala, India, focused on building practical, scalable digital products across web, mobile, backend, and AI solutions.
                 </p>
                 <p className="text-sm sm:text-base dark:text-zinc-400 text-zinc-600 leading-relaxed font-normal">
-                  I enjoy turning complex ideas into intuitive, scalable products — from responsive user interfaces and REST APIs to data-driven and AI-powered applications.
+                  As an active React developer and Django/Python backend engineer, I enjoy turning complex ideas into intuitive, robust products — from interactive user interfaces and REST APIs to data-driven and AI-powered applications.
                 </p>
               </div>
             </TerminalRevealItem>

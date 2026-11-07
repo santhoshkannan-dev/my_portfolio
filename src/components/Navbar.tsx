@@ -157,7 +157,7 @@ const Navbar = () => {
             <div className="relative h-10 w-10 rounded-full overflow-hidden border-2 border-emerald-500/60 shadow-[0_0_12px_rgba(16,185,129,0.4)] group-hover:border-emerald-400 transition-all duration-300">
               <img
                 src="/kannan.png"
-                alt="Santhosh Kannan"
+                alt="Santhosh Kannan - Full Stack Developer"
                 className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
             </div>

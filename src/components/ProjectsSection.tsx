@@ -265,7 +265,7 @@ export const ProjectsSection: React.FC = () => {
               Featured Projects
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Selected digital products and software systems I've designed, architected, and built.
+              Selected digital products, 3D web apps, and full-stack software systems I've designed, architected, and built as a Full Stack Developer.
             </p>
           </TerminalRevealItem>
 
@@ -319,7 +319,7 @@ export const ProjectsSection: React.FC = () => {
                           <div className="relative w-full aspect-[16/10] overflow-hidden">
                             <img
                               src={project.image}
-                              alt={project.title}
+                              alt={`${project.title} - ${project.subtitle} by Santhosh Kannan`}
                               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                               loading="eager"
                             />

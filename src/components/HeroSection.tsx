@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => {
             <div className="mb-4">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                SOFTWARE DEVELOPER • FULL STACK ENGINEER
+                FULL STACK DEVELOPER • REACT & PYTHON
               </span>
             </div>
 
@@ -53,7 +53,7 @@ const HeroSection: React.FC = () => {
 
             {/* Personal Intro */}
             <p className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal mb-8 max-w-xl">
-              Full Stack Software Developer specializing in high-performance web applications, mobile apps, REST APIs, and AI-powered solutions using React, Python, Django, PostgreSQL, Docker, AWS and modern cloud technologies.
+              I'm <strong className="text-zinc-900 dark:text-white font-semibold">Santhosh Kannan</strong>, a Full Stack Developer & React/Python engineer based in Kerala, India. I specialize in high-performance web applications, mobile apps, REST APIs, and AI-powered solutions using React, Python, Django, PostgreSQL, Docker, AWS and modern cloud technologies.
             </p>
 
             {/* CTA Buttons & Social Links */}

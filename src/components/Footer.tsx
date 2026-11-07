@@ -21,10 +21,10 @@ export const Footer: React.FC = () => {
                 Santhosh Kannan
               </span>
               <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 mt-0.5">
-                Full Stack Developer · Software Engineer
+                Full Stack Developer · React & Python
               </span>
               <p className="text-xs dark:text-zinc-400 text-zinc-600 max-w-sm mt-2 leading-relaxed">
-                Building scalable web applications, REST APIs, mobile apps, and AI solutions with modern technologies.
+                Full Stack Software Developer based in Kerala, India. Building high-performance web applications, REST APIs, and digital products.
               </p>
             </div>
 
